@@ -1,6 +1,6 @@
 # dcdavidev/spellbookx
 
-A unified toolkit for consistent, maintainable, and automated development workflows.
+Crafting magical developer toolchains, automation, environments, and wizards for devs
 
 ---
 
