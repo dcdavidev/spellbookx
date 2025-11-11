@@ -8,6 +8,9 @@
     },
     {
       "path": "./packages/cspell-config-spellbookx"
+    },
+    {
+      "path": "./packages/prettier-config-spellbookx"
     }
   ]
 }

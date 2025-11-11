@@ -9,7 +9,7 @@ const $filename = fileURLToPath(import.meta.url);
 const $dirname = path.dirname($filename);
 
 const pkg = JSON.parse(
-  readFileSync(path.join($dirname, "..", "package.json"), "utf8")
+  readFileSync(path.join($dirname, "..", "package.json"), "utf8"),
 );
 
 export default {

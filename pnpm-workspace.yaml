@@ -4,7 +4,7 @@ packages:
 autoInstallPeers: true
 
 onlyBuiltDependencies:
-  - '@swc/core'
+  - "@swc/core"
   - core-js
   - nx
   - unrs-resolver

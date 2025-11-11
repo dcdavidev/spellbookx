@@ -1,0 +1,9 @@
+/.codacy/
+/.gemini/
+/.github/instructions/
+/.nx/
+/bun.lockb
+
+**/dist/
+**/node_modules/
+*lock.*

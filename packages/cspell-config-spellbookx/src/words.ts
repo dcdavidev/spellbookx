@@ -21,6 +21,7 @@ export const words = [
   "noconfirm",
   "nextui",
   "pacman",
+  "resx",
   "shadcn",
   "spellbookx",
   "stefanzweifel",

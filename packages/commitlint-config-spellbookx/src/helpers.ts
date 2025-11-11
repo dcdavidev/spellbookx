@@ -16,7 +16,7 @@ import { load } from "js-yaml";
 export function getWorkspacesRawPath(
   configPath: string,
   parser: "json" | "yaml",
-  property: string = "workspaces"
+  property: string = "workspaces",
 ): string[] {
   const rawWorkspacesPaths: string[] = [];
 
@@ -64,22 +64,22 @@ export function getScopes(): string[] {
 
   const packageJsonPath = path.join(cwd, "package.json");
   rawWorkspaces.push(
-    ...getWorkspacesRawPath(packageJsonPath, "json", "workspaces")
+    ...getWorkspacesRawPath(packageJsonPath, "json", "workspaces"),
   );
 
   const pnpmWorkspaceYamlPath = path.join(cwd, "pnpm-workspace.yaml");
   rawWorkspaces.push(
-    ...getWorkspacesRawPath(pnpmWorkspaceYamlPath, "yaml", "packages")
+    ...getWorkspacesRawPath(pnpmWorkspaceYamlPath, "yaml", "packages"),
   );
 
   const pnpmWorkspaceYmlPath = path.join(cwd, "pnpm-workspace.yml");
   rawWorkspaces.push(
-    ...getWorkspacesRawPath(pnpmWorkspaceYmlPath, "yaml", "packages")
+    ...getWorkspacesRawPath(pnpmWorkspaceYmlPath, "yaml", "packages"),
   );
 
   const lernaJsonPath = path.join(cwd, "lerna.json");
   rawWorkspaces.push(
-    ...getWorkspacesRawPath(lernaJsonPath, "json", "packages")
+    ...getWorkspacesRawPath(lernaJsonPath, "json", "packages"),
   );
 
   const workspaces: string[] = [];
