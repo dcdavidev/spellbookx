@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "pnpm dlx nx run-many -t build"
+    "build": "pnpm dlx nx run-many -t build",
+    "prepare": "lefkhook install"
   },
   "private": true,
   "devDependencies": {

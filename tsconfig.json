@@ -4,7 +4,7 @@
   "files": [],
   "references": [
     {
-      "path": "./packages/commitlint-config"
+      "path": "./packages/commitlint-config-spellbookx"
     },
     {
       "path": "./packages/cspell-config-spellbookx"
