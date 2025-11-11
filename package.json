@@ -1,0 +1,19 @@
+{
+  "name": "@dcdavidev/source",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {},
+  "private": true,
+  "devDependencies": {
+    "@nx/js": "22.0.3",
+    "@nx/node": "22.0.3",
+    "@swc-node/register": "~1.11.1",
+    "@swc/core": "~1.15.1",
+    "@swc/helpers": "~0.5.17",
+    "@types/node": "20.19.9",
+    "nx": "22.0.3",
+    "tslib": "^2.8.1",
+    "typescript": "~5.9.3"
+  },
+  "dependencies": {}
+}
