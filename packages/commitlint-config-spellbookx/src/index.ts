@@ -21,18 +21,21 @@ for (const scope of scopesArray) {
 
   switch (scope) {
     case SCOPE_EMPTY:
-    case SCOPE_WORKSPACE:
+    case SCOPE_WORKSPACE: {
       description =
         "workspace scope - root files such as config files, root package.json, etc";
       break;
+    }
 
-    case SCOPE_RELEASE:
+    case SCOPE_RELEASE: {
       description = "Special scope for release commits";
       break;
+    }
 
-    default:
+    default: {
       description = `${scope} scope`;
       break;
+    }
   }
 
   scopesEnum[scope] = { description: description };

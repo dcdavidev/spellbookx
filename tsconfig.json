@@ -11,6 +11,9 @@
     },
     {
       "path": "./packages/prettier-config-spellbookx"
+    },
+    {
+      "path": "./packages/eslint-plugin-spellbookx"
     }
   ]
 }

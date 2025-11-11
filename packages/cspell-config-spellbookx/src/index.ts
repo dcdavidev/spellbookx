@@ -1,9 +1,11 @@
-import { CSpellSettings } from "cspell";
-import path from "node:path";
 import { readFileSync } from "node:fs";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { words } from "./words.js";
+
+import { CSpellSettings } from "cspell";
+
 import { ignorePaths } from "./ignore-paths.js";
+import { words } from "./words.js";
 
 const $filename = fileURLToPath(import.meta.url);
 const $dirname = path.dirname($filename);
