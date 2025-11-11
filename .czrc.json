@@ -1,0 +1,7 @@
+{
+  "name": "cz-git",
+  "useCommitizen": true,
+  "commitlintConfig": {
+    "extends": ["./.commitlintrc.js"]
+  }
+}

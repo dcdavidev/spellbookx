@@ -15,5 +15,10 @@
     "tslib": "^2.8.1",
     "typescript": "~5.9.3"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "config": {
+    "commitizen": {
+      "path": "cz-git"
+    }
+  }
 }
