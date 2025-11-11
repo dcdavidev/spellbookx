@@ -56,6 +56,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^17.6.7
         version: 17.8.1
+      conventional-changelog-conventionalcommits:
+        specifier: ^9.1.0
+        version: 9.1.0
       conventional-changelog-lint-config-cz:
         specifier: ^0.3.0
         version: 0.3.0(conventional-changelog-lint@1.1.9)
@@ -1780,6 +1783,10 @@ packages:
   conventional-changelog-conventionalcommits@6.1.0:
     resolution: {integrity: sha512-3cS3GEtR78zTfMzk0AizXKKIdN4OvSh7ibNz6/DPbhWWQu7LqE/8+/GqSodV+sywUR2gpJAdP/1JFf4XtN7Zpw==}
     engines: {node: '>=14'}
+
+  conventional-changelog-conventionalcommits@9.1.0:
+    resolution: {integrity: sha512-MnbEysR8wWa8dAEvbj5xcBgJKQlX/m0lhS8DsyAAWDHdfs2faDJxTgzRYlRYpXSe7UiKrIIlB4TrBKU9q9DgkA==}
+    engines: {node: '>=18'}
 
   conventional-changelog-lint-config-angular@0.4.1:
     resolution: {integrity: sha512-Rf5kcgLkWyiV6ra3HcnUc13dIwe8zKnFnU337yI3m66RlXfBQCPNnJMuGOueNAKNglLUi0NUJOmZTJAm3pxMdw==}
@@ -5724,6 +5731,10 @@ snapshots:
       compare-func: 2.0.0
 
   conventional-changelog-conventionalcommits@6.1.0:
+    dependencies:
+      compare-func: 2.0.0
+
+  conventional-changelog-conventionalcommits@9.1.0:
     dependencies:
       compare-func: 2.0.0
 

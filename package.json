@@ -2,7 +2,9 @@
   "name": "@dcdavidev/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build": "pnpm dlx nx run-many -t build"
+  },
   "private": true,
   "devDependencies": {
     "@commitlint/cli": "^17.8.1",
