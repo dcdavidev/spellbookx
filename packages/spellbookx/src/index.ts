@@ -3,6 +3,7 @@
 import { Command } from 'commander';
 import { actionCommitlint } from './actions/commitlint.js';
 import { actionCspell } from './actions/cspell.js';
+import { actionEslint } from './actions/eslint.js';
 import { actionPrettier } from './actions/prettier.js';
 import { packageJson } from './helpers/package-json.js';
 
@@ -37,6 +38,12 @@ init
   .command('prettier')
   .description('Initialize Prettier configuration')
   .action(actionPrettier);
+
+// Command init eslint
+init
+  .command('eslint')
+  .description('Initialize ESLint configuration')
+  .action(actionEslint);
 
 // Parse arguments
 sbx.parse(process.argv);
