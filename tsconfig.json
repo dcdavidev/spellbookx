@@ -14,6 +14,12 @@
     },
     {
       "path": "./packages/eslint-plugin-spellbookx"
+    },
+    {
+      "path": "./packages/spellbookx"
+    },
+    {
+      "path": "./packages/spellbookx-cli"
     }
   ]
 }
