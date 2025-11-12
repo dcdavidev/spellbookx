@@ -4,6 +4,7 @@ import { Command } from 'commander';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
 import { actionCommitlint } from './actions/commitlint.js';
+import { actionCspell } from './actions/cspell.js';
 
 const packagePath = fileURLToPath(new URL('../package.json', import.meta.url));
 const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8')) as {
@@ -30,6 +31,12 @@ init
   .command('commitlint')
   .description('Initialize commitlint configuration')
   .action(actionCommitlint);
+
+// Command init cspell
+init
+  .command('cspell')
+  .description('Initialize cspell configuration')
+  .action(actionCspell);
 
 // Parse arguments
 sbx.parse(process.argv);
