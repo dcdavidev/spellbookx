@@ -2,9 +2,6 @@
   "name": "eslint-plugin-spellbookx",
   "version": "0.0.1",
   "private": true,
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "type": "module",
   "exports": {
     "./package.json": "./package.json",
@@ -14,20 +11,22 @@
       "default": "./dist/index.js"
     }
   },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "dependencies": {
-    "tslib": "^2.3.0"
-  },
-  "devDependencies": {
     "@cspell/eslint-plugin": "^9.3.0",
     "@eslint-react/eslint-plugin": "^2.3.4",
     "@eslint/js": "^9.39.1",
     "@eslint/json": "^0.14.0",
     "@eslint/markdown": "^7.5.1",
+    "@typescript-eslint/parser": "^8.46.4",
     "astro-eslint-parser": "^1.2.2",
-    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.5.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsdoc": "^61.1.12",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-node-dependencies": "^1.2.0",
     "eslint-plugin-package-json": "^0.65.3",
     "eslint-plugin-prettier": "^5.5.4",
@@ -35,7 +34,13 @@
     "eslint-plugin-unicorn": "^62.0.0",
     "globals": "^16.5.0",
     "jsonc-eslint-parser": "^2.4.1",
+    "tslib": "^2.8.1",
     "typescript-eslint": "^8.46.4"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.0",
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3"
   },
   "peerDependencies": {
     "eslint": "^9.39.1"

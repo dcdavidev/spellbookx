@@ -1,178 +1,178 @@
-import type { Linter } from "eslint";
+import type { Linter } from 'eslint';
 
 const IMPORT_GROUPS = [
   // dotenv & dotenvx packages
-  ["^@dotenvx/dotenvx", "^dotenv"],
+  ['^@dotenvx/dotenvx', '^dotenv'],
 
   // Side-effect imports (e.g. polyfills)
   [String.raw`^\u0000`],
 
   // Env imports for React Native, Expo, etc.
-  ["^@env"],
+  ['^@env'],
 
   // Node.js built-in modules
   [
-    "^assert",
-    "^buffer",
-    "^child_process",
-    "^cluster",
-    "^console",
-    "^constants",
-    "^crypto",
-    "^dgram",
-    "^dns",
-    "^domain",
-    "^events",
-    "^fs",
-    "^http",
-    "^https",
-    "^inspector",
-    "^module",
-    "^net",
-    "^os",
-    "^path",
-    "^perf_hooks",
-    "^process",
-    "^punycode",
-    "^querystring",
-    "^readline",
-    "^repl",
-    "^stream",
-    "^string_decoder",
-    "^timers",
-    "^tls",
-    "^tty",
-    "^url",
-    "^util",
-    "^v8",
-    "^vm",
-    "^zlib",
+    '^assert',
+    '^buffer',
+    '^child_process',
+    '^cluster',
+    '^console',
+    '^constants',
+    '^crypto',
+    '^dgram',
+    '^dns',
+    '^domain',
+    '^events',
+    '^fs',
+    '^http',
+    '^https',
+    '^inspector',
+    '^module',
+    '^net',
+    '^os',
+    '^path',
+    '^perf_hooks',
+    '^process',
+    '^punycode',
+    '^querystring',
+    '^readline',
+    '^repl',
+    '^stream',
+    '^string_decoder',
+    '^timers',
+    '^tls',
+    '^tty',
+    '^url',
+    '^util',
+    '^v8',
+    '^vm',
+    '^zlib',
   ],
 
   // Node.js built-in modules #2
-  ["^node:"],
+  ['^node:'],
 
   // Node.js backend frameworks
   [
-    "^@fastify",
-    "^@hapi/hapi",
-    "^@koa/koa",
-    "^@nestjs",
-    "^express",
-    "^fastify",
-    "^hapi",
-    "^koa",
-    "^loopback",
-    "^nest",
-    "^sails",
+    '^@fastify',
+    '^@hapi/hapi',
+    '^@koa/koa',
+    '^@nestjs',
+    '^express',
+    '^fastify',
+    '^hapi',
+    '^koa',
+    '^loopback',
+    '^nest',
+    '^sails',
   ],
 
   // Node.js backend middlewares & utilities
   [
-    "^body-parser",
-    "^connect-redis",
-    "^cookie-parser",
-    "^cors",
-    "^express-rate-limit",
-    "^express-session",
-    "^helmet",
-    "^morgan",
-    "^passport",
+    '^body-parser',
+    '^connect-redis',
+    '^cookie-parser',
+    '^cors',
+    '^express-rate-limit',
+    '^express-session',
+    '^helmet',
+    '^morgan',
+    '^passport',
     String.raw`^pino-`,
-    "^redis",
-    "^winston",
+    '^redis',
+    '^winston',
   ],
 
   // UI Frameworks (React, Vue, Svelte, etc.)
-  ["^@angular", "^react", "^solid-js", "^svelte", "^vue"],
+  ['^@angular', '^react', '^solid-js', '^svelte', '^vue'],
 
   // React specific packages
   [
-    "^@tanstack/router",
-    "^react-dom",
-    "^react-helmet",
-    "^react-intl",
-    "^react-router",
-    "^react-router-dom",
+    '^@tanstack/router',
+    '^react-dom',
+    '^react-helmet',
+    '^react-intl',
+    '^react-router',
+    '^react-router-dom',
   ],
 
   // Full-stack/SSR frameworks (Next.js, Remix, etc.)
-  ["^@nuxt/kit", "^@remix-run", "^@sveltejs/kit", "^gatsby", "^next"],
+  ['^@nuxt/kit', '^@remix-run', '^@sveltejs/kit', '^gatsby', '^next'],
 
   // React Native & Expo
   [
-    "^@expo",
+    '^@expo',
     String.raw`^@expo\/`,
-    "^@react-native",
-    "^expo",
+    '^@react-native',
+    '^expo',
     String.raw`^expo-`,
-    "^react-native",
-    "^react-navigation",
+    '^react-native',
+    '^react-navigation',
   ],
 
   // State management libraries
   [
-    "^@reduxjs/toolkit",
-    "^jotai",
-    "^mobx",
-    "^recoil",
-    "^redux",
-    "^valtio",
-    "^zustand",
+    '^@reduxjs/toolkit',
+    '^jotai',
+    '^mobx',
+    '^recoil',
+    '^redux',
+    '^valtio',
+    '^zustand',
   ],
 
   // Data-fetching libraries
-  ["^@apollo/client", "^@tanstack/react-query", "^axios", "^graphql", "^swr"],
+  ['^@apollo/client', '^@tanstack/react-query', '^axios', '^graphql', '^swr'],
 
   // UI libraries & design systems
   [
-    "^@chakra-ui",
-    "^@headlessui/react",
-    "^@lottiefiles",
-    "^@material-ui",
-    "^@mui",
-    "^@nextui-org/react",
-    "^@radix-ui",
-    "^antd",
-    "^framer-motion",
-    "^native-base",
-    "^react-native-paper",
-    "^shadcn-ui",
-    "^tailwindcss",
+    '^@chakra-ui',
+    '^@headlessui/react',
+    '^@lottiefiles',
+    '^@material-ui',
+    '^@mui',
+    '^@nextui-org/react',
+    '^@radix-ui',
+    '^antd',
+    '^framer-motion',
+    '^native-base',
+    '^react-native-paper',
+    '^shadcn-ui',
+    '^tailwindcss',
   ],
 
   // CSS-in-JS & utility libraries
   [
-    "^@emotion",
-    "^class-variance-authority",
-    "^clsx",
-    "^lucide-react",
-    "^styled-components",
-    "^tailwind-merge",
-    "^twin.macro",
-    "^tw-animate-css",
+    '^@emotion',
+    '^class-variance-authority',
+    '^clsx',
+    '^lucide-react',
+    '^styled-components',
+    '^tailwind-merge',
+    '^twin.macro',
+    '^tw-animate-css',
   ],
 
   // Common icon packages
   [
     String.raw`^@expo\/vector-icons`,
-    "^@fortawesome",
-    "^@tabler/icons-react",
-    "^lucide",
-    "^react-feather",
-    "^react-icons",
-    "^react-native-feather",
-    "^react-native-vector-icons",
+    '^@fortawesome',
+    '^@tabler/icons-react',
+    '^lucide',
+    '^react-feather',
+    '^react-icons',
+    '^react-native-feather',
+    '^react-native-vector-icons',
   ],
 
   // Testing libraries and utilities
-  ["^@testing-library", "^cypress", "^jest", "^playwright", "^vitest"],
+  ['^@testing-library', '^cypress', '^jest', '^playwright', '^vitest'],
 
   // Generic third-party packages (npm scope and plain)
-  ["^[a-z]", String.raw`^@\w`],
+  ['^[a-z]', String.raw`^@\w`],
 
   // Monorepo/workspace scoped packages
-  ["^@my-org/", "^@workspace/"],
+  ['^@my-org/', '^@workspace/'],
 
   // Asset imports (images, fonts, etc.)
   [
@@ -208,11 +208,11 @@ const IMPORT_GROUPS = [
  */
 export const jsRulesImportsExports: Linter.RulesRecord = {
   // Disable the built-in sort-imports rule in favor of plugin
-  "sort-imports": "off",
+  'sort-imports': 'off',
 
   // Enforce structured and grouped imports using simple-import-sort
-  "simple-import-sort/imports": ["error", { groups: IMPORT_GROUPS }],
+  'simple-import-sort/imports': ['error', { groups: IMPORT_GROUPS }],
 
   // Enforce sorted exports
-  "simple-import-sort/exports": "error",
+  'simple-import-sort/exports': 'error',
 };

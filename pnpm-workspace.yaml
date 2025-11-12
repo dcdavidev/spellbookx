@@ -1,9 +1,9 @@
 packages:
-  - "packages/*"
-  - "eslint-plugin-spellbookx"
+  - 'packages/*'
+  - 'eslint-plugin-spellbookx'
 autoInstallPeers: true
 onlyBuiltDependencies:
-  - "@swc/core"
-  - "core-js"
-  - "nx"
-  - "unrs-resolver"
+  - '@swc/core'
+  - 'core-js'
+  - 'nx'
+  - 'unrs-resolver'

@@ -1,4 +1,4 @@
-import type { Linter } from "eslint";
+import type { Linter } from 'eslint';
 
 /**
  * ESLint configuration for JavaScript and TypeScript.
@@ -24,32 +24,32 @@ import type { Linter } from "eslint";
  */
 export const jsRulesCommon: Linter.RulesRecord = {
   // TS: allow unused prefixed with "_"
-  "no-unused-vars": "off",
-  "@typescript-eslint/no-unused-vars": [
-    "error",
-    { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+  'no-unused-vars': 'off',
+  '@typescript-eslint/no-unused-vars': [
+    'error',
+    { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
   ],
 
   // Quote/semi conflict resolution (Prettier handles)
-  quotes: "off",
-  "@typescript-eslint/quotes": "off",
-  semi: "off",
-  "@typescript-eslint/semi": "off",
+  quotes: 'off',
+  '@typescript-eslint/quotes': 'off',
+  semi: 'off',
+  '@typescript-eslint/semi': 'off',
 
   // Unicorn
-  "unicorn/filename-case": ["error", { case: "kebabCase" }],
-  "unicorn/prefer-module": "error",
-  "unicorn/no-new-buffer": "error",
-  "unicorn/no-instanceof-array": "error",
-  "unicorn/prefer-includes": "error",
-  "unicorn/prefer-string-replace-all": "error",
-  "unicorn/prefer-top-level-await": "off",
-  "unicorn/prefer-type-error": "error",
-  "unicorn/throw-new-error": "error",
-  "unicorn/no-null": "off",
-  "unicorn/prevent-abbreviations": "off",
-  "unicorn/explicit-length-check": "warn",
+  'unicorn/filename-case': ['error', { case: 'kebabCase' }],
+  'unicorn/prefer-module': 'error',
+  'unicorn/no-new-buffer': 'error',
+  'unicorn/no-instanceof-array': 'error',
+  'unicorn/prefer-includes': 'error',
+  'unicorn/prefer-string-replace-all': 'error',
+  'unicorn/prefer-top-level-await': 'off',
+  'unicorn/prefer-type-error': 'error',
+  'unicorn/throw-new-error': 'error',
+  'unicorn/no-null': 'off',
+  'unicorn/prevent-abbreviations': 'off',
+  'unicorn/explicit-length-check': 'warn',
 
   // Prettier
-  "prettier/prettier": "error",
+  'prettier/prettier': 'error',
 };

@@ -3,6 +3,9 @@
 /.github/instructions/
 /.nx/
 /bun.lockb
+/czrc
+/eslint.config.mjs
+/prettier.config.mjs
 
 **/dist/
 **/node_modules/

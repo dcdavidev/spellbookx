@@ -1,4 +1,4 @@
-import type { Linter } from "eslint";
+import type { Linter } from 'eslint';
 
 /**
  * ESLint rule set focused on enforcing and improving JSDoc usage across
@@ -21,8 +21,8 @@ import type { Linter } from "eslint";
  * - jsdoc.configs['flat/stylistic-typescript-flavor'],.
  */
 export const jsDocRules: Linter.RulesRecord = {
-  "jsdoc/require-jsdoc": [
-    "warn",
+  'jsdoc/require-jsdoc': [
+    'warn',
     {
       require: {
         FunctionDeclaration: true,
@@ -31,33 +31,33 @@ export const jsDocRules: Linter.RulesRecord = {
       },
     },
   ],
-  "jsdoc/require-description": "warn",
+  'jsdoc/require-description': 'warn',
 
-  "jsdoc/require-param": "error",
-  "jsdoc/require-returns": "error",
+  'jsdoc/require-param': 'error',
+  'jsdoc/require-returns': 'error',
 
-  "jsdoc/check-param-names": "error",
-  "jsdoc/check-property-names": "error",
-  "jsdoc/check-tag-names": "error",
+  'jsdoc/check-param-names': 'error',
+  'jsdoc/check-property-names': 'error',
+  'jsdoc/check-tag-names': 'error',
 
-  "jsdoc/check-alignment": "warn",
-  "jsdoc/check-indentation": "warn",
-  "jsdoc/require-description-complete-sentence": "warn",
+  'jsdoc/check-alignment': 'warn',
+  'jsdoc/check-indentation': 'warn',
+  'jsdoc/require-description-complete-sentence': 'warn',
 
-  "jsdoc/no-undefined-types": "error",
-  "jsdoc/empty-tags": "error",
-  "jsdoc/no-multi-asterisks": "warn",
+  'jsdoc/no-undefined-types': 'error',
+  'jsdoc/empty-tags': 'error',
+  'jsdoc/no-multi-asterisks': 'warn',
 
-  "jsdoc/no-types": "off",
-  "jsdoc/require-param-type": "off",
-  "jsdoc/require-property-type": "off",
-  "jsdoc/require-throws-type": "off",
-  "jsdoc/require-yields-type": "off",
-  "jsdoc/require-returns-type": "off",
+  'jsdoc/no-types': 'off',
+  'jsdoc/require-param-type': 'off',
+  'jsdoc/require-property-type': 'off',
+  'jsdoc/require-throws-type': 'off',
+  'jsdoc/require-yields-type': 'off',
+  'jsdoc/require-returns-type': 'off',
 
-  "jsdoc/tag-lines": [
-    "warn",
-    "any",
+  'jsdoc/tag-lines': [
+    'warn',
+    'any',
     {
       startLines: 0,
       endLines: 0,

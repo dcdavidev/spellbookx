@@ -1,59 +1,61 @@
-import type { Config } from "prettier";
+import type { Config } from 'prettier';
 
-export const config: Config = {
+const spellbookxConfig: Config = {
   plugins: [
-    "prettier-plugin-astro",
-    "prettier-plugin-sh",
-    "prettier-plugin-toml",
-    "prettier-plugin-ini",
-    "prettier-plugin-packagejson",
-    "prettier-plugin-properties",
-    "prettier-plugin-prisma",
-    "@prettier/plugin-xml",
-    "prettier-plugin-tailwindcss", // must be loaded last
+    'prettier-plugin-astro',
+    'prettier-plugin-sh',
+    'prettier-plugin-toml',
+    'prettier-plugin-ini',
+    'prettier-plugin-packagejson',
+    'prettier-plugin-properties',
+    'prettier-plugin-prisma',
+    '@prettier/plugin-xml',
+    'prettier-plugin-tailwindcss', // must be loaded last
   ],
 
-  trailingComma: "es5",
+  trailingComma: 'es5',
   tabWidth: 2,
   semi: true,
   singleQuote: true,
   printWidth: 80,
-  endOfLine: "lf",
+  endOfLine: 'lf',
+  bracketSpacing: true,
+  jsxBracketSameLine: false,
 
   overrides: [
     {
-      files: ["*.toml"],
+      files: ['*.toml'],
       options: {
         printWidth: 100,
       },
     },
     {
-      files: ["*.astro"],
+      files: ['*.astro'],
       options: {
-        parser: "astro",
+        parser: 'astro',
       },
     },
     {
       files: [
-        "**/*.xml",
-        "**/*.svg",
-        "**/*.xhtml",
-        "**/*.xsd",
-        "**/*.xsl",
-        "**/*.xslt",
-        "**/*.plist",
-        "**/*.axml",
-        "**/*.xaml",
-        "**/*.config",
-        "**/*.resx",
-        "**/*.csproj",
-        "**/*.vbproj",
+        '**/*.xml',
+        '**/*.svg',
+        '**/*.xhtml',
+        '**/*.xsd',
+        '**/*.xsl',
+        '**/*.xslt',
+        '**/*.plist',
+        '**/*.axml',
+        '**/*.xaml',
+        '**/*.config',
+        '**/*.resx',
+        '**/*.csproj',
+        '**/*.vbproj',
       ],
       options: {
-        parser: "xml",
+        parser: 'xml',
       },
     },
   ],
 };
 
-export default config;
+export default spellbookxConfig;
