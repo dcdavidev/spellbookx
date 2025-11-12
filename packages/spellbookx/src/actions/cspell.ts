@@ -3,6 +3,10 @@ import { spawnSync } from 'child_process';
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import path from 'path';
 import { resolvePackageManager } from '../helpers/resolve-package-manager.js';
+import {
+  dependencies,
+  globalDependencies,
+} from 'cspell-config-spellbookx/dependencies';
 
 export function actionCspell() {
   console.log(chalk.yellow('Initializing cspell configuration...'));
@@ -11,43 +15,33 @@ export function actionCspell() {
 
   console.log(chalk.green(`Using ${pm} as the package manager.`));
 
-  // Packages to install globally
-  const globalPackages = ['cspell'];
-
-  // Packages to install as dev dependencies
-  const devPackages = [
-    'cspell',
-    '@cspell/cspell-types',
-    'cspell-config-spellbookx',
-  ];
-
   // Determine install commands based on package manager
   let globalAddCmd: string[];
   let devAddCmd: string[];
 
   switch (pm) {
     case 'pnpm':
-      globalAddCmd = ['add', '-g', ...globalPackages];
-      devAddCmd = ['add', '-D', ...devPackages];
+      globalAddCmd = ['add', '-g', ...globalDependencies];
+      devAddCmd = ['add', '-D', ...dependencies];
       break;
     case 'yarn':
-      globalAddCmd = ['global', 'add', ...globalPackages];
-      devAddCmd = ['add', '-D', ...devPackages];
+      globalAddCmd = ['global', 'add', ...globalDependencies];
+      devAddCmd = ['add', '-D', ...dependencies];
       break;
     case 'bun':
-      globalAddCmd = ['add', '-g', ...globalPackages];
-      devAddCmd = ['add', '-D', ...devPackages];
+      globalAddCmd = ['add', '-g', ...globalDependencies];
+      devAddCmd = ['add', '-D', ...dependencies];
       break;
     case 'npm':
     default:
-      globalAddCmd = ['install', '-g', ...globalPackages];
-      devAddCmd = ['install', '-D', ...devPackages];
+      globalAddCmd = ['install', '-g', ...globalDependencies];
+      devAddCmd = ['install', '-D', ...dependencies];
       break;
   }
 
   // Install global packages
   console.log(
-    chalk.cyan(`\nInstalling global packages: ${globalPackages.join(', ')}`)
+    chalk.cyan(`\nInstalling global packages: ${globalDependencies.join(', ')}`)
   );
   const globalResult = spawnSync(pm, globalAddCmd, {
     stdio: 'inherit',
@@ -72,7 +66,7 @@ export function actionCspell() {
 
   // Install dev dependencies
   console.log(
-    chalk.cyan(`\nInstalling dev dependencies: ${devPackages.join(', ')}`)
+    chalk.cyan(`\nInstalling dev dependencies: ${dependencies.join(', ')}`)
   );
   const devResult = spawnSync(pm, devAddCmd, {
     stdio: 'inherit',

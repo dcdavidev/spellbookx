@@ -1,6 +1,3 @@
-import fs from 'node:fs';
-import { fileURLToPath } from 'node:url';
-
 import type { ESLint, Linter } from 'eslint';
 
 import configCSpell from './configs/cspell.js';
@@ -16,29 +13,10 @@ import configRecommendedNoSpellCheck from './configs/recommended/no-spellcheck.j
 import configRecommendedNoSpellCheckReact from './configs/recommended/no-spellcheck-react.js';
 import configRecommendedReact from './configs/recommended/react.js';
 import configRecommended from './configs/recommended/recommended.js';
+import type { SbxESLintConfig } from './types.js';
+import { packageJson } from './helpers.js';
 
-type ConfigName =
-  | 'ignores'
-  | 'javascript'
-  | 'react'
-  | 'json'
-  | 'markdown'
-  | 'cspell'
-  | 'prettier'
-  | 'recommended'
-  | 'recommended-astro'
-  | 'recommended-react'
-  | 'recommended-no-spellcheck'
-  | 'recommended-no-spellcheck-astro'
-  | 'recommended-no-spellcheck-react';
-
-const packagePath = fileURLToPath(new URL('../package.json', import.meta.url));
-const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8')) as {
-  name: string;
-  version: string;
-};
-
-const configs: Record<ConfigName, Linter.Config[]> = {
+const configs: Record<SbxESLintConfig, Linter.Config[]> = {
   // global ignores
   ignores: configIgnores,
 

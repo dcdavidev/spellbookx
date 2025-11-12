@@ -5,6 +5,7 @@ export const words = [
   'chackra',
   'codacy',
   'criscito',
+  'czrc',
   'dcdavidev',
   'davide',
   'distros',

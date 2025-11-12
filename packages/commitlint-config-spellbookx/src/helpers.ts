@@ -4,6 +4,15 @@ import path from 'node:path';
 import fg from 'fast-glob';
 import { load } from 'js-yaml';
 
+import { fileURLToPath } from 'node:url';
+
+const packagePath = fileURLToPath(new URL('../package.json', import.meta.url));
+export const packageJson = JSON.parse(readFileSync(packagePath, 'utf8')) as {
+  name: string;
+  version: string;
+  peerDependencies: Record<string, string>;
+};
+
 /**
  * Reads workspace paths from configuration files (JSON or YAML).
  * @param configPath The path to the config file (e.g., package.json, pnpm-workspace.yaml).

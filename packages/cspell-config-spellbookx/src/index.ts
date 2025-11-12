@@ -1,23 +1,13 @@
-import { readFileSync } from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-import { CSpellSettings } from 'cspell';
+import type { CSpellSettings } from '@cspell/cspell-types';
 
 import { ignorePaths } from './ignore-paths.js';
 import { words } from './words.js';
+import { packageJson } from './helpers.js';
 
-const $filename = fileURLToPath(import.meta.url);
-const $dirname = path.dirname($filename);
-
-const pkg = JSON.parse(
-  readFileSync(path.join($dirname, '..', 'package.json'), 'utf8')
-);
-
-export default {
+export const config: CSpellSettings = {
   version: '0.2',
 
-  name: pkg.name, // The name of this config
+  name: packageJson.name, // The name of this config
 
   enabled: true,
   enableGlobDot: true,
@@ -63,4 +53,6 @@ export default {
   ],
 
   words: words,
-} satisfies CSpellSettings;
+};
+
+export default config;

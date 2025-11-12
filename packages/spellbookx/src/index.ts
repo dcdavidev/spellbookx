@@ -1,22 +1,15 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { fileURLToPath } from 'node:url';
-import fs from 'node:fs';
 import { actionCommitlint } from './actions/commitlint.js';
 import { actionCspell } from './actions/cspell.js';
-
-const packagePath = fileURLToPath(new URL('../package.json', import.meta.url));
-const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8')) as {
-  name: string;
-  version: string;
-};
+import { packageJson } from './helpers/package-json.js';
 
 const sbx = new Command();
 
 // Initialize CLI
 sbx
-  .name('spellbookx')
+  .name(packageJson.name)
   .alias('sbx')
   .description('🔮 A magical CLI for enchanting your development workflow')
   .version(packageJson.version);
@@ -35,7 +28,7 @@ init
 // Command init cspell
 init
   .command('cspell')
-  .description('Initialize cspell configuration')
+  .description('Initialize CSpell configuration')
   .action(actionCspell);
 
 // Parse arguments
