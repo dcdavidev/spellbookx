@@ -87,7 +87,7 @@ bun add -D prettier prettier-config-spellbookx
 
 ## Usage
 
-Create a `.prettierrc.mjs` file at your project root.
+Create a `prettier.config.mjs` file at your project root.
 
 There are two convenient ways to consume this package. The package exposes both:
 
@@ -96,7 +96,7 @@ There are two convenient ways to consume this package. The package exposes both:
 
 Named-export example (recommended):
 
-```js
+```ts
 import { base } from 'prettier-config-spellbookx';
 
 /**

@@ -10,7 +10,7 @@
     "lint": "pnpm dlx eslint --fix .",
     "lint:fmt": "pnpm run lint && pnpm run fmt",
     "prepare": "lefthook install",
-    "release": "pnpm dlx nx release --yes"
+    "release": "pnpm dlx nx release --yes --verbose"
   },
   "config": {
     "commitizen": {

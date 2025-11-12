@@ -3,6 +3,7 @@
 import { Command } from 'commander';
 import { actionCommitlint } from './actions/commitlint.js';
 import { actionCspell } from './actions/cspell.js';
+import { actionPrettier } from './actions/prettier.js';
 import { packageJson } from './helpers/package-json.js';
 
 const sbx = new Command();
@@ -30,6 +31,12 @@ init
   .command('cspell')
   .description('Initialize CSpell configuration')
   .action(actionCspell);
+
+// Command init prettier
+init
+  .command('prettier')
+  .description('Initialize Prettier configuration')
+  .action(actionPrettier);
 
 // Parse arguments
 sbx.parse(process.argv);
