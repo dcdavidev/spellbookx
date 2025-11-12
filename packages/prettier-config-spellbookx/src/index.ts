@@ -1,6 +1,6 @@
 import type { Config } from 'prettier';
 
-type ConfigName =
+export type PrettierSbxConfigs =
   | 'base'
   | 'astro'
   | 'astro-prisma'
@@ -21,7 +21,7 @@ import {
   astroPrismaTailwind,
 } from './configs/index.js';
 
-const configs: Record<ConfigName, Config> = {
+const configs: Record<PrettierSbxConfigs, Config> = {
   base: base,
   astro: astro,
   'astro-prisma': astroPrisma,
