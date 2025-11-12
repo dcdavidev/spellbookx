@@ -23,11 +23,6 @@ const configAstro: Linter.Config[] = defineConfig([
   // --- Astro ---
   {
     files: [
-      '*.astro',
-      '*.astro/*.js',
-      '*.astro/*.ts',
-      '*.astro/*.jsx',
-      '*.astro/*.tsx',
       '**/*.astro',
       '**/*.astro/*.js',
       '**/*.astro/*.ts',
@@ -38,15 +33,14 @@ const configAstro: Linter.Config[] = defineConfig([
       import: importPlugin,
       prettier: prettierPlugin,
       'simple-import-sort': simpleImportSort,
-      astro,
     },
     extends: [
       js.configs.recommended,
       ...tseslint.configs.recommended,
+      ...astro.configs['flat/recommended'],
       eslintReact.configs['recommended-typescript'],
       nodeDependencies.configs['flat/recommended'],
       unicorn.configs.recommended,
-      astro.configs['flat/all'],
     ],
     languageOptions: {
       sourceType: 'module',
