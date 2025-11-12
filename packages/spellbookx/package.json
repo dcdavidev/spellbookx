@@ -42,6 +42,7 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
+    "sbx": "./dist/index.js",
     "spellbookx": "./dist/index.js"
   },
   "dependencies": {

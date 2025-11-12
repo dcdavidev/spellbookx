@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import { spawnSync } from 'child_process';
 import { writeFileSync, readFileSync } from 'fs';
 import path from 'path';
-import { resolvePackageManager } from 'src/helpers/resolve-package-manager.js';
+import { resolvePackageManager } from '../helpers/resolve-package-manager.js';
 
 export function actionCommitlint() {
   console.log(chalk.yellow('Initializing commitlint configuration...'));
