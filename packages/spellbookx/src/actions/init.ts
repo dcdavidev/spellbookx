@@ -5,98 +5,67 @@ import { actionPrettier } from './prettier.js';
 import { actionEslint } from './eslint.js';
 import { actionVSCode } from './vscode.js';
 
-export async function actionInit() {
+function printHeader(step: string, total: string, title: string) {
   console.log(
     chalk.magenta.bold(
-      '\n========================================\n' +
-        '  Running Full Spellbookx Setup\n' +
-        '========================================\n'
+      `\n${'='.repeat(40)}\n  [${step}/${total}] ${title}\n${'='.repeat(40)}\n`
     )
   );
+}
 
+function printIntro() {
+  const divider = '='.repeat(40);
+  console.log(
+    chalk.magenta.bold(
+      `\n${divider}\n  Running Full Spellbookx Setup\n${divider}\n`
+    )
+  );
   console.log(
     chalk.cyan(
       'This will initialize all configurations in the following order:\n' +
-        '  1. Commitlint\n' +
-        '  2. CSpell\n' +
-        '  3. Prettier\n' +
-        '  4. ESLint\n' +
-        '  5. VSCode\n'
+        '  1. Commitlint\n  2. CSpell\n  3. Prettier\n  4. ESLint\n  5. VSCode\n'
     )
   );
+}
+
+function printSuccess() {
+  const divider = '='.repeat(40);
+  console.log(
+    chalk.magenta.bold(`\n${divider}\n  All Setup Complete!\n${divider}\n`)
+  );
+  const nextSteps =
+    '\nNext steps:\n' +
+    '  - Reload VSCode to apply workspace settings\n' +
+    '  - Review generated config files and adjust as needed\n' +
+    '  - Run your linters and formatters to verify setup\n';
+  console.log(
+    chalk.green(
+      '\n[done] All spellbookx configurations have been initialized successfully!'
+    )
+  );
+  console.log(chalk.cyan(nextSteps));
+}
+
+export async function actionInit() {
+  printIntro();
 
   try {
-    // Step 1: Commitlint
-    console.log(
-      chalk.magenta.bold(
-        '\n========================================\n' +
-          '  [1/5] Commitlint Setup\n' +
-          '========================================\n'
-      )
-    );
+    printHeader('1', '5', 'Commitlint Setup');
     actionCommitlint();
 
-    // Step 2: CSpell
-    console.log(
-      chalk.magenta.bold(
-        '\n========================================\n' +
-          '  [2/5] CSpell Setup\n' +
-          '========================================\n'
-      )
-    );
+    printHeader('2', '5', 'CSpell Setup');
     actionCspell();
 
-    // Step 3: Prettier
-    console.log(
-      chalk.magenta.bold(
-        '\n========================================\n' +
-          '  [3/5] Prettier Setup\n' +
-          '========================================\n'
-      )
-    );
+    printHeader('3', '5', 'Prettier Setup');
     await actionPrettier();
 
-    // Step 4: ESLint
-    console.log(
-      chalk.magenta.bold(
-        '\n========================================\n' +
-          '  [4/5] ESLint Setup\n' +
-          '========================================\n'
-      )
-    );
+    printHeader('4', '5', 'ESLint Setup');
     await actionEslint();
 
-    // Step 5: VSCode
-    console.log(
-      chalk.magenta.bold(
-        '\n========================================\n' +
-          '  [5/5] VSCode Setup\n' +
-          '========================================\n'
-      )
-    );
+    printHeader('5', '5', 'VSCode Setup');
     actionVSCode();
 
-    // Final success message
-    console.log(
-      chalk.magenta.bold(
-        '\n========================================\n' +
-          '  All Setup Complete!\n' +
-          '========================================\n'
-      )
-    );
-    console.log(
-      chalk.green(
-        '\n[done] All spellbookx configurations have been initialized successfully!'
-      )
-    );
-    console.log(
-      chalk.cyan(
-        '\nNext steps:\n' +
-          '  - Reload VSCode to apply workspace settings\n' +
-          '  - Review generated config files and adjust as needed\n' +
-          '  - Run your linters and formatters to verify setup\n'
-      )
-    );
+    printSuccess();
   } catch (error) {
     console.error(
       chalk.red(
