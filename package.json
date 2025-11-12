@@ -17,7 +17,7 @@
     }
   },
   "dependencies": {
-    "commander": "^12.1.0"
+    "commander": "^14.0.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
@@ -28,10 +28,10 @@
     "@swc-node/register": "~1.11.1",
     "@swc/core": "~1.15.1",
     "@swc/helpers": "~0.5.17",
-    "@types/node": "24.10.0",
+    "@types/node": "24.10.1",
     "commitizen": "^4.3.1",
     "commitlint-config-spellbookx": "workspace:*",
-    "cspell": "^9.3.0",
+    "cspell": "^9.3.1",
     "cspell-config-spellbookx": "workspace:*",
     "cz-git": "^1.12.0",
     "eslint": "^9.39.1",

@@ -50,9 +50,7 @@ export function actionCommitlint() {
 
   // Install global packages
   console.log(
-    chalk.cyan(
-      `\nInstalling global packages: ${globalPackages.path.join(', ')}`
-    )
+    chalk.cyan(`\nInstalling global packages: ${globalPackages.join(', ')}`)
   );
   const globalResult = spawnSync(pm, globalAddCmd, {
     stdio: 'inherit',
@@ -77,7 +75,7 @@ export function actionCommitlint() {
 
   // Install dev dependencies
   console.log(
-    chalk.cyan(`\nInstalling dev dependencies: ${devPackages.path.join(', ')}`)
+    chalk.cyan(`\nInstalling dev dependencies: ${devPackages.join(', ')}`)
   );
   const devResult = spawnSync(pm, devAddCmd, {
     stdio: 'inherit',
