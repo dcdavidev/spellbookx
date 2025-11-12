@@ -2,6 +2,25 @@
   "name": "cspell-config-spellbookx",
   "version": "0.0.1",
   "private": false,
+  "description": "Shared cspell (spell checker) configuration for SpellbookX",
+  "keywords": [
+    "cspell",
+    "spellchecker",
+    "spellcheck",
+    "cspell-config",
+    "spellbookx"
+  ],
+  "homepage": "https://github.com/dcdavidev/spellbookx#readme",
+  "bugs": {
+    "url": "https://github.com/dcdavidev/spellbookx/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcdavidev/spellbookx.git",
+    "directory": "packages/cspell-config-spellbookx"
+  },
+  "license": "MIT",
+  "author": "Davide Di Criscito",
   "type": "module",
   "exports": {
     "./package.json": "./package.json",

@@ -2,6 +2,26 @@
   "name": "prettier-config-spellbookx",
   "version": "0.0.1",
   "private": false,
+  "description": "Shared Prettier configuration for JS/TS/Markdown/TOML/Prisma and more",
+  "keywords": [
+    "prettier",
+    "prettier-config",
+    "formatting",
+    "spellbookx",
+    "config",
+    "prettier-plugin"
+  ],
+  "homepage": "https://github.com/dcdavidev/spellbookx#readme",
+  "bugs": {
+    "url": "https://github.com/dcdavidev/spellbookx/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcdavidev/spellbookx.git",
+    "directory": "packages/prettier-config-spellbookx"
+  },
+  "license": "MIT",
+  "author": "Davide Di Criscito",
   "type": "module",
   "exports": {
     "./package.json": "./package.json",

@@ -1,6 +1,6 @@
 # prettier-config-spellbookx
 
-Shared Prettier configuration — harmonizing code and text formatting across JS, TS, Markdown, YAML, TOML, Prisma, and shell scripts.  
+Shared Prettier configuration - harmonizing code and text formatting across JS, TS, Markdown, YAML, TOML, Prisma, and shell scripts.  
 Clean. Opinionated. Always consistent.
 
 ---
@@ -18,15 +18,15 @@ Clean. Opinionated. Always consistent.
 ## Features
 
 - **Plugins**
-  - [`prettier-plugin-sh`](https://github.com/un-ts/prettier/tree/master/packages/prettier-plugin-sh) → Formats shell scripts (`.sh`).
-  - [`prettier-plugin-toml`](https://github.com/bd82/toml-tools/tree/master/packages/prettier-plugin-toml) → Formats `.toml` files.
-  - [`prettier-plugin-ini`](https://github.com/kddnewton/prettier-plugin-ini) → Formats `.ini` files.
-  - [`prettier-plugin-packagejson`](https://github.com/matzkoh/prettier-plugin-packagejson) → Formats `package.json` files.
-  - [`prettier-plugin-properties`](https://github.com/eemeli/prettier-plugin-properties) → Formats `.properties` files.
-  - [`prettier-plugin-prisma`](https://github.com/omar-dulaimi/prettier-plugin-prisma) → Formats Prisma schema files.
-  - [`prettier-plugin-astro`](https://github.com/withastro/prettier-plugin-astro) → Formats `.astro` files.
-  - [`@prettier/plugin-xml`](https://github.com/prettier/plugin-xml) → Formats `.xml` files.
-  - [`prettier-plugin-tailwindcss`](https://github.com/tailwindlabs/prettier-plugin-tailwindcss) → Formats `.css` files.
+  - [`prettier-plugin-sh`](https://github.com/un-ts/prettier/tree/master/packages/prettier-plugin-sh) -> Formats shell scripts (`.sh`).
+  - [`prettier-plugin-toml`](https://github.com/bd82/toml-tools/tree/master/packages/prettier-plugin-toml) -> Formats `.toml` files.
+  - [`prettier-plugin-ini`](https://github.com/kddnewton/prettier-plugin-ini) -> Formats `.ini` files.
+  - [`prettier-plugin-packagejson`](https://github.com/matzkoh/prettier-plugin-packagejson) -> Formats `package.json` files.
+  - [`prettier-plugin-properties`](https://github.com/eemeli/prettier-plugin-properties) -> Formats `.properties` files.
+  - [`prettier-plugin-prisma`](https://github.com/omar-dulaimi/prettier-plugin-prisma) -> Formats Prisma schema files.
+  - [`prettier-plugin-astro`](https://github.com/withastro/prettier-plugin-astro) -> Formats `.astro` files.
+  - [`@prettier/plugin-xml`](https://github.com/prettier/plugin-xml) -> Formats `.xml` files.
+  - [`prettier-plugin-tailwindcss`](https://github.com/tailwindlabs/prettier-plugin-tailwindcss) -> Formats `.css` files.
 
 - **Base Style Rules**
   - Trailing commas: `es5`
@@ -36,8 +36,9 @@ Clean. Opinionated. Always consistent.
   - Print width: `80`
   - End of line: `lf`
 
-- **File-specific Overrides**
-  - **TOML (`.toml`)** → Uses wider `printWidth` of 100 characters.
+-- **File-specific Overrides**
+
+- **TOML (`.toml`)** -> Uses wider `printWidth` of 100 characters.
 
 ---
 
@@ -52,10 +53,21 @@ or
 
 ```bash
 pnpm add -g prettier
-pnpm add -D prettier prettier-config-spellbookx prettier-plugin-astro prettier-plugin-sh prettier-plugin-toml prettier-plugin-ini prettier-plugin-packagejson prettier-plugin-properties prettier-plugin-prisma @prettier/plugin-xml prettier-plugin-tailwindcss
+pnpm add -D prettier prettier-config-spellbookx
 ```
 
-Unluckly with pnpm you have to manually install all prettier dependencies.
+With pnpm you may still need to install Prettier plugins or peer dependencies manually in some workspaces. If you prefer installing plugins together, add them explicitly (examples below).
+
+Example: install Prettier, this config package and the common Prettier plugins used by the package in one command:
+
+```bash
+pnpm add -D prettier prettier-config-spellbookx \
+  prettier-plugin-astro prettier-plugin-sh prettier-plugin-toml \
+  prettier-plugin-ini prettier-plugin-packagejson prettier-plugin-properties \
+  prettier-plugin-prisma @prettier/plugin-xml prettier-plugin-tailwindcss
+```
+
+If your workspace already provides `prettier` globally or as a dependency, you can omit it from the command above.
 
 or
 
@@ -75,20 +87,52 @@ bun add -D prettier prettier-config-spellbookx
 
 ## Usage
 
-Create a `.prettierrc.mjs` file at your project root:
+Create a `.prettierrc.mjs` file at your project root.
+
+There are two convenient ways to consume this package. The package exposes both:
+
+- named exports for each preset (recommended), and
+- a default export which is an object that contains all presets as properties.
+
+Named-export example (recommended):
 
 ```js
-import spellbookx from "prettier-config-spellbookx";
+import { base } from 'prettier-config-spellbookx';
 
 /**
  * @type {import("prettier").Config}
  */
 const config = {
-  ...spellbookx.configs.base,
+  ...base,
 };
 
 export default config;
 ```
+
+Default-export example (all presets available as properties):
+
+```js
+import presets from 'prettier-config-spellbookx';
+
+/**
+ * @type {import("prettier").Config}
+ */
+const config = {
+  ...presets.base,
+};
+
+export default config;
+```
+
+Available preset names (all exported as named exports and as keys on the default export):
+
+- `base`
+- `astro`
+- `astro-prisma` (named export: `astroPrisma`)
+- `astro-tailwind` (named export: `astroTailwind`)
+- `astro-prisma-tailwind` (named export: `astroPrismaTailwind`)
+
+Note: the package ships ESM entry points and bundled TypeScript types. It also includes several Prettier plugins as dependencies; Prettier itself remains a peer dependency (see `package.json`).
 
 ### Editor integration
 

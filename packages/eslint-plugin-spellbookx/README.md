@@ -1,4 +1,4 @@
-# @spellbookx/eslint-plugin
+# eslint-plugin-spellbookx
 
 This plugin offers a unified, modern ESLint Flat Config setup to reduce configuration overhead while enforcing best practices, clean code, and maintainable project structures for modern JavaScript, TypeScript, and React projects.
 
@@ -18,35 +18,35 @@ This plugin offers a unified, modern ESLint Flat Config setup to reduce configur
 
 ```bash
 npm install -g eslint
-npm install -D eslint @spellbookx/eslint-plugin
+npm install -D eslint eslint-plugin-spellbookx
 ```
 
 or
 
 ```bash
 pnpm add -g eslint
-pnpm add -D eslint @spellbookx/eslint-plugin
+pnpm add -D eslint eslint-plugin-spellbookx
 ```
 
 or
 
 ```bash
 yarn global add eslint
-yarn add -D eslint @spellbookx/eslint-plugin
+yarn add -D eslint eslint-plugin-spellbookx
 ```
 
 or
 
 ```bash
 bun add -g eslint
-bun add -D eslint @spellbookx/eslint-plugin
+bun add -D eslint eslint-plugin-spellbookx
 ```
 
 Then use Flat Config by importing the desired configurations:
 
 ```js
 // eslint.config.js
-import spellbookx from '@spellbookx/eslint-plugin';
+import spellbookx from 'eslint-plugin-spellbookx';
 
 export default [...spellbookx.configs.recommended];
 ```
@@ -79,7 +79,7 @@ export default [...spellbookx.configs.recommended];
 
 ```js
 // eslint.config.js
-import spellbookx from '@spellbookx/eslint-plugin';
+import spellbookx from 'eslint-plugin-spellbookx';
 
 export default [...spellbookx.configs.recommended];
 ```
@@ -87,7 +87,7 @@ export default [...spellbookx.configs.recommended];
 ### React / TSX
 
 ```js
-import spellbookx from '@spellbookx/eslint-plugin';
+import spellbookx from 'eslint-plugin-spellbookx';
 
 export default [...spellbookx.configs['recommended-react']];
 ```
@@ -95,7 +95,7 @@ export default [...spellbookx.configs['recommended-react']];
 ### Astro / React / TSX
 
 ```js
-import spellbookx from '@spellbookx/eslint-plugin';
+import spellbookx from 'eslint-plugin-spellbookx';
 
 export default [...spellbookx.configs['recommended-astro']];
 ```
@@ -103,7 +103,7 @@ export default [...spellbookx.configs['recommended-astro']];
 ### JSON / Package Files
 
 ```js
-import spellbookx from '@spellbookx/eslint-plugin';
+import spellbookx from 'eslint-plugin-spellbookx';
 
 export default [...spellbookx.configs.json];
 ```
@@ -111,7 +111,7 @@ export default [...spellbookx.configs.json];
 ### Markdown with Embedded Code
 
 ```js
-import spellbookx from '@spellbookx/eslint-plugin';
+import spellbookx from 'eslint-plugin-spellbookx';
 
 export default [...spellbookx.configs.markdown];
 ```
@@ -119,19 +119,19 @@ export default [...spellbookx.configs.markdown];
 ### Disabling Spell Checker
 
 ```js
-import spellbookx from '@spellbookx/eslint-plugin';
+import spellbookx from 'eslint-plugin-spellbookx';
 
 export default [...spellbookx.configs['recommended-no-spellcheck']];
 ```
 
 ```js
-import spellbookx from '@spellbookx/eslint-plugin';
+import spellbookx from 'eslint-plugin-spellbookx';
 
 export default [...spellbookx.configs['recommended-no-spellcheck-astro']];
 ```
 
 ```js
-import spellbookx from '@spellbookx/eslint-plugin';
+import spellbookx from 'eslint-plugin-spellbookx';
 
 export default [...spellbookx.configs['recommended-no-spellcheck-react']];
 ```

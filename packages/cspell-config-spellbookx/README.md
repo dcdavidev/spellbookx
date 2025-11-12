@@ -1,6 +1,6 @@
-# @spellbookx/cspell-config
+# cspell-config-spellbookx
 
-Shared configuration for [CSpell](https://cspell.org) — tuned for polyglot monorepos (Node, Rust, Go, Python, and more).  
+Shared configuration for [CSpell](https://cspell.org) - tuned for polyglot monorepos (Node, Rust, Go, Python, and more).  
 Clean. Opinionated. No junk, no false positives.
 
 ---
@@ -35,28 +35,28 @@ Clean. Opinionated. No junk, no false positives.
 
 ```bash
 npm install -g cspell
-npm install -D cspell @cspell/cspell-types @spellbookx/cspell-config
+npm install -D cspell @cspell/cspell-types cspell-config-spellbookx
 ```
 
 or
 
 ```bash
 pnpm add -g cspell
-pnpm add -D cspell @cspell/cspell-types @spellbookx/cspell-config
+pnpm add -D cspell @cspell/cspell-types cspell-config-spellbookx
 ```
 
 or
 
 ```bash
 yarn global add cspell
-yarn add -D cspell @cspell/cspell-types @spellbookx/cspell-config
+yarn add -D cspell @cspell/cspell-types cspell-config-spellbookx
 ```
 
 or
 
 ```bash
 bun add -g cspell
-bun add -D cspell @cspell/cspell-types @spellbookx/cspell-config
+bun add -D cspell @cspell/cspell-types cspell-config-spellbookx
 ```
 
 ---
@@ -77,7 +77,7 @@ const { defineConfig } = require('@cspell/cspell-types');
 
 module.exports = defineConfig({
   version: '0.2',
-  import: ['@spellbookx/cspell-config'],
+  import: ['cspell-config-spellbookx'],
   words: [],
   dictionaryDefinitions: [
     {
@@ -93,7 +93,7 @@ module.exports = defineConfig({
 Then, run:
 
 ```bash
-npx cspell lint "**/*.{ts,js,tsx,jsx,md}"
+npx cspell lint '**/*.{ts,js,tsx,jsx,md}'
 ```
 
 or integrate with Nx, Husky, Lefthook, or your CI.
@@ -102,7 +102,7 @@ or integrate with Nx, Husky, Lefthook, or your CI.
 
 ## Development
 
-If you're contributing inside the monorepo:
+If you are contributing inside the monorepo:
 
 ```bash
 nx run cspell-config:build

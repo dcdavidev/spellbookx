@@ -2,6 +2,25 @@
   "name": "eslint-plugin-spellbookx",
   "version": "0.0.1",
   "private": false,
+  "description": "Shared ESLint plugin and configs tuned for the SpellbookX monorepo and common JS/TS frameworks.",
+  "keywords": [
+    "eslint",
+    "eslint-plugin",
+    "lint",
+    "spellbookx",
+    "eslint-config"
+  ],
+  "homepage": "https://github.com/dcdavidev/spellbookx#readme",
+  "bugs": {
+    "url": "https://github.com/dcdavidev/spellbookx/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcdavidev/spellbookx.git",
+    "directory": "packages/eslint-plugin-spellbookx"
+  },
+  "license": "MIT",
+  "author": "Davide Di Criscito",
   "type": "module",
   "exports": {
     "./package.json": "./package.json",

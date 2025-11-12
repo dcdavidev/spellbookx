@@ -1,6 +1,6 @@
-# @spellbookx/commitlint-config
+## commitlint-config-spellbookx
 
-Shared Commitlint configuration — standardizing commit message formatting across JS/TS projects.  
+Shared Commitlint configuration - standardizing commit message formatting across JS/TS projects.  
 Conventional commits, interactive prompts, and multi-scope support included.  
 Clean. Opinionated. Always consistent.
 
@@ -23,17 +23,28 @@ Clean. Opinionated. Always consistent.
 - **Base Rules**
   - Enforces [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) style.
   - Supported commit types:
-    - `feat` → A new feature
-    - `fix` → A bug fix
-    - `docs` → Documentation only changes
-    - `style` → Code style changes without functional impact
-    - `refactor` → Code refactoring (no feature or fix)
-    - `perf` → Performance improvements
-    - `test` → Adding or correcting tests
-    - `build` → Changes affecting the build system or dependencies
-    - `ci` → Changes to CI configuration
-    - `chore` → Miscellaneous chores
-    - `revert` → Reverts a previous commit
+    - `feat` -> A new feature
+    - `fix` -> A bug fix
+    - `docs` -> Documentation only changes
+    - `style` -> Code style changes without functional impact
+    - `refactor` -> Code refactoring (no feature or fix)
+    - `perf` -> Performance improvements
+    - `test` -> Adding or correcting tests
+    - `build` -> Changes affecting the build system or dependencies
+    - `ci` -> Changes to CI configuration
+    - `chore` -> Miscellaneous chores
+    - `revert` -> Reverts a previous commit
+  - `feat` -> A new feature
+  - `fix` -> A bug fix
+  - `docs` -> Documentation only changes
+  - `style` -> Code style changes without functional impact
+  - `refactor` -> Code refactoring (no feature or fix)
+  - `perf` -> Performance improvements
+  - `test` -> Adding or correcting tests
+  - `build` -> Changes affecting the build system or dependencies
+  - `ci` -> Changes to CI configuration
+  - `chore` -> Miscellaneous chores
+  - `revert` -> Reverts a previous commit
   - Enforces:
     - Scope case: `kebab-case`
     - Subject cannot be empty
@@ -62,28 +73,28 @@ Clean. Opinionated. Always consistent.
 
 ```bash
 npm install -g commitizen cz-git
-npm install -D commitizen cz-git conventional-changelog-conventionalcommits @commitlint/cli @commitlint/config-conventional @spellbookx/commitlint-config
+npm install -D commitizen cz-git conventional-changelog-conventionalcommits @commitlint/cli @commitlint/config-conventional commitlint-config-spellbookx
 ```
 
 or
 
 ```bash
 pnpm add -g commitizen cz-git
-pnpm add -D commitizen cz-git conventional-changelog-conventionalcommits @commitlint/cli @commitlint/config-conventional @spellbookx/commitlint-config
+pnpm add -D commitizen cz-git conventional-changelog-conventionalcommits @commitlint/cli @commitlint/config-conventional commitlint-config-spellbookx
 ```
 
 or
 
 ```bash
 yarn global add commitizen cz-git
-yarn add -D commitizen cz-git conventional-changelog-conventionalcommits @commitlint/cli @commitlint/config-conventional @spellbookx/commitlint-config
+yarn add -D commitizen cz-git conventional-changelog-conventionalcommits @commitlint/cli @commitlint/config-conventional commitlint-config-spellbookx
 ```
 
 or
 
 ```bash
 bun add -g commitizen cz-git
-bun add -D commitizen cz-git conventional-changelog-conventionalcommits @commitlint/cli @commitlint/config-conventional @spellbookx/commitlint-config
+bun add -D commitizen cz-git conventional-changelog-conventionalcommits @commitlint/cli @commitlint/config-conventional commitlint-config-spellbookx
 ```
 
 ---
@@ -94,7 +105,7 @@ Create a `commitlint.config.mjs` file at your project root:
 
 ```ts
 export default {
-  extends: ['@spellbookx/commitlint-config'],
+  extends: ['commitlint-config-spellbookx'],
 };
 ```
 
