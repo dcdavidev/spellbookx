@@ -14,6 +14,10 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
   "dependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
@@ -29,8 +33,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "nx": {
-    "name": "commitlint-config"
   }
 }

@@ -1,8 +1,8 @@
-import spellbookx from "prettier-config-spellbookx";
-import type { Config } from "prettier";
+import spellbookx from 'prettier-config-spellbookx';
+import type { Config } from 'prettier';
 
 const config: Config = {
-  ...spellbookx,
+  ...spellbookx.base,
 };
 
 export default config;

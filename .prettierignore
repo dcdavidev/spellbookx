@@ -9,4 +9,6 @@
 
 **/dist/
 **/node_modules/
-*lock.*
+**/*LICENSE*
+**/*lock.*
+**/*.tsbuildinfo
