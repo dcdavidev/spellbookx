@@ -6,12 +6,24 @@ Crafting magical developer toolchains, automation, environments, and wizards for
 
 ## Table of Contents
 
-- [Packages](#packages)
+- [Cli - The Familiar `spellbookx`](#cli---the-familiar-spellbookx)
+- [Packages - Spells, Charms, Enchantments & Curses](#packages---spells-charms-enchantments--curses)
 - [License](#license)
 
 ---
 
-## Packages
+## CLI - The Familiar `spellbookx`
+
+A magical CLI tool for crafting developer toolchains, automation, environments, and wizards. Built with TypeScript, Commander, Inquirer, and Chalk for an enchanting development experience.
+
+**Features:**
+
+- 📖 Grimoire of development utilities
+- ✨ Automated setup for commitlint, prettier, eslint, and more
+
+[Learn more →](./packages/spellbookx/README.md)
+
+## Packages - Spells, Charms, Enchantments & Curses
 
 This monorepo contains a small collection of shared configuration packages and plugins used across projects:
 
