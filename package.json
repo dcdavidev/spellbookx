@@ -16,6 +16,9 @@
       "path": "cz-git"
     }
   },
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@nx/js": "22.0.3",

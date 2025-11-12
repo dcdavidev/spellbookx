@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 import type { ESLint, Linter } from 'eslint';
 
@@ -31,7 +32,7 @@ type ConfigName =
   | 'recommended-no-spellcheck-astro'
   | 'recommended-no-spellcheck-react';
 
-const packagePath = new URL('../package.json', import.meta.url);
+const packagePath = fileURLToPath(new URL('../package.json', import.meta.url));
 const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8')) as {
   name: string;
   version: string;
