@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { spawnSync } from 'child_process';
-import { writeFileSync, mkdirSync, existsSync } from 'fs';
+import { writeFileSync, mkdirSync, existsSync, renameSync } from 'fs';
 import path from 'path';
 import { resolvePackageManager } from '../helpers/resolve-package-manager.js';
 import {
@@ -41,7 +41,9 @@ export function actionCspell() {
 
   // Install global packages
   console.log(
-    chalk.cyan(`\nInstalling global packages: ${globalDependencies.join(', ')}`)
+    chalk.cyan(
+      `\n[info] Installing global packages: ${globalDependencies.join(', ')}`
+    )
   );
   const globalResult = spawnSync(pm, globalAddCmd, {
     stdio: 'inherit',
@@ -51,7 +53,7 @@ export function actionCspell() {
   if (globalResult.error) {
     console.error(
       chalk.red(
-        `Failed to install global packages: ${globalResult.error.message}`
+        `[error] Failed to install global packages: ${globalResult.error.message}`
       )
     );
     process.exit(1);
@@ -62,11 +64,13 @@ export function actionCspell() {
     process.exit(1);
   }
 
-  console.log(chalk.green('✓ Global packages installed successfully.'));
+  console.log(chalk.green('[ok] Global packages installed successfully.'));
 
   // Install dev dependencies
   console.log(
-    chalk.cyan(`\nInstalling dev dependencies: ${dependencies.join(', ')}`)
+    chalk.cyan(
+      `\n[info] Installing dev dependencies: ${dependencies.join(', ')}`
+    )
   );
   const devResult = spawnSync(pm, devAddCmd, {
     stdio: 'inherit',
@@ -76,57 +80,102 @@ export function actionCspell() {
   if (devResult.error) {
     console.error(
       chalk.red(
-        `Failed to install dev dependencies: ${devResult.error.message}`
+        `[error] Failed to install dev dependencies: ${devResult.error.message}`
       )
     );
     process.exit(1);
   }
 
   if (devResult.status !== 0) {
-    console.error(chalk.red('Dev dependency installation failed.'));
+    console.error(chalk.bgRed('Dev dependency installation failed.'));
     process.exit(1);
   }
 
-  console.log(chalk.green('✓ Dev dependencies installed successfully.'));
+  console.log(chalk.green('[ok] Dev dependencies installed successfully.'));
 
   // Create .cspell directory
   const cwd = process.cwd();
   const cspellDir = path.join(cwd, '.cspell');
 
-  console.log(chalk.cyan('\nCreating .cspell directory...'));
+  console.log(chalk.cyan('\n[info] Creating .cspell directory...'));
   try {
     if (!existsSync(cspellDir)) {
       mkdirSync(cspellDir, { recursive: true });
-      console.log(chalk.green('✓ .cspell directory created successfully.'));
+      console.log(chalk.green('[ok] .cspell directory created successfully.'));
     } else {
-      console.log(chalk.yellow('⚠ .cspell directory already exists.'));
+      console.log(chalk.yellow('[warn] .cspell directory already exists.'));
     }
   } catch (error) {
-    console.error(chalk.red(`Failed to create .cspell directory: ${error}`));
+    console.error(
+      chalk.red(`[error] Failed to create .cspell directory: ${error}`)
+    );
     process.exit(1);
   }
 
   // Create custom-words.txt
   const customWordsPath = path.join(cspellDir, 'custom-words.txt');
 
-  console.log(chalk.cyan('Creating .cspell/custom-words.txt...'));
+  console.log(chalk.cyan('[info] Creating .cspell/custom-words.txt...'));
   try {
     if (!existsSync(customWordsPath)) {
       writeFileSync(customWordsPath, '', 'utf-8');
       console.log(
-        chalk.green('✓ .cspell/custom-words.txt created successfully.')
+        chalk.green('[ok] .cspell/custom-words.txt created successfully.')
       );
     } else {
-      console.log(chalk.yellow('⚠ .cspell/custom-words.txt already exists.'));
+      console.log(
+        chalk.yellow('[warn] .cspell/custom-words.txt already exists.')
+      );
     }
   } catch (error) {
     console.error(
-      chalk.red(`Failed to create .cspell/custom-words.txt: ${error}`)
+      chalk.red(`[error] Failed to create .cspell/custom-words.txt: ${error}`)
     );
     process.exit(1);
   }
 
-  // Create cspell.config.cjs
+  // Remove any other CSpell config files to avoid conflicts
+  const possibleConfigs = [
+    'cspell.json',
+    'cspell.yaml',
+    'cspell.yml',
+    '.cspell.json',
+    '.cspell.yaml',
+    '.cspell.yml',
+    'cspell.config.json',
+    'cspell.config.yaml',
+    'cspell.config.yml',
+    'cspell.config.js',
+    'cspell.config.mjs',
+  ];
+
+  console.log(
+    chalk.cyan('\n[info] Backing up other CSpell config files (if any)...')
+  );
+  for (const filename of possibleConfigs) {
+    const p = path.join(cwd, filename);
+    try {
+      if (existsSync(p)) {
+        let backupPath = `${p}.bak`;
+        if (existsSync(backupPath)) {
+          backupPath = `${p}.${Date.now()}.bak`;
+        }
+        renameSync(p, backupPath);
+        console.log(
+          chalk.yellow(
+            `[backup] Backed up ${filename} -> ${path.basename(backupPath)}`
+          )
+        );
+      }
+    } catch (error) {
+      console.error(
+        chalk.red(`[error] Failed to backup ${filename}: ${error}`)
+      );
+      // continue processing others; not fatal
+    }
+  }
+
+  // Create (or overwrite) cspell.config.cjs as the single source of truth
   const cspellConfigPath = path.join(cwd, 'cspell.config.cjs');
   const cspellConfig = `const { defineConfig } = require('@cspell/cspell-types');
 
@@ -145,20 +194,23 @@ module.exports = defineConfig({
 });
 `;
 
-  console.log(chalk.cyan('Creating cspell.config.cjs...'));
+  console.log(
+    chalk.cyan(
+      '[info] Writing cspell.config.cjs (will overwrite if present)...'
+    )
+  );
+
   try {
-    if (!existsSync(cspellConfigPath)) {
-      writeFileSync(cspellConfigPath, cspellConfig, 'utf-8');
-      console.log(chalk.green('✓ cspell.config.cjs created successfully.'));
-    } else {
-      console.log(chalk.yellow('⚠ cspell.config.cjs already exists.'));
-    }
+    writeFileSync(cspellConfigPath, cspellConfig, 'utf-8');
+    console.log(chalk.green('[ok] cspell.config.cjs written successfully.'));
   } catch (error) {
-    console.error(chalk.red(`Failed to create cspell.config.cjs: ${error}`));
+    console.error(
+      chalk.red(`[error] Failed to create cspell.config.cjs: ${error}`)
+    );
     process.exit(1);
   }
 
-  console.log(chalk.magenta('\n✨ CSpell setup complete!'));
+  console.log(chalk.magenta('\n[done] CSpell setup complete!'));
   console.log(
     chalk.cyan(
       "\nRun: npx cspell lint '**/*.{ts,js,tsx,jsx,md}' to check your files."

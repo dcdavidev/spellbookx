@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { spawnSync } from 'child_process';
 import inquirer from 'inquirer';
-import { writeFileSync, existsSync } from 'fs';
+import { writeFileSync, existsSync, renameSync } from 'fs';
 import path from 'path';
 import { resolvePackageManager } from '../helpers/resolve-package-manager.js';
 import {
@@ -9,14 +9,6 @@ import {
   globalDependencies,
 } from 'prettier-config-spellbookx/dependencies';
 import type { SbxPrettierConfig } from 'prettier-config-spellbookx/types';
-
-const PRESET_IMPORT_NAME: Record<SbxPrettierConfig, string> = {
-  base: 'base',
-  astro: 'astro',
-  'astro-prisma': 'astroPrisma',
-  'astro-tailwind': 'astroTailwind',
-  'astro-prisma-tailwind': 'astroPrismaTailwind',
-};
 
 export async function actionPrettier() {
   console.log(chalk.yellow('Initializing Prettier configuration...'));
@@ -50,7 +42,9 @@ export async function actionPrettier() {
 
   // Install global packages
   console.log(
-    chalk.cyan(`\nInstalling global packages: ${globalDependencies.join(', ')}`)
+    chalk.cyan(
+      `\n[info] Installing global packages: ${globalDependencies.join(', ')}`
+    )
   );
   const globalResult = spawnSync(pm, globalAddCmd, {
     stdio: 'inherit',
@@ -60,7 +54,7 @@ export async function actionPrettier() {
   if (globalResult.error) {
     console.error(
       chalk.red(
-        `Failed to install global packages: ${globalResult.error.message}`
+        `[error] Failed to install global packages: ${globalResult.error.message}`
       )
     );
     process.exit(1);
@@ -71,11 +65,13 @@ export async function actionPrettier() {
     process.exit(1);
   }
 
-  console.log(chalk.green('✓ Global packages installed successfully.'));
+  console.log(chalk.green('[ok] Global packages installed successfully.'));
 
   // Install dev dependencies
   console.log(
-    chalk.cyan(`\nInstalling dev dependencies: ${dependencies.join(', ')}`)
+    chalk.cyan(
+      `\n[info] Installing dev dependencies: ${dependencies.join(', ')}`
+    )
   );
   const devResult = spawnSync(pm, devAddCmd, {
     stdio: 'inherit',
@@ -85,18 +81,18 @@ export async function actionPrettier() {
   if (devResult.error) {
     console.error(
       chalk.red(
-        `Failed to install dev dependencies: ${devResult.error.message}`
+        `[error] Failed to install dev dependencies: ${devResult.error.message}`
       )
     );
     process.exit(1);
   }
 
   if (devResult.status !== 0) {
-    console.error(chalk.red('Dev dependency installation failed.'));
+    console.error(chalk.bgRed('Dev dependency installation failed.'));
     process.exit(1);
   }
 
-  console.log(chalk.green('✓ Dev dependencies installed successfully.'));
+  console.log(chalk.green('[ok] Dev dependencies installed successfully.'));
 
   // Ask user which preset to use
   const choices: { name: string; value: SbxPrettierConfig }[] = [
@@ -120,7 +116,26 @@ export async function actionPrettier() {
   // Create prettier.config.mjs
   const cwd = process.cwd();
   const prettierConfigPath = path.join(cwd, 'prettier.config.mjs');
-  const importProp = PRESET_IMPORT_NAME[preset];
+  let importProp: string;
+  switch (preset) {
+    case 'base':
+      importProp = 'base';
+      break;
+    case 'astro':
+      importProp = 'astro';
+      break;
+    case 'astro-prisma':
+      importProp = 'astroPrisma';
+      break;
+    case 'astro-tailwind':
+      importProp = 'astroTailwind';
+      break;
+    case 'astro-prisma-tailwind':
+      importProp = 'astroPrismaTailwind';
+      break;
+    default:
+      throw new Error(`Invalid Prettier preset: ${preset}`);
+  }
 
   const prettierConfig = `import spellbookx from 'prettier-config-spellbookx';
 
@@ -130,20 +145,143 @@ export default {
 };
 `;
 
-  console.log(chalk.cyan('\nCreating prettier.config.mjs...'));
+  console.log(chalk.cyan('\n[info] Creating prettier.config.mjs...'));
+
   try {
     if (!existsSync(prettierConfigPath)) {
       writeFileSync(prettierConfigPath, prettierConfig, 'utf-8');
-      console.log(chalk.green('✓ prettier.config.mjs created successfully.'));
+      console.log(chalk.green('👍 prettier.config.mjs created successfully.'));
     } else {
-      console.log(
-        chalk.yellow('⚠ prettier.config.mjs already exists. Skipped')
-      );
+      const { overwrite } = await inquirer.prompt<{
+        overwrite: boolean;
+      }>([
+        {
+          type: 'confirm',
+          name: 'overwrite',
+          message: chalk.yellow(
+            'A prettier.config.mjs already exists. Do you want to overwrite it?'
+          ),
+          default: false,
+        },
+      ]);
+
+      if (overwrite) {
+        writeFileSync(prettierConfigPath, prettierConfig, 'utf-8');
+        console.log(
+          chalk.green('[ok] prettier.config.mjs overwritten successfully.')
+        );
+      } else {
+        console.log(chalk.yellow('[warn] Kept existing prettier.config.mjs.'));
+      }
     }
   } catch (error) {
-    console.error(chalk.red(`Failed to create prettier.config.mjs: ${error}`));
+    console.error(
+      chalk.red(`[error] Failed to create prettier.config.mjs: ${error}`)
+    );
     process.exit(1);
   }
 
-  console.log(chalk.magenta('\n✨ Prettier setup complete!'));
+  console.log(chalk.magenta('\n[done] Prettier setup complete!'));
+
+  // Create or update .editorconfig with backup
+  const editorConfigPath = path.join(cwd, '.editorconfig');
+  const editorConfigBakPath = path.join(cwd, '.editorconfig.bak');
+  const editorConfigContents = `# EditorConfig is awesome: https://EditorConfig.org
+
+# Top-level EditorConfig
+root=true
+
+# Global defaults for all files
+[*]
+charset=utf-8
+end_of_line=lf
+insert_final_newline=true
+trim_trailing_whitespace=true
+indent_style=space
+indent_size=2
+
+# Astro
+[*.astro]
+indent_style=tab
+indent_size=4
+
+# Markdown fix
+[*.md]
+trim_trailing_whitespace=false
+
+# Toml
+[*.toml]
+max_line_length=100
+
+[Makefile]
+indent_style=tab
+indent_size=4
+`;
+
+  console.log(chalk.cyan('\n[info] Ensuring .editorconfig is present...'));
+  try {
+    if (existsSync(editorConfigPath)) {
+      // If a previous backup exists, rotate it with a timestamp to avoid overwrite
+      if (existsSync(editorConfigBakPath)) {
+        const ts = new Date().toISOString().replace(/[:.]/g, '-');
+        const rotated = `${editorConfigBakPath}.${ts}`;
+        renameSync(editorConfigBakPath, rotated);
+        console.log(
+          chalk.yellow(
+            `[rotate] Rotated existing .editorconfig.bak to ${path.basename(rotated)}`
+          )
+        );
+      }
+      renameSync(editorConfigPath, editorConfigBakPath);
+      console.log(
+        chalk.green(
+          '[backup] Backed up existing .editorconfig to .editorconfig.bak'
+        )
+      );
+    }
+
+    writeFileSync(editorConfigPath, editorConfigContents, 'utf-8');
+    console.log(chalk.green('[ok] .editorconfig written successfully.'));
+  } catch (error) {
+    console.error(
+      chalk.red(`[error] Failed to create/update .editorconfig: ${error}`)
+    );
+    process.exit(1);
+  }
+
+  // Create or update .prettierignore with backup
+  const prettierIgnorePath = path.join(cwd, '.prettierignore');
+  const prettierIgnoreBakPath = path.join(cwd, '.prettierignore.bak');
+  const prettierIgnoreContents = `/.astro/\n/.codacy/\n/.gemini/\n/.github/instructions/\n/.nx/\n/bun.lockb\n/czrc\n/eslint.config.mjs\n/prettier.config.mjs\n\n**/dist/\n**/node_modules/\n**/*LICENSE*\n**/*lock.*\n**/*.tsbuildinfo\n`;
+
+  console.log(chalk.cyan('\n[info] Ensuring .prettierignore is present...'));
+  try {
+    if (existsSync(prettierIgnorePath)) {
+      // Rotate old backup if present
+      if (existsSync(prettierIgnoreBakPath)) {
+        const ts = new Date().toISOString().replace(/[:.]/g, '-');
+        const rotated = `${prettierIgnoreBakPath}.${ts}`;
+        renameSync(prettierIgnoreBakPath, rotated);
+        console.log(
+          chalk.yellow(
+            `[rotate] Rotated existing .prettierignore.bak to ${path.basename(rotated)}`
+          )
+        );
+      }
+      renameSync(prettierIgnorePath, prettierIgnoreBakPath);
+      console.log(
+        chalk.green(
+          '[backup] Backed up existing .prettierignore to .prettierignore.bak'
+        )
+      );
+    }
+
+    writeFileSync(prettierIgnorePath, prettierIgnoreContents, 'utf-8');
+    console.log(chalk.green('[ok] .prettierignore written successfully.'));
+  } catch (error) {
+    console.error(
+      chalk.red(`[error] Failed to create/update .prettierignore: ${error}`)
+    );
+    process.exit(1);
+  }
 }

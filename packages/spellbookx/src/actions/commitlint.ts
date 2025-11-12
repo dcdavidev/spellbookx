@@ -42,7 +42,9 @@ export function actionCommitlint() {
 
   // Install global packages
   console.log(
-    chalk.cyan(`\nInstalling global packages: ${globalDependencies.join(', ')}`)
+    chalk.cyan(
+      `\n[info] Installing global packages: ${globalDependencies.join(', ')}`
+    )
   );
   const globalResult = spawnSync(pm, globalAddCmd, {
     stdio: 'inherit',
@@ -52,7 +54,7 @@ export function actionCommitlint() {
   if (globalResult.error) {
     console.error(
       chalk.red(
-        `Failed to install global packages: ${globalResult.error.message}`
+        `[error] Failed to install global packages: ${globalResult.error.message}`
       )
     );
     process.exit(1);
@@ -63,11 +65,13 @@ export function actionCommitlint() {
     process.exit(1);
   }
 
-  console.log(chalk.green('✓ Global packages installed successfully.'));
+  console.log(chalk.green('[ok] Global packages installed successfully.'));
 
   // Install dev dependencies
   console.log(
-    chalk.cyan(`\nInstalling dev dependencies: ${dependencies.join(', ')}`)
+    chalk.cyan(
+      `\n[info] Installing dev dependencies: ${dependencies.join(', ')}`
+    )
   );
   const devResult = spawnSync(pm, devAddCmd, {
     stdio: 'inherit',
@@ -77,18 +81,18 @@ export function actionCommitlint() {
   if (devResult.error) {
     console.error(
       chalk.red(
-        `Failed to install dev dependencies: ${devResult.error.message}`
+        `[error] Failed to install dev dependencies: ${devResult.error.message}`
       )
     );
     process.exit(1);
   }
 
   if (devResult.status !== 0) {
-    console.error(chalk.red('Dev dependency installation failed.'));
+    console.error(chalk.bgRed('Dev dependency installation failed.'));
     process.exit(1);
   }
 
-  console.log(chalk.green('✓ Dev dependencies installed successfully.'));
+  console.log(chalk.green('[ok] Dev dependencies installed successfully.'));
 
   // Create commitlint.config.mjs
   const cwd = process.cwd();
@@ -98,13 +102,15 @@ export function actionCommitlint() {
 };
 `;
 
-  console.log(chalk.cyan('\nCreating commitlint.config.mjs...'));
+  console.log(chalk.cyan('\n[info] Creating commitlint.config.mjs...'));
   try {
     writeFileSync(commitlintConfigPath, commitlintConfig, 'utf-8');
-    console.log(chalk.green('✓ commitlint.config.mjs created successfully.'));
+    console.log(
+      chalk.green('[ok] commitlint.config.mjs created successfully.')
+    );
   } catch (error) {
     console.error(
-      chalk.red(`Failed to create commitlint.config.mjs: ${error}`)
+      chalk.red(`[error] Failed to create commitlint.config.mjs: ${error}`)
     );
     process.exit(1);
   }
@@ -113,18 +119,18 @@ export function actionCommitlint() {
   const czrcPath = path.join(cwd, '.czrc');
   const czrcConfig = JSON.stringify({ path: 'cz-git' }, null, 2);
 
-  console.log(chalk.cyan('Creating .czrc...'));
+  console.log(chalk.cyan('[info] Creating .czrc...'));
   try {
     writeFileSync(czrcPath, czrcConfig, 'utf-8');
-    console.log(chalk.green('✓ .czrc created successfully.'));
+    console.log(chalk.green('[ok] .czrc created successfully.'));
   } catch (error) {
-    console.error(chalk.red(`Failed to create .czrc: ${error}`));
+    console.error(chalk.red(`[error] Failed to create .czrc: ${error}`));
     process.exit(1);
   }
 
   // Update package.json with commitizen config
   const packageJsonPath = path.join(cwd, 'package.json');
-  console.log(chalk.cyan('Updating package.json...'));
+  console.log(chalk.cyan('[info] Updating package.json...'));
   try {
     const packageJsonContent = readFileSync(packageJsonPath, 'utf-8');
     const packageJson = JSON.parse(packageJsonContent);
@@ -142,11 +148,11 @@ export function actionCommitlint() {
       JSON.stringify(packageJson, null, 2) + '\n',
       'utf-8'
     );
-    console.log(chalk.green('✓ package.json updated successfully.'));
+    console.log(chalk.green('[ok] package.json updated successfully.'));
   } catch (error) {
-    console.error(chalk.red(`Failed to update package.json: ${error}`));
+    console.error(chalk.red(`[error] Failed to update package.json: ${error}`));
     process.exit(1);
   }
 
-  console.log(chalk.magenta('\n✨ Commitlint setup complete!'));
+  console.log(chalk.magenta('\n[done] Commitlint setup complete!'));
 }
