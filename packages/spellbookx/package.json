@@ -1,6 +1,6 @@
 {
   "name": "spellbookx",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": false,
   "description": "A magical CLI for crafting developer toolchains, automation, environments, and wizards",
   "keywords": [
