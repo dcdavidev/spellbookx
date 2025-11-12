@@ -33,7 +33,7 @@
     "projectsRelationship": "independent",
     "version": {
       "conventionalCommits": true,
-      "preVersionCommand": "pnpm install --ignore-scripts && pnpm dlx nx run-many -t build"
+      "preVersionCommand": "pnpm install --ignore-scripts && pnpm dlx nx run-many -t build --tui=false"
     },
     "changelog": {
       "workspaceChangelog": false,
