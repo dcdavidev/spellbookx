@@ -1,61 +1,32 @@
-import type { Config } from 'prettier';
+import type { Config } from "prettier";
 
-const spellbookxConfig: Config = {
-  plugins: [
-    'prettier-plugin-astro',
-    'prettier-plugin-sh',
-    'prettier-plugin-toml',
-    'prettier-plugin-ini',
-    'prettier-plugin-packagejson',
-    'prettier-plugin-properties',
-    'prettier-plugin-prisma',
-    '@prettier/plugin-xml',
-    'prettier-plugin-tailwindcss', // must be loaded last
-  ],
+type ConfigName =
+  | "base"
+  | "astro"
+  | "astro-prisma"
+  | "astro-tailwind"
+  | "astro-prisma-tailwind";
 
-  trailingComma: 'es5',
-  tabWidth: 2,
-  semi: true,
-  singleQuote: true,
-  printWidth: 80,
-  endOfLine: 'lf',
-  bracketSpacing: true,
-  jsxBracketSameLine: false,
+export { base } from "./configs/base.js";
+export { astro } from "./configs/astro.js";
+export { astroPrisma } from "./configs/astro-prisma.js";
+export { astroTailwind } from "./configs/astro-tailwind.js";
+export { astroPrismaTailwind } from "./configs/astro-prisma-tailwind.js";
 
-  overrides: [
-    {
-      files: ['*.toml'],
-      options: {
-        printWidth: 100,
-      },
-    },
-    {
-      files: ['*.astro'],
-      options: {
-        parser: 'astro',
-      },
-    },
-    {
-      files: [
-        '**/*.xml',
-        '**/*.svg',
-        '**/*.xhtml',
-        '**/*.xsd',
-        '**/*.xsl',
-        '**/*.xslt',
-        '**/*.plist',
-        '**/*.axml',
-        '**/*.xaml',
-        '**/*.config',
-        '**/*.resx',
-        '**/*.csproj',
-        '**/*.vbproj',
-      ],
-      options: {
-        parser: 'xml',
-      },
-    },
-  ],
+import {
+  base,
+  astro,
+  astroPrisma,
+  astroTailwind,
+  astroPrismaTailwind,
+} from "./configs/index.js";
+
+const configs: Record<ConfigName, Config> = {
+  base: base,
+  astro: astro,
+  "astro-prisma": astroPrisma,
+  "astro-tailwind": astroTailwind,
+  "astro-prisma-tailwind": astroPrismaTailwind,
 };
 
-export default spellbookxConfig;
+export default configs;

@@ -1,4 +1,4 @@
-# @spellbookx/prettier-config
+# prettier-config-spellbookx
 
 Shared Prettier configuration — harmonizing code and text formatting across JS, TS, Markdown, YAML, TOML, Prisma, and shell scripts.  
 Clean. Opinionated. Always consistent.
@@ -45,14 +45,14 @@ Clean. Opinionated. Always consistent.
 
 ```bash
 npm install -g prettier
-npm install -D prettier @spellbookx/prettier-config
+npm install -D prettier prettier-config-spellbookx
 ```
 
 or
 
 ```bash
 pnpm add -g prettier
-pnpm add -D prettier @spellbookx/prettier-config prettier-plugin-astro prettier-plugin-sh prettier-plugin-toml prettier-plugin-ini prettier-plugin-packagejson prettier-plugin-properties prettier-plugin-prisma @prettier/plugin-xml prettier-plugin-tailwindcss
+pnpm add -D prettier prettier-config-spellbookx prettier-plugin-astro prettier-plugin-sh prettier-plugin-toml prettier-plugin-ini prettier-plugin-packagejson prettier-plugin-properties prettier-plugin-prisma @prettier/plugin-xml prettier-plugin-tailwindcss
 ```
 
 Unluckly with pnpm you have to manually install all prettier dependencies.
@@ -61,14 +61,14 @@ or
 
 ```bash
 yarn global add prettier
-yarn add -D prettier @spellbookx/prettier-config
+yarn add -D prettier prettier-config-spellbookx
 ```
 
 or
 
 ```bash
 bun add -g prettier
-bun add -D prettier @spellbookx/prettier-config
+bun add -D prettier prettier-config-spellbookx
 ```
 
 ---
@@ -78,13 +78,13 @@ bun add -D prettier @spellbookx/prettier-config
 Create a `.prettierrc.mjs` file at your project root:
 
 ```js
-import spellbookxConfig from '@spellbookx/prettier-config';
+import spellbookx from "prettier-config-spellbookx";
 
 /**
  * @type {import("prettier").Config}
  */
 const config = {
-  ...spellbookxConfig,
+  ...spellbookx.configs.base,
 };
 
 export default config;

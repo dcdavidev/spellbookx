@@ -1,3 +1,8 @@
-import spellboookxConfig from 'prettier-config-spellbookx';
+import spellbookx from "prettier-config-spellbookx";
+import type { Config } from "prettier";
 
-export default spellboookxConfig;
+const config: Config = {
+  ...spellbookx,
+};
+
+export default config;
