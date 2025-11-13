@@ -98,7 +98,7 @@ export function actionCommitlint() {
   const cwd = process.cwd();
   const commitlintConfigPath = path.join(cwd, 'commitlint.config.mjs');
   const commitlintConfig = `export default {
-  extends: ['commitlint-config-spellbookx'],
+  extends: ['spellbookx'],
 };
 `;
 
