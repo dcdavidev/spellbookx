@@ -1,3 +1,5 @@
+<img alt="logo" src="./images/readme-banner.png" />
+
 # spellbookx
 
 Crafting magical developer toolchains, automation, environments, and wizards for devs. This monorepo provides a collection of shared configurations and plugins for various development tools, ensuring consistency and best practices across projects.

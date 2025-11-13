@@ -2,16 +2,10 @@ import type { UserConfig } from '@commitlint/types';
 
 import { getScopes } from './helpers.js';
 
-const SCOPE_EMPTY = '';
 const SCOPE_WORKSPACE = 'workspace';
 const SCOPE_RELEASE = 'release';
 
-const scopesArray = [
-  SCOPE_EMPTY,
-  SCOPE_WORKSPACE,
-  SCOPE_RELEASE,
-  ...getScopes(),
-];
+const scopesArray = [SCOPE_WORKSPACE, SCOPE_RELEASE, ...getScopes()];
 
 const scopesEnum: Record<string, { description: string }> = {};
 
@@ -20,7 +14,6 @@ for (const scope of scopesArray) {
   let description;
 
   switch (scope) {
-    case SCOPE_EMPTY:
     case SCOPE_WORKSPACE: {
       description =
         'workspace scope - root files such as config files, root package.json, etc';
@@ -38,7 +31,12 @@ for (const scope of scopesArray) {
     }
   }
 
-  scopesEnum[scope] = { description: description };
+  Object.defineProperty(scopesEnum, scope, {
+    value: { description },
+    enumerable: true,
+    writable: true,
+    configurable: true,
+  });
 }
 
 const config: UserConfig = {
