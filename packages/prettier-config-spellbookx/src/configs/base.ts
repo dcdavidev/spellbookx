@@ -17,7 +17,6 @@ export const base: Config = {
   printWidth: 80,
   endOfLine: 'lf',
   bracketSpacing: true,
-  jsxBracketSameLine: false,
 
   overrides: [
     {

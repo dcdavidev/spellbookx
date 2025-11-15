@@ -18,7 +18,6 @@ export const astro: Config = {
   printWidth: 80,
   endOfLine: 'lf',
   bracketSpacing: true,
-  jsxBracketSameLine: false,
 
   overrides: [
     {

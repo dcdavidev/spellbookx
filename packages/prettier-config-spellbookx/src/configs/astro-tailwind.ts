@@ -19,7 +19,6 @@ export const astroTailwind: Config = {
   printWidth: 80,
   endOfLine: 'lf',
   bracketSpacing: true,
-  jsxBracketSameLine: false,
 
   overrides: [
     {
