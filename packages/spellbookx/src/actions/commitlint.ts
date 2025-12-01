@@ -1,14 +1,22 @@
-import chalk from 'chalk';
-import { spawnSync } from 'child_process';
-import { writeFileSync, readFileSync } from 'fs';
-import path from 'path';
-import { resolvePackageManager } from '../helpers/resolve-package-manager.js';
+/* eslint-disable unicorn/no-process-exit */
+import { spawnSync } from 'node:child_process';
+import { readFileSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
 
+import chalk from 'chalk';
 import {
-  globalDependencies,
   dependencies,
+  globalDependencies,
 } from 'commitlint-config-spellbookx/dependencies';
 
+import { resolvePackageManager } from '../helpers/resolve-package-manager.js';
+
+/**
+ * Initializes and configures commitlint, installs required dependencies, and updates project configuration files.
+ * @example
+ * // Run this function to set up commitlint in your project
+ * actionCommitlint();
+ */
 export function actionCommitlint() {
   console.log(chalk.yellow('Initializing commitlint configuration...'));
 
@@ -21,23 +29,26 @@ export function actionCommitlint() {
   let devAddCmd: string[];
 
   switch (pm) {
-    case 'pnpm':
+    case 'pnpm': {
       globalAddCmd = ['add', '-g', ...globalDependencies];
       devAddCmd = ['add', '-D', ...dependencies];
       break;
-    case 'yarn':
+    }
+    case 'yarn': {
       globalAddCmd = ['global', 'add', ...globalDependencies];
       devAddCmd = ['add', '-D', ...dependencies];
       break;
-    case 'bun':
+    }
+    case 'bun': {
       globalAddCmd = ['add', '-g', ...globalDependencies];
       devAddCmd = ['add', '-D', ...dependencies];
       break;
-    case 'npm':
-    default:
+    }
+    default: {
       globalAddCmd = ['install', '-g', ...globalDependencies];
       devAddCmd = ['install', '-D', ...dependencies];
       break;
+    }
   }
 
   // Install global packages
@@ -48,7 +59,7 @@ export function actionCommitlint() {
   );
   const globalResult = spawnSync(pm, globalAddCmd, {
     stdio: 'inherit',
-    shell: false,
+    shell: true,
   });
 
   if (globalResult.error) {
@@ -104,7 +115,7 @@ export function actionCommitlint() {
 
   console.log(chalk.cyan('\n[info] Creating commitlint.config.mjs...'));
   try {
-    writeFileSync(commitlintConfigPath, commitlintConfig, 'utf-8');
+    writeFileSync(commitlintConfigPath, commitlintConfig, 'utf8');
     console.log(
       chalk.green('[ok] commitlint.config.mjs created successfully.')
     );
@@ -121,7 +132,7 @@ export function actionCommitlint() {
 
   console.log(chalk.cyan('[info] Creating .czrc...'));
   try {
-    writeFileSync(czrcPath, czrcConfig, 'utf-8');
+    writeFileSync(czrcPath, czrcConfig, 'utf8');
     console.log(chalk.green('[ok] .czrc created successfully.'));
   } catch (error) {
     console.error(chalk.red(`[error] Failed to create .czrc: ${error}`));
@@ -132,7 +143,7 @@ export function actionCommitlint() {
   const packageJsonPath = path.join(cwd, 'package.json');
   console.log(chalk.cyan('[info] Updating package.json...'));
   try {
-    const packageJsonContent = readFileSync(packageJsonPath, 'utf-8');
+    const packageJsonContent = readFileSync(packageJsonPath, 'utf8');
     const packageJson = JSON.parse(packageJsonContent);
 
     // Add commitizen config
@@ -146,7 +157,7 @@ export function actionCommitlint() {
     writeFileSync(
       packageJsonPath,
       JSON.stringify(packageJson, null, 2) + '\n',
-      'utf-8'
+      'utf8'
     );
     console.log(chalk.green('[ok] package.json updated successfully.'));
   } catch (error) {

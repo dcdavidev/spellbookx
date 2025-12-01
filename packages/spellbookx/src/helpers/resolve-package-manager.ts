@@ -1,12 +1,13 @@
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 
+import chalk from 'chalk';
+
 import {
   LOCK_FILE,
   lockFileToPackageManager,
   type PackageManager,
 } from '../consts.js';
-import chalk from 'chalk';
 
 /**
  * Detects the package manager used in the given directory by checking for known lock files.

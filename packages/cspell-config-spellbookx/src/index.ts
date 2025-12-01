@@ -1,8 +1,8 @@
 import type { CSpellSettings } from '@cspell/cspell-types';
 
+import { packageJson } from './helpers.js';
 import { ignorePaths } from './ignore-paths.js';
 import { words } from './words.js';
-import { packageJson } from './helpers.js';
 
 export const config: CSpellSettings = {
   version: '0.2',

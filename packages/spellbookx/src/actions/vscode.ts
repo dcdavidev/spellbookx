@@ -1,7 +1,16 @@
-import chalk from 'chalk';
-import { writeFileSync, existsSync, renameSync, mkdirSync } from 'fs';
-import path from 'path';
+/* eslint-disable unicorn/no-process-exit */
+import { existsSync, mkdirSync, renameSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
 
+import chalk from 'chalk';
+
+/**
+ * Initializes and configures the VSCode workspace by creating or updating the .vscode directory,
+ * and writing recommended extensions and settings files with sensible defaults.
+ * @example
+ * // Run this function to set up VSCode workspace configuration:
+ * actionVSCode();
+ */
 export function actionVSCode() {
   console.log(chalk.yellow('Initializing VSCode workspace configuration...'));
 
@@ -11,11 +20,11 @@ export function actionVSCode() {
   // Create .vscode directory if it doesn't exist
   console.log(chalk.cyan('\n[info] Ensuring .vscode directory exists...'));
   try {
-    if (!existsSync(vscodeDir)) {
+    if (existsSync(vscodeDir)) {
+      console.log(chalk.yellow('[warn] .vscode directory already exists.'));
+    } else {
       mkdirSync(vscodeDir, { recursive: true });
       console.log(chalk.green('[ok] .vscode directory created successfully.'));
-    } else {
-      console.log(chalk.yellow('[warn] .vscode directory already exists.'));
     }
   } catch (error) {
     console.error(
@@ -35,9 +44,7 @@ export function actionVSCode() {
     "pkief.material-icon-theme",
     "ms-edgedevtools.vscode-edge-devtools",
     "ms-vscode-remote.remote-wsl",
-    "codacy-app.codacy",
     "streetsidesoftware.code-spell-checker",
-    "coderabbit.coderabbit-vscode",
     "joshbolduc.commitlint",
     "vivaxy.vscode-conventional-commits",
     "editorconfig.editorconfig",
@@ -47,16 +54,12 @@ export function actionVSCode() {
     "github.vscode-github-actions",
     "bierner.github-markdown-preview",
     "ecmel.vscode-html-css",
-    "visualstudioexptteam.vscodeintellicode",
     "lottiefiles.vscode-lottie",
     "motion.motion-vscode-extension",
-    "christian-kohler.npm-intellisense",
-    "christian-kohler.path-intellisense",
     "esbenp.prettier-vscode",
     "rpinski.shebang-snippets",
     "foxundermoon.shell-format",
     "timonwong.shellcheck",
-    "bradlc.vscode-tailwindcss",
     "gruntfuggly.todo-tree",
     "redhat.vscode-yaml"
   ]
@@ -172,19 +175,6 @@ export function actionVSCode() {
   "conventionalCommits.showNewVersionNotes": true,
   "conventionalCommits.storeScopesGlobally": false,
   "commitlint.log.enabled": true,
-  "npm-intellisense.importES6": true,
-  "npm-intellisense.importQuotes": "'",
-  "npm-intellisense.importDeclarationType": "const",
-  "npm-intellisense.scanDevDependencies": true,
-  "npm-intellisense.showBuildInLibs": true,
-  "npm-intellisense.recursivePackageJsonLookup": true,
-  "npm-intellisense.packageSubfoldersIntellisense": true,
-  "path-intellisense.extensionOnImport": true,
-  "path-intellisense.autoSlashAfterDirectory": true,
-  "path-intellisense.autoTriggerNextSuggestion": true,
-  "path-intellisense.showHiddenFiles": false,
-  "path-intellisense.absolutePathToWorkspace": true,
-  "path-intellisense.ignoreTsConfigBaseUrl": true,
   "typescript.suggest.paths": false,
   "javascript.suggest.paths": false,
   "exportall.config.barrelName": "index.ts",
@@ -196,8 +186,6 @@ export function actionVSCode() {
   "emojisense.markupCompletionsEnabled": true,
   "emojisense.showOnColon": true,
   "emojisense.unicodeCompletionsEnabled": true,
-  "nxConsole.generateAiAgentRules": true,
-  "coderabbit.autoReviewMode": "prompt",
   "search.exclude": {
     "**/node_modules": true,
     "**/dist": true,
@@ -300,7 +288,7 @@ export function actionVSCode() {
     if (existsSync(extensionsJsonPath)) {
       // Rotate old backup if present
       if (existsSync(extensionsJsonBakPath)) {
-        const ts = new Date().toISOString().replace(/[:.]/g, '-');
+        const ts = new Date().toISOString().replaceAll(/[:.]/g, '-');
         const rotated = `${extensionsJsonBakPath}.${ts}`;
         renameSync(extensionsJsonBakPath, rotated);
         console.log(
@@ -317,7 +305,7 @@ export function actionVSCode() {
       );
     }
 
-    writeFileSync(extensionsJsonPath, extensionsJsonContent, 'utf-8');
+    writeFileSync(extensionsJsonPath, extensionsJsonContent, 'utf8');
     console.log(chalk.green('[ok] extensions.json written successfully.'));
   } catch (error) {
     console.error(
@@ -335,7 +323,7 @@ export function actionVSCode() {
     if (existsSync(settingsJsonPath)) {
       // Rotate old backup if present
       if (existsSync(settingsJsonBakPath)) {
-        const ts = new Date().toISOString().replace(/[:.]/g, '-');
+        const ts = new Date().toISOString().replaceAll(/[:.]/g, '-');
         const rotated = `${settingsJsonBakPath}.${ts}`;
         renameSync(settingsJsonBakPath, rotated);
         console.log(
@@ -352,7 +340,7 @@ export function actionVSCode() {
       );
     }
 
-    writeFileSync(settingsJsonPath, settingsJsonContent, 'utf-8');
+    writeFileSync(settingsJsonPath, settingsJsonContent, 'utf8');
     console.log(chalk.green('[ok] settings.json written successfully.'));
   } catch (error) {
     console.error(

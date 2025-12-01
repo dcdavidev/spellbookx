@@ -1,11 +1,25 @@
+/* eslint-disable unicorn/no-process-exit */
 import chalk from 'chalk';
+
 import { actionCommitlint } from './commitlint.js';
 import { actionCspell } from './cspell.js';
-import { actionPrettier } from './prettier.js';
 import { actionEslint } from './eslint.js';
+import { actionPrettier } from './prettier.js';
 import { actionVSCode } from './vscode.js';
 
-function printHeader(step: string, total: string, title: string) {
+/**
+ * Prints a formatted header for a setup step to the console.
+ * This function uses chalk for magenta, bold text formatting.
+ * @param {string} step The current step number in the setup process (e.g., '1').
+ * @param {string} total The total number of steps in the setup process (e.g., '5').
+ * @param {string} title The title or description of the current step (e.g., 'Commitlint Setup').
+ * @returns {void}
+ *
+ * @example
+ * // Example usage in the actionInit function:
+ * printHeader('1', '5', 'Commitlint Setup');
+ */
+function printHeader(step: string, total: string, title: string): void {
   console.log(
     chalk.magenta.bold(
       `\n${'='.repeat(40)}\n  [${step}/${total}] ${title}\n${'='.repeat(40)}\n`
@@ -13,7 +27,16 @@ function printHeader(step: string, total: string, title: string) {
   );
 }
 
-function printIntro() {
+/**
+ * Prints an introductory message for the full Spellbookx setup process.
+ * Lists the tools that will be configured and the order of execution.
+ * @returns {void}
+ *
+ * @example
+ * // Example usage at the beginning of the setup:
+ * printIntro();
+ */
+function printIntro(): void {
   const divider = '='.repeat(40);
   console.log(
     chalk.magenta.bold(
@@ -28,7 +51,16 @@ function printIntro() {
   );
 }
 
-function printSuccess() {
+/**
+ * Prints a success message upon successful completion of all setup steps.
+ * Also provides a list of suggested next steps for the user.
+ * @returns {void}
+ *
+ * @example
+ * // Example usage at the end of a successful setup:
+ * printSuccess();
+ */
+function printSuccess(): void {
   const divider = '='.repeat(40);
   console.log(
     chalk.magenta.bold(`\n${divider}\n  All Setup Complete!\n${divider}\n`)
@@ -46,7 +78,17 @@ function printSuccess() {
   console.log(chalk.cyan(nextSteps));
 }
 
-export async function actionInit() {
+/**
+ * Executes the full Spellbookx initialization sequence.
+ * This runs setup actions for Commitlint, CSpell, Prettier, ESLint, and VSCode
+ * in a predefined order. Handles errors and provides feedback via console output.
+ * @returns {Promise<void>}
+ *
+ * @example
+ * // To start the full setup process:
+ * await actionInit();
+ */
+export async function actionInit(): Promise<void> {
   printIntro();
 
   try {
@@ -69,7 +111,9 @@ export async function actionInit() {
   } catch (error) {
     console.error(
       chalk.red(
-        `\n[error] Setup failed during execution: ${error instanceof Error ? error.message : error}`
+        `\n[error] Setup failed during execution: ${
+          error instanceof Error ? error.message : error
+        }`
       )
     );
     process.exit(1);

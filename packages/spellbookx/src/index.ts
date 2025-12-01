@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { actionInit } from './actions/init.js';
+
 import { actionCommitlint } from './actions/commitlint.js';
 import { actionCspell } from './actions/cspell.js';
 import { actionEslint } from './actions/eslint.js';
+import { actionInit } from './actions/init.js';
 import { actionPrettier } from './actions/prettier.js';
 import { actionVSCode } from './actions/vscode.js';
 import { packageJson } from './helpers/package-json.js';

@@ -1,16 +1,35 @@
+/* eslint-disable unicorn/no-process-exit */
+import { spawnSync } from 'node:child_process';
+import { existsSync, renameSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
+
 import chalk from 'chalk';
-import { spawnSync } from 'child_process';
 import inquirer from 'inquirer';
-import { writeFileSync, existsSync, renameSync } from 'fs';
-import path from 'path';
-import { resolvePackageManager } from '../helpers/resolve-package-manager.js';
 import {
   dependencies,
   globalDependencies,
 } from 'prettier-config-spellbookx/dependencies';
 import type { SbxPrettierConfig } from 'prettier-config-spellbookx/types';
 
-export async function actionPrettier() {
+import { resolvePackageManager } from '../helpers/resolve-package-manager.js';
+
+/**
+ * Executes the setup for Prettier configuration and dependencies.
+ *
+ * This function performs the following steps:
+ * 1. Determines the package manager (npm, pnpm, yarn, bun).
+ * 2. Installs global packages and dev dependencies required by Prettier.
+ * 3. Prompts the user to select a Prettier preset configuration.
+ * 4. Creates the `prettier.config.mjs` file, backing up or prompting for overwrite if necessary.
+ * 5. Creates or updates the `.editorconfig` file with a backup mechanism.
+ * 6. Creates or updates the `.prettierignore` file with a backup mechanism.
+ * @returns {Promise<void>}
+ *
+ * @example
+ * // To initialize Prettier setup:
+ * await actionPrettier();
+ */
+export async function actionPrettier(): Promise<void> {
   console.log(chalk.yellow('Initializing Prettier configuration...'));
 
   const pm = resolvePackageManager(process.cwd());
@@ -21,23 +40,26 @@ export async function actionPrettier() {
   let devAddCmd: string[];
 
   switch (pm) {
-    case 'pnpm':
+    case 'pnpm': {
       globalAddCmd = ['add', '-g', ...globalDependencies];
       devAddCmd = ['add', '-D', ...dependencies];
       break;
-    case 'yarn':
+    }
+    case 'yarn': {
       globalAddCmd = ['global', 'add', ...globalDependencies];
       devAddCmd = ['add', '-D', ...dependencies];
       break;
-    case 'bun':
+    }
+    case 'bun': {
       globalAddCmd = ['add', '-g', ...globalDependencies];
       devAddCmd = ['add', '-D', ...dependencies];
       break;
-    case 'npm':
-    default:
+    }
+    default: {
       globalAddCmd = ['install', '-g', ...globalDependencies];
       devAddCmd = ['install', '-D', ...dependencies];
       break;
+    }
   }
 
   // Install global packages
@@ -48,7 +70,7 @@ export async function actionPrettier() {
   );
   const globalResult = spawnSync(pm, globalAddCmd, {
     stdio: 'inherit',
-    shell: false,
+    shell: true,
   });
 
   if (globalResult.error) {
@@ -75,7 +97,7 @@ export async function actionPrettier() {
   );
   const devResult = spawnSync(pm, devAddCmd, {
     stdio: 'inherit',
-    shell: false,
+    shell: true,
   });
 
   if (devResult.error) {
@@ -116,42 +138,20 @@ export async function actionPrettier() {
   // Create prettier.config.mjs
   const cwd = process.cwd();
   const prettierConfigPath = path.join(cwd, 'prettier.config.mjs');
-  let importProp: string;
-  switch (preset) {
-    case 'base':
-      importProp = 'base';
-      break;
-    case 'astro':
-      importProp = 'astro';
-      break;
-    case 'astro-prisma':
-      importProp = 'astroPrisma';
-      break;
-    case 'astro-tailwind':
-      importProp = 'astroTailwind';
-      break;
-    case 'astro-prisma-tailwind':
-      importProp = 'astroPrismaTailwind';
-      break;
-    default:
-      throw new Error(`Invalid Prettier preset: ${preset}`);
-  }
+  const importProp = preset;
 
   const prettierConfig = `import spellbookx from 'prettier-config-spellbookx';
 
 /** @type {import('prettier').Config} */
 export default {
-  ...spellbookx.${importProp},
+  ...spellbookx['${importProp}'],
 };
 `;
 
   console.log(chalk.cyan('\n[info] Creating prettier.config.mjs...'));
 
   try {
-    if (!existsSync(prettierConfigPath)) {
-      writeFileSync(prettierConfigPath, prettierConfig, 'utf-8');
-      console.log(chalk.green('👍 prettier.config.mjs created successfully.'));
-    } else {
+    if (existsSync(prettierConfigPath)) {
       const { overwrite } = await inquirer.prompt<{
         overwrite: boolean;
       }>([
@@ -166,13 +166,16 @@ export default {
       ]);
 
       if (overwrite) {
-        writeFileSync(prettierConfigPath, prettierConfig, 'utf-8');
+        writeFileSync(prettierConfigPath, prettierConfig, 'utf8');
         console.log(
           chalk.green('[ok] prettier.config.mjs overwritten successfully.')
         );
       } else {
         console.log(chalk.yellow('[warn] Kept existing prettier.config.mjs.'));
       }
+    } else {
+      writeFileSync(prettierConfigPath, prettierConfig, 'utf8');
+      console.log(chalk.green('👍 prettier.config.mjs created successfully.'));
     }
   } catch (error) {
     console.error(
@@ -223,7 +226,7 @@ indent_size=4
     if (existsSync(editorConfigPath)) {
       // If a previous backup exists, rotate it with a timestamp to avoid overwrite
       if (existsSync(editorConfigBakPath)) {
-        const ts = new Date().toISOString().replace(/[:.]/g, '-');
+        const ts = new Date().toISOString().replaceAll(/[:.]/g, '-');
         const rotated = `${editorConfigBakPath}.${ts}`;
         renameSync(editorConfigBakPath, rotated);
         console.log(
@@ -240,7 +243,7 @@ indent_size=4
       );
     }
 
-    writeFileSync(editorConfigPath, editorConfigContents, 'utf-8');
+    writeFileSync(editorConfigPath, editorConfigContents, 'utf8');
     console.log(chalk.green('[ok] .editorconfig written successfully.'));
   } catch (error) {
     console.error(
@@ -252,14 +255,14 @@ indent_size=4
   // Create or update .prettierignore with backup
   const prettierIgnorePath = path.join(cwd, '.prettierignore');
   const prettierIgnoreBakPath = path.join(cwd, '.prettierignore.bak');
-  const prettierIgnoreContents = `/.astro/\n/.codacy/\n/.gemini/\n/.github/instructions/\n/.nx/\n/bun.lockb\n/czrc\n/eslint.config.mjs\n/prettier.config.mjs\n\n**/dist/\n**/node_modules/\n**/*LICENSE*\n**/*lock.*\n**/*.tsbuildinfo\n`;
+  const prettierIgnoreContents = `/.astro/\n/.codacy/\n/.gemini/\n/.github/instructions/\n/.nx/\n/bun.lockb\n/.czrc\n\n**/dist/\n**/node_modules/\n**/*LICENSE*\n**/*lock.*\n**/*.tsbuildinfo\n`;
 
   console.log(chalk.cyan('\n[info] Ensuring .prettierignore is present...'));
   try {
     if (existsSync(prettierIgnorePath)) {
       // Rotate old backup if present
       if (existsSync(prettierIgnoreBakPath)) {
-        const ts = new Date().toISOString().replace(/[:.]/g, '-');
+        const ts = new Date().toISOString().replaceAll(/[:.]/g, '-');
         const rotated = `${prettierIgnoreBakPath}.${ts}`;
         renameSync(prettierIgnoreBakPath, rotated);
         console.log(
@@ -276,7 +279,7 @@ indent_size=4
       );
     }
 
-    writeFileSync(prettierIgnorePath, prettierIgnoreContents, 'utf-8');
+    writeFileSync(prettierIgnorePath, prettierIgnoreContents, 'utf8');
     console.log(chalk.green('[ok] .prettierignore written successfully.'));
   } catch (error) {
     console.error(

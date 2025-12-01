@@ -1,15 +1,24 @@
+/* eslint-disable unicorn/no-process-exit */
+import { spawnSync } from 'node:child_process';
+import { existsSync, renameSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
+
 import chalk from 'chalk';
-import { spawnSync } from 'child_process';
-import inquirer from 'inquirer';
-import { writeFileSync, existsSync, renameSync } from 'fs';
-import path from 'path';
-import { resolvePackageManager } from '../helpers/resolve-package-manager.js';
 import {
   dependencies,
   globalDependencies,
 } from 'eslint-plugin-spellbookx/dependencies';
 import type { SbxESLintConfig } from 'eslint-plugin-spellbookx/types';
+import inquirer from 'inquirer';
 
+import { resolvePackageManager } from '../helpers/resolve-package-manager.js';
+
+/**
+ * Initializes ESLint configuration for the current project, installs required dependencies, and writes a new config file.
+ * @example
+ * // Run this function to set up ESLint with SpellbookX presets
+ * await actionEslint();
+ */
 export async function actionEslint() {
   console.log(chalk.yellow('Initializing ESLint configuration...'));
 
@@ -21,23 +30,26 @@ export async function actionEslint() {
   let devAddCmd: string[];
 
   switch (pm) {
-    case 'pnpm':
+    case 'pnpm': {
       globalAddCmd = ['add', '-g', ...globalDependencies];
       devAddCmd = ['add', '-D', ...dependencies];
       break;
-    case 'yarn':
+    }
+    case 'yarn': {
       globalAddCmd = ['global', 'add', ...globalDependencies];
       devAddCmd = ['add', '-D', ...dependencies];
       break;
-    case 'bun':
+    }
+    case 'bun': {
       globalAddCmd = ['add', '-g', ...globalDependencies];
       devAddCmd = ['add', '-D', ...dependencies];
       break;
-    case 'npm':
-    default:
+    }
+    default: {
       globalAddCmd = ['install', '-g', ...globalDependencies];
       devAddCmd = ['install', '-D', ...dependencies];
       break;
+    }
   }
 
   // Install global packages
@@ -48,20 +60,18 @@ export async function actionEslint() {
   );
   const globalResult = spawnSync(pm, globalAddCmd, {
     stdio: 'inherit',
-    shell: false,
+    shell: true,
   });
 
   if (globalResult.error) {
-    console.error(
-      chalk.red(
-        `[error] Failed to install global packages: ${globalResult.error.message}`
-      )
-    );
+    const msg = `[error] Failed to install global packages: ${globalResult.error.message}`;
+    console.error(chalk.red(msg));
     process.exit(1);
   }
 
   if (globalResult.status !== 0) {
-    console.error(chalk.red('Global package installation failed.'));
+    const msg = 'Global package installation failed.';
+    console.error(chalk.red(msg));
     process.exit(1);
   }
 
@@ -79,16 +89,14 @@ export async function actionEslint() {
   });
 
   if (devResult.error) {
-    console.error(
-      chalk.red(
-        `[error] Failed to install dev dependencies: ${devResult.error.message}`
-      )
-    );
+    const msg = `[error] Failed to install dev dependencies: ${devResult.error.message}`;
+    console.error(chalk.red(msg));
     process.exit(1);
   }
 
   if (devResult.status !== 0) {
-    console.error(chalk.bgRed('Dev dependency installation failed.'));
+    const msg = 'Dev dependency installation failed.';
+    console.error(chalk.bgRed(msg));
     process.exit(1);
   }
 
@@ -155,7 +163,7 @@ export default [...spellbookx.configs['${preset}']];
       if (existsSync(p)) {
         let backupPath = `${p}.bak`;
         if (existsSync(backupPath)) {
-          const ts = new Date().toISOString().replace(/[:.]/g, '-');
+          const ts = new Date().toISOString().replaceAll(/[:.]/g, '-');
           backupPath = `${p}.${ts}.bak`;
         }
         renameSync(p, backupPath);
@@ -180,12 +188,11 @@ export default [...spellbookx.configs['${preset}']];
   );
 
   try {
-    writeFileSync(eslintConfigPath, eslintConfig, 'utf-8');
+    writeFileSync(eslintConfigPath, eslintConfig, 'utf8');
     console.log(chalk.green('[ok] eslint.config.mjs written successfully.'));
   } catch (error) {
-    console.error(
-      chalk.red(`[error] Failed to create eslint.config.mjs: ${error}`)
-    );
+    const msg = `[error] Failed to create eslint.config.mjs: ${error}`;
+    console.error(chalk.red(msg));
     process.exit(1);
   }
 

@@ -4,18 +4,6 @@
   "include": [],
   "references": [
     {
-      "path": "../prettier-config-spellbookx"
-    },
-    {
-      "path": "../eslint-plugin-spellbookx"
-    },
-    {
-      "path": "../cspell-config-spellbookx"
-    },
-    {
-      "path": "../commitlint-config-spellbookx"
-    },
-    {
       "path": "./tsconfig.lib.json"
     }
   ]

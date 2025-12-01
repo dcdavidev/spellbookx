@@ -1,13 +1,22 @@
+/* eslint-disable unicorn/no-process-exit */
+import { spawnSync } from 'node:child_process';
+import { existsSync, mkdirSync, renameSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
+
 import chalk from 'chalk';
-import { spawnSync } from 'child_process';
-import { writeFileSync, mkdirSync, existsSync, renameSync } from 'fs';
-import path from 'path';
-import { resolvePackageManager } from '../helpers/resolve-package-manager.js';
 import {
   dependencies,
   globalDependencies,
 } from 'cspell-config-spellbookx/dependencies';
 
+import { resolvePackageManager } from '../helpers/resolve-package-manager.js';
+
+/**
+ * Initializes and configures CSpell in the current project, installing dependencies and setting up configuration files.
+ * @example
+ * // Run this function to set up CSpell in your project
+ * actionCspell();
+ */
 export function actionCspell() {
   console.log(chalk.yellow('Initializing cspell configuration...'));
 
@@ -20,23 +29,26 @@ export function actionCspell() {
   let devAddCmd: string[];
 
   switch (pm) {
-    case 'pnpm':
+    case 'pnpm': {
       globalAddCmd = ['add', '-g', ...globalDependencies];
       devAddCmd = ['add', '-D', ...dependencies];
       break;
-    case 'yarn':
+    }
+    case 'yarn': {
       globalAddCmd = ['global', 'add', ...globalDependencies];
       devAddCmd = ['add', '-D', ...dependencies];
       break;
-    case 'bun':
+    }
+    case 'bun': {
       globalAddCmd = ['add', '-g', ...globalDependencies];
       devAddCmd = ['add', '-D', ...dependencies];
       break;
-    case 'npm':
-    default:
+    }
+    default: {
       globalAddCmd = ['install', '-g', ...globalDependencies];
       devAddCmd = ['install', '-D', ...dependencies];
       break;
+    }
   }
 
   // Install global packages
@@ -47,7 +59,7 @@ export function actionCspell() {
   );
   const globalResult = spawnSync(pm, globalAddCmd, {
     stdio: 'inherit',
-    shell: false,
+    shell: true,
   });
 
   if (globalResult.error) {
@@ -99,11 +111,11 @@ export function actionCspell() {
 
   console.log(chalk.cyan('\n[info] Creating .cspell directory...'));
   try {
-    if (!existsSync(cspellDir)) {
+    if (existsSync(cspellDir)) {
+      console.log(chalk.yellow('[warn] .cspell directory already exists.'));
+    } else {
       mkdirSync(cspellDir, { recursive: true });
       console.log(chalk.green('[ok] .cspell directory created successfully.'));
-    } else {
-      console.log(chalk.yellow('[warn] .cspell directory already exists.'));
     }
   } catch (error) {
     console.error(
@@ -117,14 +129,14 @@ export function actionCspell() {
 
   console.log(chalk.cyan('[info] Creating .cspell/custom-words.txt...'));
   try {
-    if (!existsSync(customWordsPath)) {
-      writeFileSync(customWordsPath, '', 'utf-8');
-      console.log(
-        chalk.green('[ok] .cspell/custom-words.txt created successfully.')
-      );
-    } else {
+    if (existsSync(customWordsPath)) {
       console.log(
         chalk.yellow('[warn] .cspell/custom-words.txt already exists.')
+      );
+    } else {
+      writeFileSync(customWordsPath, '', 'utf8');
+      console.log(
+        chalk.green('[ok] .cspell/custom-words.txt created successfully.')
       );
     }
   } catch (error) {
@@ -201,7 +213,7 @@ module.exports = defineConfig({
   );
 
   try {
-    writeFileSync(cspellConfigPath, cspellConfig, 'utf-8');
+    writeFileSync(cspellConfigPath, cspellConfig, 'utf8');
     console.log(chalk.green('[ok] cspell.config.cjs written successfully.'));
   } catch (error) {
     console.error(

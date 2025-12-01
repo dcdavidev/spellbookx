@@ -13,8 +13,8 @@ import configRecommendedNoSpellCheck from './configs/recommended/no-spellcheck.j
 import configRecommendedNoSpellCheckReact from './configs/recommended/no-spellcheck-react.js';
 import configRecommendedReact from './configs/recommended/react.js';
 import configRecommended from './configs/recommended/recommended.js';
-import type { SbxESLintConfig } from './types.js';
 import { packageJson } from './helpers.js';
+import type { SbxESLintConfig } from './types.js';
 
 const configs: Record<SbxESLintConfig, Linter.Config[]> = {
   // global ignores
