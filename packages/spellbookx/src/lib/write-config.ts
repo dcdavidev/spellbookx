@@ -1,22 +1,23 @@
 /**
  * @file write-config.ts
- * Atomic configuration file writer with directory creation.
+ * Configuration file writer with directory creation and optional file modes.
  */
 
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { chmodSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
 export interface WriteConfigOptions {
   cwd?: string;
   overwrite?: boolean;
+  mode?: number;
 }
 
 /**
  * Writes a configuration file to disk, ensuring all parent directories exist.
  *
- * @param relativePath - Relative path from project root (e.g. 'cspell.config.cjs', '.config/cspell/custom.txt').
+ * @param relativePath - Relative path from project root (e.g. 'cspell.config.cjs', '.config/cspell/custom-dictionary.txt').
  * @param content - File content to write.
- * @param options - Options controlling working directory and overwriting existing files.
+ * @param options - Options controlling working directory, overwriting, and file mode.
  * @returns True if the file was written, false if skipped because it already exists.
  */
 export function hasWrittenConfigFile(
@@ -36,6 +37,14 @@ export function hasWrittenConfigFile(
     mkdirSync(dir, { recursive: true });
   }
 
-  writeFileSync(absolutePath, content, 'utf8');
+  writeFileSync(absolutePath, content, {
+    encoding: 'utf8',
+    mode: options.mode,
+  });
+
+  if (options.mode !== undefined) {
+    chmodSync(absolutePath, options.mode);
+  }
+
   return true;
 }

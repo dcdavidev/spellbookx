@@ -18,16 +18,27 @@ describe('spellbookx (CLI program & exports)', () => {
     expect(program.version()).toBe(packageJson.version);
   });
 
-  it('registers the "init" subcommand with --pm, --skip-install, and --tools options', () => {
+  it('registers the "init" subcommand with tool and preset options', () => {
     const program = createProgram();
     const initCmd = program.commands.find((cmd) => cmd.name() === 'init');
 
     expect(initCmd).toBeDefined();
-    expect(initCmd?.description()).toContain('initialize');
+    expect(initCmd?.description()).toContain('Initialize');
 
     const optionFlags = initCmd?.options.map((opt) => opt.long);
     expect(optionFlags).toEqual(
-      expect.arrayContaining(['--pm', '--skip-install', '--tools'])
+      expect.arrayContaining([
+        '--pm',
+        '--skip-install',
+        '--tools',
+        '--cspell',
+        '--eslint',
+        '--prettier',
+        '--commitlint',
+        '--prettier-config',
+        '--eslint-config',
+        '--hook-manager',
+      ])
     );
   });
 

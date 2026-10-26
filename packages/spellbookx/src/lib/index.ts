@@ -6,6 +6,7 @@
 export * from './banner.js';
 export * from './detect-pm.js';
 export * from './get-install-args.js';
+export * from './hooks.js';
 export * from './install-deps.js';
 export * from './package-json.js';
 export * from './prompt-tools.js';

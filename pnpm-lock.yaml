@@ -536,6 +536,9 @@ importers:
       execa:
         specifier: ^9.5.2
         version: 9.6.1
+      figlet:
+        specifier: ^1.12.0
+        version: 1.12.0
       ora:
         specifier: ^8.2.0
         version: 8.2.0
