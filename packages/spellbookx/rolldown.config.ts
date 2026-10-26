@@ -15,6 +15,7 @@ export default defineConfig([
       'lib/banner': 'src/lib/banner.ts',
       'lib/detect-pm': 'src/lib/detect-pm.ts',
       'lib/get-install-args': 'src/lib/get-install-args.ts',
+      'lib/hooks': 'src/lib/hooks.ts',
       'lib/install-deps': 'src/lib/install-deps.ts',
       'lib/package-json': 'src/lib/package-json.ts',
       'lib/prompt-tools': 'src/lib/prompt-tools.ts',

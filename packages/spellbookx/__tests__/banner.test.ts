@@ -1,19 +1,26 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { getBanner, printBanner } from '../src/lib/banner.js';
+import {
+  BANNER_TAGLINE,
+  BANNER_TEXT,
+  getBanner,
+  printBanner,
+} from '../src/lib/banner.js';
 
 describe('spellbookx (banner)', () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  it('returns a formatted banner containing wizard emoji, title, and explicit version', () => {
+  it('renders an ASCII-art wordmark, tagline, wizard emoji, and version', () => {
     const banner = getBanner('0.11.1');
 
     expect(banner).toContain('🧙');
-    expect(banner).toContain('Spellbookx CLI (sbx)');
+    expect(banner).toContain(BANNER_TAGLINE);
     expect(banner).toContain('v0.11.1');
-    expect(banner).toContain('Arcane developer toolchain');
+    // figlet renders the wordmark as multi-line ASCII art.
+    expect(banner).not.toContain(BANNER_TEXT);
+    expect(banner.split('\n').length).toBeGreaterThan(5);
   });
 
   it('defaults to the package.json version when no version is passed', () => {
