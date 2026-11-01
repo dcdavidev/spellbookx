@@ -5,7 +5,7 @@
 
 import type { UserConfig } from '@commitlint/types';
 
-import { scopesEnum } from './scopes.js';
+import { scopesEnum } from '@spellbookx/recipes/git';
 
 /**
  * Commitizen and cz-git interactive prompt configuration.
@@ -36,17 +36,17 @@ export const prompt: UserConfig['prompt'] = {
         docs: {
           description: 'Documentation only changes',
           title: 'Documentation',
-          emoji: '📚',
+          emoji: '📖',
         },
         style: {
           description: 'Changes that do not affect meaning of the code',
           title: 'Styles',
-          emoji: '💎',
+          emoji: '🎨',
         },
         refactor: {
           description: 'Code refactoring',
           title: 'Code Refactoring',
-          emoji: '📦',
+          emoji: '🧹',
         },
         perf: {
           description: 'Performance improvements',
@@ -56,23 +56,23 @@ export const prompt: UserConfig['prompt'] = {
         test: {
           description: 'Adding or fixing tests',
           title: 'Tests',
-          emoji: '🚨',
+          emoji: '🧪',
         },
         build: {
           description: 'Changes that affect build system',
           title: 'Builds',
-          emoji: '🛠',
+          emoji: '📦',
         },
         ci: {
           description: 'Changes to CI config',
           title: 'Continuous Integrations',
-          emoji: '⚙️',
+          emoji: '🤖',
         },
         chore: { description: 'Other changes', title: 'Chores', emoji: '♻️' },
         revert: {
           description: 'Reverts a previous commit',
           title: 'Reverts',
-          emoji: '🗑',
+          emoji: '🔙',
         },
       },
     },

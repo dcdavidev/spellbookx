@@ -1,6 +1,6 @@
 # commitlint-config-spellbookx
 
-A modern, highly modular, and opinionated [Commitlint](https://commitlint.js.org/) configuration for the Spellbookx ecosystem. It enforces the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification, automatically discovers monorepo package scopes, and provides an interactive [cz-git](https://cz-git.qbenben.com/) Commitizen prompt with emojis.
+A modern, highly modular, and opinionated [Commitlint](https://commitlint.js.org/) configuration for the Spellbookx ecosystem. It enforces the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification, automatically discovers monorepo package scopes, and provides an interactive [cz-git](https://cz-git.qbb.sh/) prompt with emojis.
 
 ---
 
@@ -12,7 +12,7 @@ A modern, highly modular, and opinionated [Commitlint](https://commitlint.js.org
 | **Dynamic Monorepo Scopes**   | Automatically discovers workspace packages from `pnpm-workspace.yaml`, `package.json`, and `lerna.json`.                                  |
 | **Standard Special Scopes**   | Built-in support for `workspace` (root/infra changes) and `release` (versioning commits).                                                 |
 | **Interactive cz-git Prompt** | Out-of-the-box support for `commitizen` with rich emojis, descriptions, and multi-scope selection.                                        |
-| **Modular Architecture**      | Import individual building blocks (`rules`, `prompt`, `scopes`, `COMMIT_TYPES`) or atomic functions (`lib/`).                             |
+| **Modular Architecture**      | Import individual building blocks (`config`, `rules`, `prompt`) and combine with `@spellbookx/recipes/git`.                               |
 
 ---
 
@@ -22,15 +22,15 @@ A modern, highly modular, and opinionated [Commitlint](https://commitlint.js.org
 | :------------- | :---: | :---------------------- | :-------------------------------------------------------------------------------- |
 | **`feat`**     |  ✨   | Features                | A new feature for the user or codebase                                            |
 | **`fix`**      |  🐛   | Bug Fixes               | A bug fix                                                                         |
-| **`docs`**     |  📚   | Documentation           | Documentation only changes                                                        |
-| **`style`**    |  💎   | Styles                  | Changes that do not affect the meaning of the code (whitespace, formatting, etc.) |
-| **`refactor`** |  📦   | Code Refactoring        | A code change that neither fixes a bug nor adds a feature                         |
+| **`docs`**     |  📖   | Documentation           | Documentation only changes                                                        |
+| **`style`**    |  🎨   | Styles                  | Changes that do not affect the meaning of the code (whitespace, formatting, etc.) |
+| **`refactor`** |  🧹   | Code Refactoring        | A code change that neither fixes a bug nor adds a feature                         |
 | **`perf`**     |  🚀   | Performance             | A code change that improves performance                                           |
-| **`test`**     |  🚨   | Tests                   | Adding missing tests or correcting existing tests                                 |
-| **`build`**    |   🛠   | Builds                  | Changes that affect the build system or external dependencies                     |
-| **`ci`**       |  ⚙️   | Continuous Integrations | Changes to CI configuration files and scripts                                     |
+| **`test`**     |  🧪   | Tests                   | Adding missing tests or correcting existing tests                                 |
+| **`build`**    |  📦   | Builds                  | Changes that affect the build system or external dependencies                     |
+| **`ci`**       |  🤖   | Continuous Integrations | Changes to CI configuration files and scripts                                     |
 | **`chore`**    |  ♻️   | Chores                  | Other changes that don't modify src or test files                                 |
-| **`revert`**   |   🗑   | Reverts                 | Reverts a previous commit                                                         |
+| **`revert`**   |  🔙   | Reverts                 | Reverts a previous commit                                                         |
 
 ---
 
@@ -46,11 +46,20 @@ npm install --save-dev commitlint-config-spellbookx @commitlint/cli
 
 ## Usage
 
-Commitlint loads configuration from standard config files in your repository root. You can use this package in multiple ways depending on your project needs:
+Commitlint loads configuration from standard config files in your repository root. Because the package is named `commitlint-config-spellbookx`, Commitlint's [Shareable Configuration](https://commitlint.js.org/reference/configuration.html#shareable-configuration) resolution allows you to simply specify `'spellbookx'` in the `extends` array.
 
-### 1. Default Export (Recommended)
+### 1. Shareable Configuration (Recommended)
 
-The simplest way to use this preset:
+Extend `'spellbookx'` in your Commitlint configuration:
+
+```javascript
+// commitlint.config.mjs
+export default {
+  extends: ['spellbookx'],
+};
+```
+
+Alternatively, you can re-export the default configuration object directly:
 
 ```javascript
 // commitlint.config.mjs
@@ -59,16 +68,13 @@ export { default } from 'commitlint-config-spellbookx';
 
 ### 2. Customizing Rules
 
-Extend and customize specific commitlint rules while keeping the shared defaults:
+Extend `'spellbookx'` and override specific Commitlint rules:
 
 ```javascript
 // commitlint.config.mjs
-import { config, rules } from 'commitlint-config-spellbookx';
-
 export default {
-  ...config,
+  extends: ['spellbookx'],
   rules: {
-    ...rules,
     'header-max-length': [2, 'always', 100],
   },
 };
@@ -76,16 +82,15 @@ export default {
 
 ### 3. Adding Custom Scopes
 
-You can extend the dynamically discovered monorepo scopes with custom scopes:
+You can extend the dynamically discovered monorepo scopes from `@spellbookx/recipes/git` with custom scopes:
 
 ```javascript
 // commitlint.config.mjs
-import { config, rules, scopesArray } from 'commitlint-config-spellbookx';
+import { scopesArray } from '@spellbookx/recipes/git';
 
 export default {
-  ...config,
+  extends: ['spellbookx'],
   rules: {
-    ...rules,
     'scope-enum': [2, 'always', [...scopesArray, 'custom-scope', 'analytics']],
   },
 };
@@ -97,13 +102,7 @@ Assemble your configuration from modular pieces:
 
 ```javascript
 // commitlint.config.mjs
-import {
-  rules,
-  prompt,
-  scopesArray,
-  scopesEnum,
-  COMMIT_TYPES,
-} from 'commitlint-config-spellbookx';
+import { rules, prompt } from 'commitlint-config-spellbookx';
 
 export default {
   extends: ['@commitlint/config-conventional'],
@@ -118,56 +117,38 @@ Available building blocks:
 - `config`: Complete, ready-to-use commitlint configuration object.
 - `rules`: Strict Conventional Commit rules (`type-enum`, `scope-enum`, `header-max-length`, etc.).
 - `prompt`: Commitizen / `cz-git` interactive questionnaire configuration with emojis and multi-scope support.
-- `scopesArray`: Array of discovered workspace package names plus `'workspace'` and `'release'`.
-- `scopesEnum`: Record of scopes with human-readable descriptions for interactive CLI prompts.
-- `COMMIT_TYPES`: Array of all 11 allowed commit type strings.
-- `SCOPE_WORKSPACE`: Constant `'workspace'`.
-- `SCOPE_RELEASE`: Constant `'release'`.
 
-### 5. Atomic Utility Functions (`lib`)
-
-Every helper and utility function is implemented atomically under `lib/` and can be imported either from the package root or from `commitlint-config-spellbookx/lib`:
-
-```javascript
-import {
-  findGitRoot,
-  getScopes,
-  getScopeDescription,
-  getWorkspacesRawPath,
-} from 'commitlint-config-spellbookx/lib';
-```
-
-- `getScopes(cwd?)`: Scans the monorepo configuration files and returns all workspace package names.
-- `findGitRoot(startDir?)`: Traverses upwards to locate the root of the current git repository.
-- `getScopeDescription(scope)`: Generates a human-friendly description string for a given scope identifier.
-- `getWorkspacesRawPath(configPath, parser, property?)`: Parses JSON or YAML configuration files to extract workspace glob patterns.
+Shared git constants (`COMMIT_TYPES`, `SCOPE_WORKSPACE`, `SCOPE_RELEASE`, `scopesArray`, `scopesEnum`) and workspace discovery utilities (`findGitRoot`, `getScopes`, `getScopeDescription`, `getWorkspacesRawPath`) are provided by [`@spellbookx/recipes/git`](../recipes/README.md).
 
 ---
 
 ## Configuration File Formats
 
-According to the [Commitlint Configuration Documentation](https://commitlint.js.org/#/reference-configuration), you can define your configuration in any of the following formats:
+According to the [Commitlint Shareable Configuration Documentation](https://commitlint.js.org/reference/configuration.html#shareable-configuration), you can define your configuration in any of the following formats:
 
 ### In `commitlint.config.mjs` (ES Modules)
 
 ```javascript
-export { default } from 'commitlint-config-spellbookx';
+export default {
+  extends: ['spellbookx'],
+};
 ```
 
 ### In `commitlint.config.cjs` (CommonJS)
 
 ```javascript
-module.exports = require('commitlint-config-spellbookx').default;
+module.exports = {
+  extends: ['spellbookx'],
+};
 ```
 
 ### In `commitlint.config.ts` (TypeScript)
 
 ```typescript
 import type { UserConfig } from '@commitlint/types';
-import config from 'commitlint-config-spellbookx';
 
 const userConfig: UserConfig = {
-  ...config,
+  extends: ['spellbookx'],
 };
 
 export default userConfig;
@@ -177,7 +158,7 @@ export default userConfig;
 
 ```json
 {
-  "extends": ["commitlint-config-spellbookx"]
+  "extends": ["spellbookx"]
 }
 ```
 
@@ -185,7 +166,7 @@ export default userConfig;
 
 ```yaml
 extends:
-  - commitlint-config-spellbookx
+  - spellbookx
 ```
 
 ### In `package.json`
@@ -194,7 +175,7 @@ extends:
 {
   "name": "my-project",
   "commitlint": {
-    "extends": ["commitlint-config-spellbookx"]
+    "extends": ["spellbookx"]
   }
 }
 ```
@@ -226,9 +207,13 @@ npx husky add .husky/commit-msg 'npx --no -- commitlint --edit "$1"'
 
 ---
 
-## Interactive Commits with Commitizen
+## Interactive Commits (`cz-git` / `czg` / Commitizen)
 
-For a guided, interactive commit experience with `cz-git`, configure Commitizen in your `package.json`:
+`commitlint-config-spellbookx` ships with a preconfigured [`cz-git`](https://cz-git.qbb.sh/config/) prompt. You can use it either with **Commitizen** (`cz`) or standalone with **`czg`** / **`cz-git`** without Commitizen.
+
+### Option 1: Using Commitizen (`cz`)
+
+Configure Commitizen to use the `cz-git` adapter in your `package.json`:
 
 ```json
 {
@@ -247,6 +232,52 @@ Then run:
 
 ```bash
 npm run commit
+```
+
+### Option 2: Using `czg` or `cz-git` Without Commitizen
+
+If you use [`czg`](https://cz-git.qbb.sh/cli/) or `cz-git` without Commitizen, create a `cz.config.(js|cjs|mjs|ts)` file in your project root (see the [cz-git Configuration Documentation](https://cz-git.qbb.sh/config/)):
+
+#### In `cz.config.mjs` (ES Modules)
+
+```javascript
+import { definePrompt } from 'cz-git';
+import { prompt } from 'commitlint-config-spellbookx';
+
+export default definePrompt({
+  ...prompt,
+});
+```
+
+Or re-export `prompt` directly:
+
+```javascript
+export { prompt as default } from 'commitlint-config-spellbookx';
+```
+
+#### In `cz.config.cjs` (CommonJS)
+
+```javascript
+const { definePrompt } = require('cz-git');
+const { prompt } = require('commitlint-config-spellbookx');
+
+module.exports = definePrompt({
+  ...prompt,
+});
+```
+
+Then add a script in `package.json` or run `czg` directly:
+
+```json
+{
+  "scripts": {
+    "commit": "czg"
+  }
+}
+```
+
+```bash
+npx czg
 ```
 
 ---

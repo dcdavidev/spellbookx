@@ -95,13 +95,53 @@ console.log(ignores.lockFiles); // Lock files (pnpm, yarn, npm, bun)
 
 ---
 
-### 3. Unified Root Recipes (`@spellbookx/recipes`)
+### 3. Git Recipes (`@spellbookx/recipes/git`)
 
-The root default export bundles both `ignores` and `imports` dictionaries into a single object:
+Standard Conventional Commit types, monorepo scope collections, and workspace discovery utilities shared across `commitlint-config-spellbookx` and `cz-config-spellbookx`:
 
 ```typescript
-import recipes, { ignores, imports } from '@spellbookx/recipes';
+import {
+  COMMIT_TYPES,
+  commitTypes,
+  findGitRoot,
+  getScopeDescription,
+  getScopes,
+  getWorkspacesRawPath,
+  git,
+  SCOPE_RELEASE,
+  SCOPE_WORKSPACE,
+  scopesArray,
+  scopesEnum,
+} from '@spellbookx/recipes/git';
 
+console.log(COMMIT_TYPES); // ['feat', 'fix', 'docs', ...]
+console.log(scopesArray); // ['workspace', 'release', ...discoveredPackages]
+console.log(scopesEnum); // Record<string, { description: string }>
+console.log(git.commitTypes);
+```
+
+#### Available Git Exports
+
+- `COMMIT_TYPES` / `commitTypes`: All 11 allowed Conventional Commit type strings.
+- `SCOPE_WORKSPACE`: Constant `'workspace'`.
+- `SCOPE_RELEASE`: Constant `'release'`.
+- `scopesArray`: Array of discovered workspace package names plus `'workspace'` and `'release'`.
+- `scopesEnum`: Record of scopes mapped to `{ description: string }` for interactive CLI prompts.
+- `getScopes(cwd?)`: Scans monorepo configuration files (`package.json`, `pnpm-workspace.yaml`, `lerna.json`) and returns all workspace package names.
+- `findGitRoot(startDir?)`: Traverses upwards to locate the root of the current git repository.
+- `getScopeDescription(scope)`: Generates a human-friendly description string for a given scope identifier.
+- `getWorkspacesRawPath(configPath, parser, property?)`: Parses JSON or YAML configuration files to extract workspace glob patterns.
+
+---
+
+### 4. Unified Root Recipes (`@spellbookx/recipes`)
+
+The root default export bundles `git`, `ignores`, and `imports` dictionaries into a single object:
+
+```typescript
+import recipes, { git, ignores, imports } from '@spellbookx/recipes';
+
+console.log(recipes.git.commitTypes);
 console.log(recipes.imports.dotenv);
 console.log(recipes.ignores.node);
 ```

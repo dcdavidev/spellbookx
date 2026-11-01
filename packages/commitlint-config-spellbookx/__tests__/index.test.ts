@@ -1,16 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
+import { COMMIT_TYPES, scopesEnum } from '@spellbookx/recipes/git';
+
 import defaultExport, {
-  COMMIT_TYPES,
   config,
+  packageJson,
   prompt,
   rules,
-  SCOPE_RELEASE,
-  SCOPE_WORKSPACE,
-  scopesArray,
-  scopesEnum,
 } from '../src/index.js';
-import { packageJson } from '../src/lib/package-json.js';
 
 describe('commitlint-config-spellbookx (entrypoint)', () => {
   it('exports a valid commitlint UserConfig object as default and named export', () => {
@@ -29,22 +26,6 @@ describe('commitlint-config-spellbookx (entrypoint)', () => {
     expect(packageJson.version).toMatch(/^\d+\.\d+\.\d+/);
   });
 
-  it('exports all 11 standard conventional commit types', () => {
-    expect(COMMIT_TYPES).toEqual([
-      'feat',
-      'fix',
-      'docs',
-      'style',
-      'refactor',
-      'perf',
-      'test',
-      'chore',
-      'ci',
-      'build',
-      'revert',
-    ]);
-  });
-
   it('configures cz-git interactive prompt questions and settings', () => {
     expect(prompt?.settings?.enableMultipleScopes).toBe(true);
     expect(prompt?.settings?.scopeEnumSeparator).toBe(',');
@@ -53,12 +34,5 @@ describe('commitlint-config-spellbookx (entrypoint)', () => {
     for (const type of COMMIT_TYPES) {
       expect(prompt?.questions?.type?.enum?.[type]).toBeDefined();
     }
-  });
-
-  it('exports special scope constants and dynamically discovered scopes', () => {
-    expect(SCOPE_WORKSPACE).toBe('workspace');
-    expect(SCOPE_RELEASE).toBe('release');
-    expect(Array.isArray(scopesArray)).toBe(true);
-    expect(scopesEnum).toBeTypeOf('object');
   });
 });

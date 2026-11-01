@@ -5,8 +5,7 @@
 
 import type { QualifiedRules } from '@commitlint/types';
 
-import { COMMIT_TYPES } from './constants/commit-types.js';
-import { scopesArray } from './scopes.js';
+import { COMMIT_TYPES, scopesArray } from '@spellbookx/recipes/git';
 
 /**
  * Standard commitlint rules configuration.

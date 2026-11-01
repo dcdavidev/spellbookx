@@ -24,3 +24,8 @@ export const COMMIT_TYPES = [
  * Valid Conventional Commit type string.
  */
 export type CommitType = (typeof COMMIT_TYPES)[number];
+
+/**
+ * CamelCase alias for `COMMIT_TYPES`.
+ */
+export const commitTypes = COMMIT_TYPES;

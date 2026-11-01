@@ -1,10 +1,10 @@
 /**
  * @file scopes.ts
- * Scopes constants and scope enumeration generator for commitlint and commitizen.
+ * Scopes constants and scope enumeration generator for commitlint, cz-git, and Commitizen.
  */
 
-import { getScopeDescription } from './lib/get-scope-description.js';
-import { getScopes } from './lib/get-scopes.js';
+import { getScopeDescription } from './get-scope-description.js';
+import { getScopes } from './get-scopes.js';
 
 /**
  * Scope identifier for repository-wide or workspace-level changes.

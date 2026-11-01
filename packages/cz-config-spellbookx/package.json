@@ -1,0 +1,72 @@
+{
+  "name": "cz-config-spellbookx",
+  "version": "1.2.0",
+  "private": false,
+  "description": "A shareable cz-git and Commitizen configuration for interactive Conventional Commits.",
+  "keywords": [
+    "commit-config",
+    "commitizen",
+    "conventional-commits",
+    "cz-config",
+    "cz-git",
+    "czg",
+    "spellbookx"
+  ],
+  "homepage": "https://github.com/dcdavidev/spellbookx#readme",
+  "bugs": {
+    "url": "https://github.com/dcdavidev/spellbookx/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcdavidev/spellbookx.git",
+    "directory": "packages/cz-config-spellbookx"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./prompt": {
+      "types": "./dist/prompt.d.ts",
+      "import": "./dist/prompt.js",
+      "default": "./dist/prompt.js"
+    },
+    "./lib": {
+      "types": "./dist/lib/index.d.ts",
+      "import": "./dist/lib/index.js",
+      "default": "./dist/lib/index.js"
+    },
+    "./lib/*": {
+      "types": "./dist/lib/*.d.ts",
+      "import": "./dist/lib/*.js",
+      "default": "./dist/lib/*.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "rolldown -c && tsc",
+    "release": "pnpm publish --access public --no-git-checks",
+    "test": "vitest run --no-fsModuleCache"
+  },
+  "dependencies": {
+    "@spellbookx/recipes": "workspace:*",
+    "commitizen": "^4.3.2",
+    "cz-git": "^1.14.0"
+  },
+  "devDependencies": {
+    "@dcdavidev/tsconfig": "^0.1.0",
+    "@types/node": "^25.3.0",
+    "rolldown": "1.0.0-rc.5",
+    "typescript": "5.9.3",
+    "vitest": "^5.0.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

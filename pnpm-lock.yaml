@@ -223,7 +223,13 @@ importers:
       cspell-config-spellbookx:
         specifier: workspace:*
         version: link:packages/cspell-config-spellbookx
+      cz-config-spellbookx:
+        specifier: workspace:*
+        version: link:packages/cz-config-spellbookx
       cz-git:
+        specifier: ^1.14.0
+        version: 1.14.0
+      czg:
         specifier: ^1.14.0
         version: 1.14.0
       eslint:
@@ -274,6 +280,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^21.2.4
         version: 21.2.4
+      '@spellbookx/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       commitizen:
         specifier: ^4.3.2
         version: 4.3.2(@types/node@25.3.0)(typescript@5.9.3)
@@ -283,12 +292,6 @@ importers:
       cz-git:
         specifier: ^1.14.0
         version: 1.14.0
-      fast-glob:
-        specifier: ^3.3.3
-        version: 3.3.3
-      js-yaml:
-        specifier: ^4.1.1
-        version: 4.1.1
     devDependencies:
       '@commitlint/lint':
         specifier: ^21.2.4
@@ -302,9 +305,6 @@ importers:
       '@dcdavidev/tsconfig':
         specifier: ^0.1.0
         version: 0.1.0
-      '@types/js-yaml':
-        specifier: ^4.0.9
-        version: 4.0.9
       '@types/node':
         specifier: ^25.3.0
         version: 25.3.0
@@ -329,6 +329,34 @@ importers:
       cspell:
         specifier: ^10.4.0
         version: 10.4.0
+    devDependencies:
+      '@dcdavidev/tsconfig':
+        specifier: ^0.1.0
+        version: 0.1.0
+      '@types/node':
+        specifier: ^25.3.0
+        version: 25.3.0
+      rolldown:
+        specifier: 1.0.0-rc.5
+        version: 1.0.0-rc.5(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^5.0.5
+        version: 5.0.5(@types/node@25.3.0)(vite@8.3.5(@types/node@25.3.0)(esbuild@0.28.2)(jiti@2.6.1)(tsx@4.23.15)(yaml@2.9.1))
+
+  packages/cz-config-spellbookx:
+    dependencies:
+      '@spellbookx/recipes':
+        specifier: workspace:*
+        version: link:../recipes
+      commitizen:
+        specifier: ^4.3.2
+        version: 4.3.2(@types/node@25.3.0)(typescript@5.9.3)
+      cz-git:
+        specifier: ^1.14.0
+        version: 1.14.0
     devDependencies:
       '@dcdavidev/tsconfig':
         specifier: ^0.1.0
@@ -505,10 +533,20 @@ importers:
         version: 5.0.5(@types/node@25.3.0)(vite@8.3.5(@types/node@25.3.0)(esbuild@0.28.2)(jiti@2.6.1)(tsx@4.23.15)(yaml@2.9.1))
 
   packages/recipes:
+    dependencies:
+      fast-glob:
+        specifier: ^3.3.3
+        version: 3.3.3
+      js-yaml:
+        specifier: ^4.1.1
+        version: 4.1.1
     devDependencies:
       '@dcdavidev/tsconfig':
         specifier: ^0.1.0
         version: 0.1.0
+      '@types/js-yaml':
+        specifier: ^4.0.9
+        version: 4.0.9
       '@types/node':
         specifier: ^25.3.0
         version: 25.3.0
@@ -2755,6 +2793,11 @@ packages:
   cz-git@1.14.0:
     resolution: {integrity: sha512-QjwlXZrGWsXQkyregBHhA2qNNGB2TCuf0ovkW1Q5OLgdJDs9Tq1yahfKpSMLyqOBjVRuv1iHBTDP83zJDBlJdg==}
     engines: {node: '>=v12.20.0'}
+
+  czg@1.14.0:
+    resolution: {integrity: sha512-pO0VNReAHu6TSArr655pYRyShn6n2MX2ohMIz/jIugbI2UkeqSGp46zIOsYKORi9l1WNcdkbCiLKc8lolCr2Tw==}
+    engines: {node: '>=v12.20.0'}
+    hasBin: true
 
   damerau-levenshtein@1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
@@ -7552,6 +7595,8 @@ snapshots:
       - typescript
 
   cz-git@1.14.0: {}
+
+  czg@1.14.0: {}
 
   damerau-levenshtein@1.0.8: {}
 

@@ -40,16 +40,6 @@
       "import": "./dist/prompt.js",
       "default": "./dist/prompt.js"
     },
-    "./scopes": {
-      "types": "./dist/scopes.d.ts",
-      "import": "./dist/scopes.js",
-      "default": "./dist/scopes.js"
-    },
-    "./constants": {
-      "types": "./dist/constants/commit-types.d.ts",
-      "import": "./dist/constants/commit-types.js",
-      "default": "./dist/constants/commit-types.js"
-    },
     "./lib": {
       "types": "./dist/lib/index.d.ts",
       "import": "./dist/lib/index.js",
@@ -72,18 +62,16 @@
   "dependencies": {
     "@commitlint/cli": "^21.2.4",
     "@commitlint/config-conventional": "^21.2.4",
+    "@spellbookx/recipes": "workspace:*",
     "commitizen": "^4.3.2",
     "conventional-changelog-conventionalcommits": "^10.4.1",
-    "cz-git": "^1.14.0",
-    "fast-glob": "^3.3.3",
-    "js-yaml": "^4.1.1"
+    "cz-git": "^1.14.0"
   },
   "devDependencies": {
     "@commitlint/lint": "^21.2.4",
     "@commitlint/load": "^21.2.4",
     "@commitlint/types": "^21.2.3",
     "@dcdavidev/tsconfig": "^0.1.0",
-    "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.3.0",
     "rolldown": "1.0.0-rc.5",
     "typescript": "5.9.3",

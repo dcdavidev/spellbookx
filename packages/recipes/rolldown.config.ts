@@ -4,6 +4,7 @@ export default defineConfig([
   {
     input: {
       index: 'src/index.ts',
+      'git/index': 'src/git/index.ts',
       'imports/index': 'src/imports/index.ts',
       'ignores/index': 'src/ignores/index.ts',
     },
