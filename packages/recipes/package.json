@@ -1,6 +1,6 @@
 {
   "name": "@spellbookx/recipes",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "private": false,
   "description": "Curated configurations, patterns, and recipes for the Spellbookx ecosystem.",
   "keywords": [

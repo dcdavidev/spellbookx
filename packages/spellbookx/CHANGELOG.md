@@ -1,5 +1,11 @@
 # spellbookx
 
+## 1.3.0
+
+### Minor Changes
+
+- chore(release): automated minor release bump
+
 ## 1.2.0
 
 ### Minor Changes
