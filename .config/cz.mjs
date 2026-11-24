@@ -1,7 +1,7 @@
 import { config } from 'cz-config-spellbookx';
-import { defineConfig } from 'cz-git';
+import { definePrompt } from 'czg';
 
-export default defineConfig({
+export default definePrompt({
   ...config,
   useEmoji: true,
 });

@@ -26,7 +26,7 @@ describe('commitlint-config-spellbookx (entrypoint)', () => {
     expect(packageJson.version).toMatch(/^\d+\.\d+\.\d+/);
   });
 
-  it('configures cz-git interactive prompt questions and settings', () => {
+  it('configures the commitlint prompt questions and settings', () => {
     expect(prompt?.settings?.enableMultipleScopes).toBe(true);
     expect(prompt?.settings?.scopeEnumSeparator).toBe(',');
     expect(prompt?.questions?.scope?.enum).toBe(scopesEnum);

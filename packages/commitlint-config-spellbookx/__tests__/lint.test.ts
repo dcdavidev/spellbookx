@@ -12,6 +12,9 @@ describe('commitlint-config-spellbookx (lint rules)', () => {
     'chore(release): bump to v1.1.1',
     'docs(@spellbookx/recipes): document ignore globs',
     'test(spellbookx): rewrite test suite with vitest',
+    'fix(cspell-config-spellbookx,eslint-plugin-spellbookx): share globs',
+    'fix(cspell-config-spellbookx,@spellbookx/recipes): ignore bun.lock',
+    'fix(@spellbookx/recipes, cz-config-spellbookx): share commit types',
   ])('accepts valid conventional commit: "%s"', async (message) => {
     const result = await lint(message, rules);
 
@@ -22,6 +25,9 @@ describe('commitlint-config-spellbookx (lint rules)', () => {
   it.each([
     ['unknown(workspace): invalid commit type', 'type-enum'],
     ['feat(nonexistent-scope): unknown package scope', 'scope-enum'],
+    ['feat(workspace,nonexistent-scope): one unknown scope', 'scope-enum'],
+    ['feat(@spellbookx/nonexistent): unknown scoped package', 'scope-enum'],
+    ['feat(spellbookx/recipes): slash is not a separator', 'scope-enum'],
     ['fix(workspace): trailing period in subject.', 'subject-full-stop'],
     ['fix(workspace): ', 'subject-empty'],
     [`feat(workspace): ${'a'.repeat(80)}`, 'header-max-length'],

@@ -1,6 +1,6 @@
 /**
  * @file scopes.ts
- * Scopes constants and scope enumeration generator for commitlint, cz-git, and Commitizen.
+ * Scopes constants and scope enumeration generator for commitlint and czg.
  */
 
 import { SCOPE_RELEASE, SCOPE_WORKSPACE } from './constants.js';
@@ -32,7 +32,7 @@ export const scopesArray: string[] = [
 ];
 
 /**
- * Record of scopes mapped to their human-readable descriptions for Commitizen interactive prompt.
+ * Record of scopes mapped to their human-readable descriptions for the commitlint prompt.
  */
 export const scopesEnum: Record<string, { description: string }> =
   Object.fromEntries(

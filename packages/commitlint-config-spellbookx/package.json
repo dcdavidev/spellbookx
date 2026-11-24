@@ -5,11 +5,9 @@
   "description": "A shareable Commitlint configuration for enforcing conventional commits.",
   "keywords": [
     "commit-config",
-    "commitizen",
     "commitlint",
     "commitlint-config",
     "conventional-commits",
-    "cz-git",
     "spellbookx"
   ],
   "homepage": "https://github.com/dcdavidev/spellbookx#readme",
@@ -63,9 +61,7 @@
     "@commitlint/cli": "^21.2.4",
     "@commitlint/config-conventional": "^21.2.4",
     "@spellbookx/recipes": "workspace:*",
-    "commitizen": "^4.3.2",
-    "conventional-changelog-conventionalcommits": "^10.4.1",
-    "cz-git": "^1.14.0"
+    "conventional-changelog-conventionalcommits": "^10.4.1"
   },
   "devDependencies": {
     "@commitlint/lint": "^21.2.4",
