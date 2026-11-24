@@ -51,7 +51,7 @@ The root [`eslint.config.mjs`](../../eslint.config.mjs) uses the `recommended-sp
 
 - The recommended rules of `@eslint/js`, `typescript-eslint` and `eslint-plugin-unicorn`.
 - **Unused variables** are errors. To keep an unused argument or variable on purpose, start its name with `_`.
-- **File names** use `kebab-case`, for example `detect-pm.ts`. The `__tests__` folder is the only exception.
+- **File names** use `kebab-case`, for example `detect-pm.ts`.
 - **Imports and exports are sorted** with `eslint-plugin-simple-import-sort`. The import groups come from `@spellbookx/recipes/imports`: Node.js built-ins first, then frameworks and third-party packages, then monorepo packages (`@spellbookx/*`), and relative imports last.
 - **JSDoc**: every function declaration, class and method must have a JSDoc comment with a description (`eslint-plugin-jsdoc`).
 - **Dependencies**: `eslint-plugin-node-dependencies` checks that the dependencies are compatible with the `engines` field.

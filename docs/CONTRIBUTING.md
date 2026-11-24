@@ -110,7 +110,7 @@ spellbookx/
 └── turbo.json                         # Turborepo task pipeline configuration
 ```
 
-Each package has its own `tsconfig.json` (type-checking of `src/` and `__tests__/`) and `tsconfig.build.json` (emits the `.d.ts` declarations).
+Each package has its own `tsconfig.json` (type-checking of `src/` and `tests/`) and `tsconfig.build.json` (emits the `.d.ts` declarations).
 
 For the design principles and the dependency graph between packages, see [Architecture](./contribute/architecture.md).
 
@@ -208,7 +208,7 @@ When you commit, [Lefthook](https://github.com/evilmartians/lefthook) (configure
 ## Testing Guidelines
 
 - Every new feature, utility function, or bugfix must be accompanied by unit tests.
-- Place tests in a `__tests__/` directory located at the root of the respective package.
+- Place tests in a `tests/` directory located at the root of the respective package.
 - Keep test files split, focused, and named after the module under test (e.g., `banner.test.ts`, `detect-pm.test.ts`).
 - Ensure all tests pass with:
 

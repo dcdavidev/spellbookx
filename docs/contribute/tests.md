@@ -49,7 +49,7 @@ Each package runs `vitest run --no-fsModuleCache`. There is no Vitest config fil
 ## Write Tests
 
 - Every new feature, utility function or bug fix must have tests.
-- Put the tests in the `__tests__/` folder at the root of the package, not next to the source files.
+- Put the tests in the `tests/` folder at the root of the package, not next to the source files.
 - Name each test file after the module that it tests, with the `.test.ts` extension, for example `detect-pm.test.ts` for `src/lib/detect-pm.ts`. Keep each file small and focused on one module.
 - Name the top-level `describe` block after the package and the module:
 
