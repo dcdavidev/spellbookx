@@ -56,7 +56,6 @@
     "@spellbookx/recipes": "workspace:*"
   },
   "devDependencies": {
-    "@dcdavidev/tsconfig": "^0.1.0",
     "@types/node": "^25.9.9",
     "czg": "^1.14.0",
     "rolldown": "1.3.3",

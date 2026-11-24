@@ -41,7 +41,6 @@
     "@commitlint/cli": "^21.2.4",
     "@commitlint/config-conventional": "^21.2.4",
     "@dcdavidev/dropdx": "^0.4.0",
-    "@dcdavidev/tsconfig": "^0.1.0",
     "@prettier/plugin-xml": "^3.4.2",
     "@types/node": "^26",
     "changeset-conventional-commits": "^1.0.4",

@@ -200,9 +200,6 @@ importers:
       '@dcdavidev/dropdx':
         specifier: ^0.4.0
         version: 0.4.0
-      '@dcdavidev/tsconfig':
-        specifier: ^0.1.0
-        version: 0.1.0
       '@prettier/plugin-xml':
         specifier: ^3.4.2
         version: 3.4.2(prettier@3.10.1)
@@ -297,9 +294,6 @@ importers:
       '@commitlint/types':
         specifier: ^21.2.3
         version: 21.2.3
-      '@dcdavidev/tsconfig':
-        specifier: ^0.1.0
-        version: 0.1.0
       '@types/node':
         specifier: ^25.9.9
         version: 25.9.9
@@ -325,9 +319,6 @@ importers:
         specifier: ^10.5.2
         version: 10.5.2
     devDependencies:
-      '@dcdavidev/tsconfig':
-        specifier: ^0.1.0
-        version: 0.1.0
       '@types/node':
         specifier: ^25.9.9
         version: 25.9.9
@@ -347,9 +338,6 @@ importers:
         specifier: workspace:*
         version: link:../recipes
     devDependencies:
-      '@dcdavidev/tsconfig':
-        specifier: ^0.1.0
-        version: 0.1.0
       '@types/node':
         specifier: ^25.9.9
         version: 25.9.9
@@ -429,9 +417,6 @@ importers:
         specifier: ^8.73.0
         version: 8.73.0(eslint@10.15.0(jiti@2.6.1)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
     devDependencies:
-      '@dcdavidev/tsconfig':
-        specifier: ^0.1.0
-        version: 0.1.0
       '@types/node':
         specifier: ^25.9.9
         version: 25.9.9
@@ -502,9 +487,6 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(prettier@3.10.1)
     devDependencies:
-      '@dcdavidev/tsconfig':
-        specifier: ^0.1.0
-        version: 0.1.0
       '@types/node':
         specifier: ^25.9.9
         version: 25.9.9
@@ -527,9 +509,6 @@ importers:
         specifier: ^5.5.0
         version: 5.5.0
     devDependencies:
-      '@dcdavidev/tsconfig':
-        specifier: ^0.1.0
-        version: 0.1.0
       '@types/js-yaml':
         specifier: ^4.0.9
         version: 4.0.9
@@ -567,9 +546,6 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0
     devDependencies:
-      '@dcdavidev/tsconfig':
-        specifier: ^0.1.0
-        version: 0.1.0
       '@types/node':
         specifier: ^25.9.9
         version: 25.9.9
@@ -1230,9 +1206,6 @@ packages:
   '@dcdavidev/dropdx@0.4.0':
     resolution: {integrity: sha512-x7qPXthm7X6TG15SoZW2rWQB799aYBul9yQWl+MuMkbH+Yfn2snlYWdyJBE/Ow4SuVztignjgndUYwLhigc/jw==}
     hasBin: true
-
-  '@dcdavidev/tsconfig@0.1.0':
-    resolution: {integrity: sha512-TgI96P0xkq95zXwjXtYJTNp+FcVs9yYhWDjpnIeluYeV49efWY/OQ2hUKoRO/+/jfqKF/nuNAfVST3eBSdOiCA==}
 
   '@dual-bundle/import-meta-resolve@4.2.1':
     resolution: {integrity: sha512-id+7YRUgoUX6CgV0DtuhirQWodeeA7Lf4i2x71JS/vtA5pRb/hIGWlw+G6MeXvsM+MXrz0VAydTGElX1rAfgPg==}
@@ -5442,8 +5415,6 @@ snapshots:
       type-fest: 5.10.0
 
   '@dcdavidev/dropdx@0.4.0': {}
-
-  '@dcdavidev/tsconfig@0.1.0': {}
 
   '@dual-bundle/import-meta-resolve@4.2.1': {}
 
