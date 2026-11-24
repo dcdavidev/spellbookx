@@ -18,7 +18,7 @@ Spellbookx streamlines your developer workflow by providing battle-tested, opini
 
 | Package                                                                       | Description                                                                                                                                       |                                                               Version                                                               |
 | :---------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------: |
-| [**`eslint-plugin-spellbookx`**](./packages/eslint-plugin-spellbookx)         | Modern ESLint 9+ Flat Config plugin bundling 16 modular presets, framework rules (React, Astro, Svelte, Node), and automated import sorting.      |     [![npm](https://img.shields.io/npm/v/eslint-plugin-spellbookx.svg)](https://www.npmjs.com/package/eslint-plugin-spellbookx)     |
+| [**`eslint-plugin-spellbookx`**](./packages/eslint-plugin-spellbookx)         | Modern ESLint 10 Flat Config plugin bundling 16 modular presets, framework rules (React, Astro, Svelte, Node), and automated import sorting.      |     [![npm](https://img.shields.io/npm/v/eslint-plugin-spellbookx.svg)](https://www.npmjs.com/package/eslint-plugin-spellbookx)     |
 | [**`prettier-config-spellbookx`**](./packages/prettier-config-spellbookx)     | Prettier configuration with 19 ready-to-use presets, plugins for Tailwind, Prisma, Astro, Svelte, SQL, Nginx, and the `defineSbxConfig` composer. |   [![npm](https://img.shields.io/npm/v/prettier-config-spellbookx.svg)](https://www.npmjs.com/package/prettier-config-spellbookx)   |
 | [**`@spellbookx/recipes`**](./packages/recipes)                               | Curated import categorization rules and comprehensive ignore patterns for toolchains, operating systems, and runtimes.                            |          [![npm](https://img.shields.io/npm/v/@spellbookx/recipes.svg)](https://www.npmjs.com/package/@spellbookx/recipes)          |
 | [**`commitlint-config-spellbookx`**](./packages/commitlint-config-spellbookx) | Strict Conventional Commits configuration with automatic workspace package scope discovery and interactive `cz-git` prompt.                       | [![npm](https://img.shields.io/npm/v/commitlint-config-spellbookx.svg)](https://www.npmjs.com/package/commitlint-config-spellbookx) |
@@ -29,7 +29,7 @@ Spellbookx streamlines your developer workflow by providing battle-tested, opini
 
 ## Key Highlights
 
-- ⚡ **ESLint 9+ Flat Configs**: Native support for ESLint flat configurations without legacy `.eslintrc` overhead.
+- ⚡ **ESLint 10 Flat Configs**: Native support for ESLint flat configurations without legacy `.eslintrc` overhead.
 - 🎨 **Multi-Framework Prettier**: First-class formatting presets for Tailwind CSS class sorting, Astro, Svelte, Prisma, SQL, and Nginx.
 - 📦 **Monorepo-Aware Commitlint**: Automatically discovers all workspace packages across `pnpm-workspace.yaml`, `package.json`, and `lerna.json` for scope validation.
 - 📖 **Technical & Multi-Lang Spellcheck**: Pre-configured CSpell dictionaries for English, Italian, Spanish, French, German, and programming runtimes.
@@ -218,33 +218,58 @@ cd spellbookx
 pnpm install
 
 # Build all packages
-pnpm run build
+pnpm build
 ```
 
 ### Available Scripts
 
-| Script                    | Command                                | Purpose                                                         |
-| :------------------------ | :------------------------------------- | :-------------------------------------------------------------- |
-| `pnpm run build`          | `turbo run build`                      | Compiles all workspace packages using Rolldown & `tsc`          |
-| `pnpm run build:force`    | `turbo run build --force`              | Rebuilds all packages ignoring Turborepo cache                  |
-| `pnpm run test`           | `turbo run test`                       | Executes all unit test suites using Vitest                      |
-| `pnpm run test:watch`     | `turbo run test -- --watch`            | Runs Vitest in interactive watch mode                           |
-| `pnpm run test:force`     | `turbo run test --force`               | Runs all tests bypassing Turborepo cache                        |
-| `pnpm run lint`           | `pnpm exec eslint --fix .`             | Lints and auto-fixes JavaScript, TypeScript, JSON, and Markdown |
-| `pnpm run lint:check`     | `pnpm exec eslint .`                   | Lints codebase without applying automatic fixes                 |
-| `pnpm run fmt`            | `pnpm exec prettier --write .`         | Formats all supported files across the monorepo                 |
-| `pnpm run fmt:check`      | `pnpm exec prettier --check .`         | Verifies formatting without writing changes                     |
-| `pnpm run spellcheck`     | `pnpm exec cspell .`                   | Quick spell-check without progress bar                          |
-| `pnpm run spellcheck:all` | `pnpm exec cspell .`                   | Complete spell-check with full reporting                        |
-| `pnpm run check`          | `lint && spellcheck && test`           | Local validation suite                                          |
-| `pnpm run check:ci`       | `lint:check && fmt:check && ...`       | Strict CI pipeline verification                                 |
-| `pnpm run clean`          | `rm -rf ...`                           | Removes `.turbo` caches and package `dist/` folders             |
-| `pnpm run commit`         | `cz`                                   | Launches interactive Commitizen (`cz-git`) prompt               |
-| `pnpm run commit:lint`    | `commitlint --from=HEAD~1`             | Validates recent commit messages against Conventional Commits   |
-| `pnpm run changeset`      | `changeset`                            | Creates a new changeset interactively                           |
-| `pnpm run version`        | `changeset version`                    | Consumes changesets, bumps versions, and updates changelogs     |
-| `pnpm run release`        | `turbo run release`                    | Compiles all packages and publishes each to npmjs via Turborepo |
-| `pnpm run publish`        | `pnpm run version && pnpm run release` | Full pipeline: bumps versions and publishes all packages        |
+Script names follow the `action[:target][:modifier]` convention described in [`docs/npm-scripts.md`](docs/npm-scripts.md).
+
+| Script                   | Purpose                                                                     |
+| :----------------------- | :-------------------------------------------------------------------------- |
+| `pnpm build`             | Compiles all workspace packages with Rolldown and `tsc`                     |
+| `pnpm test`              | Runs all unit test suites with Vitest                                       |
+| `pnpm test:watch`        | Runs Vitest in watch mode                                                   |
+| `pnpm lint`              | Runs `lint:code`, `lint:spelling` and `lint:types` (checks only)            |
+| `pnpm lint:code`         | Lints JavaScript, TypeScript, JSON and Markdown with ESLint                 |
+| `pnpm lint:code:fix`     | Lints and applies automatic fixes                                           |
+| `pnpm lint:spelling`     | Spell-checks the repository with CSpell                                     |
+| `pnpm lint:types`        | Type-checks sources and tests of every package                              |
+| `pnpm lint:commits`      | Validates the last commit message against Conventional Commits              |
+| `pnpm fmt`               | Formats all supported files                                                 |
+| `pnpm fmt:check`         | Verifies formatting without writing changes                                 |
+| `pnpm clean`             | Removes `.turbo` caches and package `dist/` folders                         |
+| `pnpm commit`            | Launches the interactive `czg` commit prompt (`cz` and `czg` are aliases)   |
+| `pnpm changeset`         | Creates a new changeset interactively                                       |
+| `pnpm changeset:commits` | Creates changesets from Conventional Commits                                |
+| `pnpm changeset:version` | Consumes changesets, bumps versions and updates changelogs                  |
+| `pnpm release`           | Full release: `changeset:commits` → `changeset:version` → `release:publish` |
+| `pnpm release:publish`   | Builds, tags and publishes all packages with `dropdx`                       |
+| `pnpm update:turbo`      | Updates Turborepo and applies its codemods                                  |
+
+Pass extra flags after the script name, for example `pnpm build --force` to bypass the Turborepo cache.
+
+------------------------ | :------------------------------------- | :-------------------------------------------------------------- |
+| `pnpm run build` | `turbo run build` | Compiles all workspace packages using Rolldown & `tsc` |
+| `pnpm run build:force` | `turbo run build --force` | Rebuilds all packages ignoring Turborepo cache |
+| `pnpm run test` | `turbo run test` | Executes all unit test suites using Vitest |
+| `pnpm run test:watch` | `turbo run test -- --watch` | Runs Vitest in interactive watch mode |
+| `pnpm run test:force` | `turbo run test --force` | Runs all tests bypassing Turborepo cache |
+| `pnpm run lint` | `pnpm exec eslint --fix .` | Lints and auto-fixes JavaScript, TypeScript, JSON, and Markdown |
+| `pnpm run lint:check` | `pnpm exec eslint .` | Lints codebase without applying automatic fixes |
+| `pnpm run fmt` | `pnpm exec prettier --write .` | Formats all supported files across the monorepo |
+| `pnpm run fmt:check` | `pnpm exec prettier --check .` | Verifies formatting without writing changes |
+| `pnpm run spellcheck` | `pnpm exec cspell .` | Quick spell-check without progress bar |
+| `pnpm run spellcheck:all` | `pnpm exec cspell .` | Complete spell-check with full reporting |
+| `pnpm run check` | `lint && spellcheck && test` | Local validation suite |
+| `pnpm run check:ci` | `lint:check && fmt:check && ...` | Strict CI pipeline verification |
+| `pnpm run clean` | `rm -rf ...` | Removes `.turbo` caches and package `dist/` folders |
+| `pnpm run commit` | `cz` | Launches interactive Commitizen (`cz-git`) prompt |
+| `pnpm run commit:lint` | `commitlint --from=HEAD~1` | Validates recent commit messages against Conventional Commits |
+| `pnpm run changeset` | `changeset` | Creates a new changeset interactively |
+| `pnpm run version` | `changeset version` | Consumes changesets, bumps versions, and updates changelogs |
+| `pnpm run release` | `turbo run release` | Compiles all packages and publishes each to npmjs via Turborepo |
+| `pnpm run publish` | `pnpm run version && pnpm run release` | Full pipeline: bumps versions and publishes all packages |
 
 ---
 
@@ -252,7 +277,7 @@ pnpm run build
 
 This project enforces commit hygiene and pre-commit checks using [Lefthook](https://github.com/evilmartians/lefthook):
 
-1. **Pre-commit**: Runs `pnpm run lint` and `pnpm run fmt` on staged files.
+1. **Pre-commit**: Runs ESLint (with fixes) and Prettier on staged files.
 2. **Commit-msg**: Validates the commit message with `commitlint` according to Conventional Commits.
 3. **Interactive Commits**: Run `pnpm run commit` to use the interactive CLI powered by `cz-git`.
 

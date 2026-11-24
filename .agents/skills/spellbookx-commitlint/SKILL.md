@@ -56,7 +56,7 @@ export { default } from 'commitlint-config-spellbookx';
 {
   "scripts": {
     "commit": "cz",
-    "commit:lint": "commitlint --from=HEAD~1"
+    "lint:commits": "commitlint --from=HEAD~1"
   },
   "config": {
     "commitizen": {

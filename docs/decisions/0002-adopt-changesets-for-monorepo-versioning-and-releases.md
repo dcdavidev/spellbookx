@@ -33,3 +33,14 @@ We adopted **Changesets** (`@changesets/cli`) combined with **Turborepo** for ve
 ### Negative or Trade-offs
 
 - Release process requires a two-step sequence (`pnpm run version` followed by `pnpm run release`).
+
+## Update (2026-11)
+
+Publishing moved from `turbo run release` (one `pnpm publish` per package) to [`dropdx`](https://github.com/dcdavidev/dropdx), which builds, tags and publishes the packages in topological order. The per-package `release` scripts and the Turborepo `release` task were removed. The root scripts now are:
+
+- `changeset:commits`: create changesets from Conventional Commits.
+- `changeset:version`: apply the changesets (`changeset version`).
+- `release:publish`: publish with `dropdx`.
+- `release`: run the three steps above in sequence.
+
+The previous `version` and `publish` scripts were renamed because they shadowed the `pnpm version` and `pnpm publish` built-in commands (see [`docs/npm-scripts.md`](../npm-scripts.md)).

@@ -150,21 +150,20 @@ commit-msg:
 
 ## 4. Package.json Scripts
 
-Add convenient scripts to the root `package.json`:
+Add scripts to the root `package.json`. Names follow the `action[:target][:modifier]` convention: `lint` only checks, fixes are opt-in with `:fix`, and every read-only check is a `lint:<target>` script run by the `lint` aggregate (this is what `sbx init` generates):
 
 ```json
 {
   "scripts": {
-    "check": "pnpm run lint && pnpm run spellcheck && pnpm run test",
-    "check:ci": "pnpm run lint:check && pnpm run fmt:check && pnpm run spellcheck && pnpm run test",
     "commit": "cz",
-    "commit:lint": "commitlint --from=HEAD~1",
     "fmt": "prettier --ignore-unknown --write .",
     "fmt:check": "prettier --ignore-unknown --check .",
-    "lint": "eslint --no-warn-ignored --fix .",
-    "lint:check": "eslint --no-warn-ignored .",
-    "prepare": "lefthook install",
-    "spellcheck": "cspell --no-progress --no-summary ."
+    "lint": "pnpm run lint:code && pnpm run lint:spelling",
+    "lint:code": "eslint --no-warn-ignored .",
+    "lint:code:fix": "eslint --no-warn-ignored --fix .",
+    "lint:commits": "commitlint --from=HEAD~1",
+    "lint:spelling": "cspell --no-progress --no-summary .",
+    "prepare": "lefthook install"
   },
   "config": {
     "commitizen": {
@@ -181,7 +180,6 @@ Add convenient scripts to the root `package.json`:
 Always verify the setup by running:
 
 1. `pnpm run prepare` (or equivalent) to initialize Git hooks.
-2. `pnpm run lint` to confirm ESLint flat config resolves and runs without syntax errors.
-3. `pnpm run fmt:check` to verify Prettier formatting across the repository.
-4. `pnpm run spellcheck` to confirm CSpell runs cleanly without false positives.
-5. Create a test commit to verify Commitlint validation and pre-commit hooks.
+2. `pnpm lint` to confirm the ESLint flat config and CSpell run without errors.
+3. `pnpm fmt:check` to verify Prettier formatting across the repository.
+4. Create a test commit to verify Commitlint validation and pre-commit hooks.

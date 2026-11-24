@@ -38,6 +38,7 @@ Closes #
 - [ ] `prettier-config-spellbookx`
 - [ ] `cspell-config-spellbookx`
 - [ ] `commitlint-config-spellbookx`
+- [ ] `cz-config-spellbookx`
 - [ ] `@spellbookx/recipes`
 - [ ] Workspace / Monorepo root
 
@@ -48,10 +49,9 @@ Closes #
 Before submitting this PR, please verify the following:
 
 - [ ] My code adheres to the style guidelines and architectural rules of this project.
-- [ ] I have executed `pnpm run lint` and `pnpm run fmt` without errors.
-- [ ] I have executed `pnpm run spellcheck` without errors (new words added to `.config/cspell/custom.txt`).
+- [ ] I have executed `pnpm lint` and `pnpm fmt:check` without errors (new words added to `.config/cspell/custom.txt`).
 - [ ] I have added unit tests covering my changes in the corresponding `__tests__/` directory.
-- [ ] All unit tests pass locally via `pnpm run test:force`.
-- [ ] The full CI check succeeds: `pnpm run check:ci`.
+- [ ] All unit tests pass locally via `pnpm test`.
+- [ ] The build succeeds: `pnpm build`.
 - [ ] I have updated the relevant documentation ([`README.md`](README.md), package docs, etc.) where appropriate.
-- [ ] My commits conform to the [Conventional Commits](https://www.conventionalcommits.org/) standard (`pnpm run commit`).
+- [ ] My commits conform to the [Conventional Commits](https://www.conventionalcommits.org/) standard (`pnpm commit`).
