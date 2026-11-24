@@ -8,7 +8,7 @@ This document outlines the guidelines, development setup, code standards, and wo
 
 ## Table of Contents
 
-- [Code of Conduct](#code-of-conduct)
+- [Security Policy](#security-policy)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
 - [Monorepo Architecture](#monorepo-architecture)
@@ -20,9 +20,7 @@ This document outlines the guidelines, development setup, code standards, and wo
 
 ---
 
-## Code of Conduct
-
-We are committed to providing a welcoming, inclusive, and harassment-free experience for everyone. All participants are expected to adhere to our [Code of Conduct](./CODE_OF_CONDUCT.md).
+## Security Policy
 
 For vulnerability reporting, please see our [Security Policy](./SECURITY.md).
 

@@ -248,7 +248,6 @@ spellbookx/
 ├── docs/
 │   ├── contributing/                  # Architecture, commit style, npm scripts
 │   ├── decisions/                     # Architecture decision records (ADRs)
-│   ├── CODE_OF_CONDUCT.md
 │   ├── CONTRIBUTING.md
 │   └── SECURITY.md
 ├── images/                            # README banner and assets
