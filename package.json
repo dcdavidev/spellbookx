@@ -41,7 +41,6 @@
     "@changesets/cli": "^3.0.3",
     "@commitlint/cli": "^21.2.4",
     "@commitlint/config-conventional": "^21.2.4",
-    "@cspell/cspell-types": "^10.5.2",
     "@dcdavidev/dropdx": "^0.4.0",
     "@dcdavidev/tsconfig": "^0.1.0",
     "@prettier/plugin-xml": "^3.4.2",
