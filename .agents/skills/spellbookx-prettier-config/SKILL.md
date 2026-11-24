@@ -1,5 +1,5 @@
 ---
-name: spellbookx-prettier
+name: spellbookx-prettier-config
 description: Configures and composes Prettier formatting setups using prettier-config-spellbookx. Covers presets (tailwind, astro, svelte, prisma, sql, nginx, multiline-arrays) and the defineSbxConfig composer.
 ---
 
@@ -83,6 +83,74 @@ export default defineSbxConfig({
 });
 ```
 
+.prettierignore:
+
+```
+# ==============================================================================
+# Prettier Ignore Configuration - Spellbookx
+# ==============================================================================
+
+# Package manager lockfiles (auto-generated)
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+bun.lockb
+
+# Dependencies and package managers
+node_modules/
+.pnpm-store/
+.yarn/
+
+# Build outputs, bundles, and distribution directories
+dist/
+build/
+out/
+out-tsc/
+coverage/
+.turbo/
+.next/
+.nuxt/
+.svelte-kit/
+.astro/
+.rollup.cache/
+.parcel-cache/
+.vite/
+
+# TypeScript and source maps
+*.tsbuildinfo
+*.js.map
+*.d.ts.map
+
+# Temporary files, logs, and caches
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.cache/
+.temp/
+.tmp/
+.eslintcache/
+.sass-cache/
+
+# Version control and editor internals
+.git/
+.svn/
+.hg/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+*:Zone.Identifier*
+
+# Template engines & unprocessed formats
+**/*.hbs
+**/*.mustache
+**/*.min.*
+```
+
 ---
 
 ## 4. Best Practices & Commands
@@ -97,3 +165,43 @@ export default defineSbxConfig({
    ```
 3. **Plugin Ordering**:
    Always let `prettier-config-spellbookx` manage plugin order. Plugins like `prettier-plugin-tailwindcss` must execute at the end of the parser chain; the internal `plugin-priority` utility guarantees this automatically.
+
+---
+
+5. vscode Prettier Extension
+
+`./.vscode/extensions.json`:
+
+```json
+{
+  "recommendations": ["esbenp.prettier-vscode"]
+}
+```
+
+```jsonc
+{
+  // Editor & Formatter (Prettier & EditorConfig)
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+
+  // Language Specific Formatters
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+}
+```

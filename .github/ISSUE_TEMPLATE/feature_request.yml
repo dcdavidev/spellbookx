@@ -13,13 +13,14 @@ body:
       label: Target Package
       description: Which package should this new feature or enhancement belong to?
       options:
-        - 'spellbookx (CLI / sbx)'
+        - 'Monorepo tooling / other'
+        - 'commitlint-config-spellbookx'
+        - 'cspell-config-spellbookx'
+        - 'cz-config-spellbookx'
         - 'eslint-plugin-spellbookx'
         - 'prettier-config-spellbookx'
-        - 'cspell-config-spellbookx'
-        - 'commitlint-config-spellbookx'
         - '@spellbookx/recipes'
-        - 'Monorepo / All'
+        - 'spellbookx (CLI / sbx)'
     validations:
       required: true
   - type: textarea

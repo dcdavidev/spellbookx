@@ -1,5 +1,5 @@
 ---
-name: spellbookx-cspell
+name: spellbookx-cspell-config
 description: Configures and customizes CSpell spell-checking with cspell-config-spellbookx. Explains technical word whitelisting, multi-language dictionaries, ignore paths, and defineSbxConfig.
 ---
 
@@ -24,6 +24,8 @@ This skill guides an AI agent through setting up, extending, and maintaining cod
 
 ### Standard Monorepo Setup (`cspell.config.cjs`)
 
+> change to `cspell.config.yml`
+
 ```javascript
 const { defineConfig } = require('@cspell/cspell-types');
 
@@ -39,6 +41,37 @@ module.exports = defineConfig({
   ],
   dictionaries: ['project-custom-words'],
 });
+```
+
+change to:
+
+```yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
+# CSpell configuration
+# Documentation: https://cspell.org/docs/Configuration
+
+version: '0.2'
+
+# Spellbookx preset: languages (en, es, it, fr, de), technical dictionaries,
+# and the shared ignore globs (lock files, build outputs, AI agent folders,
+# LICENSE, CHANGELOG.md, and so on).
+import:
+  - cspell-config-spellbookx
+
+# Project word lists, one lowercase word per line. Paths are relative to this
+# file.
+dictionaryDefinitions:
+  # Tool names, identifiers, and other terms missing from the preset.
+  - name: project-words
+    path: ./cspell/custom.txt
+    addWords: true
+
+dictionaries:
+  - project-words
+
+# Paths the preset does not already ignore.
+ignorePaths:
+  - skills-lock.json
 ```
 
 Create the custom words file for project-specific terms:
@@ -79,3 +112,24 @@ module.exports = defineSbxConfig({
    ```
 3. **Adding New Words**:
    When legitimate technical terms, company names, or identifiers trigger a spell-check failure, append them to `.config/cspell/custom.txt` in lowercase.
+
+---
+
+# 5. vscode CSpell Extension
+
+`./.vscode/extensions.json`:
+
+```jsonc
+{
+  "recommendations": ["streetsidesoftware.code-spell-checker"],
+}
+```
+
+`./.vscode/settings.json`:
+
+```jsonc
+{
+  // Spellbookx CSpell configuration
+  "cSpell.enabled": true,
+}
+```

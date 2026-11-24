@@ -1,4 +1,4 @@
-name: Code quality and build
+name: Code quality and tests
 
 on:
   pull_request:
@@ -56,11 +56,11 @@ jobs:
       - name: Lint
         run: pnpm lint:code
 
-      - name: Spelling
-        run: pnpm lint:spelling
-
       - name: Format
         run: pnpm fmt:check
+
+      - name: Spelling
+        run: pnpm lint:spelling
 
       - name: Types
         run: pnpm lint:types

@@ -13,13 +13,14 @@ body:
       label: Affected Package
       description: Which package in the Spellbookx monorepo is experiencing the problem?
       options:
-        - 'spellbookx (CLI / sbx)'
+        - 'Monorepo tooling / other'
+        - 'commitlint-config-spellbookx'
+        - 'cspell-config-spellbookx'
+        - 'cz-config-spellbookx'
         - 'eslint-plugin-spellbookx'
         - 'prettier-config-spellbookx'
-        - 'cspell-config-spellbookx'
-        - 'commitlint-config-spellbookx'
         - '@spellbookx/recipes'
-        - 'Monorepo tooling / other'
+        - 'spellbookx (CLI / sbx)'
     validations:
       required: true
   - type: textarea

@@ -1,6 +1,6 @@
 ---
-name: spellbookx-commitlint
-description: Configures Conventional Commits enforcement and interactive cz-git commit prompts with commitlint-config-spellbookx. Covers dynamic monorepo scope detection, custom types, and git hooks.
+name: spellbookx-commitlint-config
+description: Configures Conventional Commits enforcement and interactive czg commit prompts with commitlint-config-spellbookx. Covers dynamic monorepo scope detection, custom types, and git hooks.
 ---
 
 # Spellbookx Commitlint Skill
@@ -55,13 +55,8 @@ export { default } from 'commitlint-config-spellbookx';
 ```json
 {
   "scripts": {
-    "commit": "cz",
+    "commit": "czg",
     "lint:commits": "commitlint --from=HEAD~1"
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-git"
-    }
   }
 }
 ```
@@ -72,7 +67,7 @@ export { default } from 'commitlint-config-spellbookx';
 commit-msg:
   commands:
     commitlint:
-      run: pnpm exec commitlint --edit {1}
+      run: pnpm exec commitlint --edit {1} --verbose
 ```
 
 ---

@@ -48,15 +48,23 @@ bunx spellbookx init
 Install the required packages as development dependencies:
 
 ```bash
+npm install -g czgit
+```
+
+Then, install the Spellbookx toolchain:
+
+```bash
 # pnpm
-pnpm add -D eslint-plugin-spellbookx prettier-config-spellbookx cspell-config-spellbookx commitlint-config-spellbookx @spellbookx/recipes eslint prettier cspell @commitlint/cli lefthook
+pnpm add -D eslint-plugin-spellbookx prettier-config-spellbookx cspell-config-spellbookx commitlint-config-spellbookx eslint prettier cspell czg @commitlint/cli lefthook
 
 # npm
-npm install --save-dev eslint-plugin-spellbookx prettier-config-spellbookx cspell-config-spellbookx commitlint-config-spellbookx @spellbookx/recipes eslint prettier cspell @commitlint/cli lefthook
+npm install --save-dev eslint-plugin-spellbookx prettier-config-spellbookx cspell-config-spellbookx commitlint-config-spellbookx eslint prettier cspell czg @commitlint/cli lefthook
 
 # bun
-bun add -d eslint-plugin-spellbookx prettier-config-spellbookx cspell-config-spellbookx commitlint-config-spellbookx @spellbookx/recipes eslint prettier cspell @commitlint/cli lefthook
+bun add -d eslint-plugin-spellbookx prettier-config-spellbookx cspell-config-spellbookx commitlint-config-spellbookx eslint prettier cspell czg @commitlint/cli lefthook
 ```
+
+`@spellbookx/recipes` is an internal package that exports common configuration files for ESLint, Prettier, CSpell, Commitlint, and Lefthook. It is automatically installed as a dependency of the above packages.
 
 ---
 
@@ -94,23 +102,104 @@ export { default } from 'prettier-config-spellbookx';
 // export { default } from 'prettier-config-spellbookx/base';
 ```
 
-### C. CSpell Config (`cspell.config.cjs`)
+It is recommended to add an `.editorconfig` file to the root of the repository to ensure consistent editor settings across contributors. The Spellbookx CLI wizard generates a default `.editorconfig` file, but you can also create one manually:
 
-```javascript
-const { defineConfig } = require('@cspell/cspell-types');
+```ini
+# EditorConfig is awesome: https://editorconfig.org
 
-module.exports = defineConfig({
-  version: '0.2',
-  import: ['cspell-config-spellbookx'],
-  dictionaryDefinitions: [
-    {
-      name: 'project-custom-words',
-      path: './.config/cspell/custom.txt',
-      addWords: true,
-    },
-  ],
-  dictionaries: ['project-custom-words'],
-});
+# Top-level EditorConfig
+root=true
+
+# Global defaults for all files
+[*]
+charset=utf-8
+end_of_line=lf
+insert_final_newline=true
+trim_trailing_whitespace=true
+indent_style=space
+indent_size=2
+
+# JavaScript, TypeScript, and modern modules
+[*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}]
+indent_style=space
+indent_size=2
+max_line_length=80
+
+# Web frameworks
+[*.{astro,svelte,vue}]
+indent_style=space
+indent_size=2
+
+# JSON, JSON5, JSONC, and configuration files
+[*.{json,json5,jsonc}]
+indent_style=space
+indent_size=2
+
+# Runtime configurations
+[.*rc]
+indent_style=space
+indent_size=2
+
+# YAML and workflow configurations
+[*.{yml,yaml}]
+indent_style=space
+indent_size=2
+
+# Markdown documentation
+[*.md]
+trim_trailing_whitespace=false
+
+# TOML configuration files
+[*.toml]
+indent_style=space
+indent_size=2
+max_line_length=100
+
+# XML and SVG graphics
+[*.{xml,svg}]
+indent_style=space
+indent_size=2
+
+# Shell scripts
+[*.{sh,bash,zsh}]
+indent_style=space
+indent_size=2
+
+# Makefiles require hard tabs
+[Makefile]
+indent_style=tab
+indent_size=4
+```
+
+### C. CSpell Config (`cspell.config.yaml`)
+
+```yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
+# CSpell configuration
+# Documentation: https://cspell.org/docs/Configuration
+
+version: '0.2'
+
+# Spellbookx preset: languages (en, es, it, fr, de), technical dictionaries,
+# and the shared ignore globs (lock files, build outputs, AI agent folders,
+# LICENSE, CHANGELOG.md, and so on).
+import:
+  - cspell-config-spellbookx
+
+# Project word lists, one lowercase word per line. Paths are relative to this
+# file.
+dictionaryDefinitions:
+  # Tool names, identifiers, and other terms missing from the preset.
+  - name: project-words
+    path: ./cspell/custom.txt
+    addWords: true
+
+dictionaries:
+  - project-words
+
+# Paths the preset does not already ignore.
+ignorePaths:
+  - skills-lock.json
 ```
 
 Ensure the custom word file exists:
@@ -125,25 +214,78 @@ mkdir -p .config/cspell && touch .config/cspell/custom.txt
 export { default } from 'commitlint-config-spellbookx';
 ```
 
-### E. Lefthook Git Hooks (`lefthook.yml`)
+### E. CZG Configuration (`czg.config.mjs`)
+
+```javascript
+import { config } from 'cz-config-spellbookx';
+import { defineConfig } from 'cz-git';
+
+export default defineConfig({
+  ...config,
+  useEmoji: true,
+});
+```
+
+### F. Lefthook Git Hooks (`lefthook.yml`)
 
 ```yaml
+# Lefthook configuration
+# Documentation: https://lefthook.dev/configuration/
+#
+# Skip every hook for one command:   LEFTHOOK=0 git commit ...
+# Skip some jobs for one command:    LEFTHOOK_EXCLUDE=types git commit ...
+# Override jobs locally (ignored by Git): lefthook-local.yml
+
+min_version: 2.0.0
+assert_lefthook_installed: true
+skip_lfs: true
+
+# ------------------------------------------------------------------------------
+# Before the commit is created: check only the staged files.
+# ------------------------------------------------------------------------------
 pre-commit:
   parallel: true
-  commands:
-    lint:
-      glob: '*.{js,ts,jsx,tsx,json,jsonc,md}'
-      run: pnpm exec eslint --no-warn-ignored --fix {staged_files}
-      stage_fixed: true
-    fmt:
-      glob: '*.{js,ts,jsx,tsx,json,jsonc,md,yml,yaml}'
-      run: pnpm exec prettier --ignore-unknown --write {staged_files}
-      stage_fixed: true
+  skip:
+    - merge
+    - rebase
+  jobs:
+    # ESLint and Prettier both write files, so they run one after the other.
+    # ESLint also checks spelling through @cspell/eslint-plugin.
+    - name: lint-and-format
+      group:
+        piped: true
+        jobs:
+          - name: eslint
+            run: pnpm exec eslint --no-warn-ignored --fix {staged_files}
+            stage_fixed: true
+            fail_text: ESLint found errors that it cannot fix. Fix them and commit again.
+          - name: prettier
+            run: pnpm exec prettier --ignore-unknown --write {staged_files}
+            stage_fixed: true
 
+    # Turbo builds the workspace dependencies first, then type-checks every
+    # package.
+    - name: types
+      glob: '*.{ts,tsx,mts,cts}'
+      run: pnpm run lint:types
+      fail_text: TypeScript found type errors.
+
+    - name: lockfile
+      glob: '{package.json,pnpm-workspace.yaml,packages/*/package.json}'
+      run: pnpm install --frozen-lockfile --lockfile-only
+      fail_text: pnpm-lock.yaml is out of date. Run "pnpm install" and stage pnpm-lock.yaml.
+
+# ------------------------------------------------------------------------------
+# Commit message: enforce Conventional Commits.
+# ------------------------------------------------------------------------------
 commit-msg:
-  commands:
-    commitlint:
-      run: pnpm exec commitlint --edit {1}
+  jobs:
+    - name: commitlint
+      run: pnpm exec commitlint --config ./.config/commitlint.mjs --edit {1} --verbose
+      fail_text: 'Use Conventional Commits, for example "feat(cspell): add a word list". Run "pnpm commit" for a guided prompt.'
+
+# No pre-push hook: the whole-project checks (lint, spelling, format, types,
+# tests, build) run in CI, in .github/workflows/ci.yml.
 ```
 
 ---
@@ -155,20 +297,17 @@ Add scripts to the root `package.json`. Names follow the `action[:target][:modif
 ```json
 {
   "scripts": {
-    "commit": "cz",
+    "commit": "pnpm exec czg",
+    "cz": "pnpm commit",
+    "czg": "pnpm commit",
     "fmt": "prettier --ignore-unknown --write .",
     "fmt:check": "prettier --ignore-unknown --check .",
-    "lint": "pnpm run lint:code && pnpm run lint:spelling",
-    "lint:code": "eslint --no-warn-ignored .",
-    "lint:code:fix": "eslint --no-warn-ignored --fix .",
-    "lint:commits": "commitlint --from=HEAD~1",
-    "lint:spelling": "cspell --no-progress --no-summary .",
+    "lint": "pnpm run \"/^lint:(code|spelling)$/\"",
+    "lint:code": "pnpm exec eslint --no-warn-ignored .",
+    "lint:code:fix": "pnpm exec eslint --no-warn-ignored --fix .",
+    "lint:commits": "pnpm exec commitlint --from=HEAD~1 --verbose",
+    "lint:spelling": "pnpm exec cspell --no-progress --no-summary .",
     "prepare": "lefthook install"
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-git"
-    }
   }
 }
 ```
@@ -183,3 +322,89 @@ Always verify the setup by running:
 2. `pnpm lint` to confirm the ESLint flat config and CSpell run without errors.
 3. `pnpm fmt:check` to verify Prettier formatting across the repository.
 4. Create a test commit to verify Commitlint validation and pre-commit hooks.
+
+---
+
+6. vscode Extensions & Settings
+
+`./.vscode/extensions.json`:
+
+```jsonc
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "redhat.vscode-yaml",
+    "streetsidesoftware.code-spell-checker",
+  ],
+}
+```
+
+`./.vscode/settings.json`:
+
+```jsonc
+{
+  // Editor & Formatter (Prettier & EditorConfig)
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+
+  // ESLint & Auto-fix on Save
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "jsonc",
+  ],
+  // Monorepo / Turborepo: automatically resolves configuration paths for each workspace package
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+
+  // JavaScript & TypeScript (js/ts.*)
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+  "js/ts.preferences.includePackageJsonAutoImports": "auto",
+  "js/ts.suggest.autoImports": true,
+
+  // CSpell
+  "cSpell.enabled": true,
+
+  // Language Specific Formatters
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+
+  // Monorepo optimizations & Turborepo exclusions (Search / Watcher)
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.turbo": true,
+    "**/dist": true,
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/.turbo/**": true,
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+  },
+}
+```

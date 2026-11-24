@@ -1,5 +1,5 @@
 ---
-name: spellbookx-eslint
+name: spellbookx-eslint-plugin
 description: Configures, customizes, and troubleshoots ESLint flat configs using eslint-plugin-spellbookx. Covers all 16 presets, framework configurations (React, Astro, Svelte, Node), and import sorting with @spellbookx/recipes.
 ---
 
@@ -135,3 +135,36 @@ export default defineConfig([
 3. **Running the Linter**:
    - Check (also in CI): `pnpm lint:code` (`eslint --no-warn-ignored .`)
    - Auto-fix: `pnpm lint:code:fix` (`eslint --no-warn-ignored --fix .`)
+
+---
+
+## 5. vscode ESLint Extension
+
+`./.vscode/extensions.json`:
+
+```jsonc
+{
+  "recommendations": ["dbaeumer.vscode-eslint"],
+}
+```
+
+`./.vscode/settings.json`:
+
+```jsonc
+{
+  // ESLint & Auto-fix on Save
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "jsonc",
+  ],
+  // Monorepo / Turborepo: automatically resolves configuration paths for each workspace package
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+}
+```

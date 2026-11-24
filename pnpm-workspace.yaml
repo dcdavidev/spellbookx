@@ -1,6 +1,8 @@
-packages:
-  - packages/*
-
 allowBuilds:
   esbuild: true
   lefthook: true
+
+engineStrict: true
+
+packages:
+  - packages/*
