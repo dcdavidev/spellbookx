@@ -1,4 +1,4 @@
-# npm script naming conventions
+# Package.json Scripts Naming Conventions
 
 Every script in the `scripts` field of a `package.json` in this repository follows one grammar:
 
@@ -91,7 +91,8 @@ Every package in `packages/*` defines the same three scripts:
 | ---------- | --------------------------------------------------------- |
 | ESLint     | `lint:code`, `lint:code:fix`                              |
 | CSpell     | `lint:spelling`                                           |
-| Commitlint | `commit`, `lint:commits`, `prepare`                       |
+| Commitlint | `commit`, `lint:commits`                                  |
+| Lefthook   | `prepare`                                                 |
 | Prettier   | `fmt`, `fmt:check`                                        |
 | All        | `lint` (runs every `lint:<target>` except `lint:commits`) |
 
