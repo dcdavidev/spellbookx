@@ -178,9 +178,6 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^21.2.4
         version: 21.2.4
-      '@cspell/cspell-types':
-        specifier: ^10.5.2
-        version: 10.5.2
       '@dcdavidev/dropdx':
         specifier: ^0.4.0
         version: 0.4.0

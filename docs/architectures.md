@@ -183,6 +183,6 @@ Turborepo coordinates dependencies and parallel execution across the workspace:
 
 ## 5. Quality Assurance & Git Automation
 
-- **Pre-commit Automation**: Managed by **Lefthook** (`lefthook.yml`). Executes staged-file formatting, ESLint validation, and CSpell checks in parallel before commits are allowed.
+- **Pre-commit Automation**: Managed by **Lefthook** (`.config/lefthook.yml`). Executes staged-file formatting, ESLint validation, and CSpell checks in parallel before commits are allowed.
 - **Commit-msg Validation**: Lefthook triggers `@commitlint/cli` using `commitlint-config-spellbookx` to enforce Conventional Commits rules on every commit message.
 - **Unit Testing**: Vitest runs unit and integration tests across all packages, verifying preset outputs, rule validity, and CLI flows.
