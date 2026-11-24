@@ -3,6 +3,5 @@ import { defineConfig } from 'cz-git';
 
 export default defineConfig({
   ...config,
-  useAi: true,
   useEmoji: true,
 });
