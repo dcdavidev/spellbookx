@@ -135,7 +135,7 @@ flowchart TD
 - Every package builds with **Rolldown** (`rolldown -c`) from the shared [`rolldown.base.ts`](../../rolldown.base.ts). Each `rolldown.config.ts` only calls `definePackageBuild()`.
 - Every file in `src/` is an entry and `preserveModules` is enabled, so `dist/` mirrors `src/` one-to-one (no hashed chunks).
 - Bare imports (npm packages, workspace packages, `node:` built-ins) stay external: runtime dependencies are installed by consumers, not bundled.
-- Type declarations (`.d.ts`) are emitted by `tsc -p tsconfig.build.json`. `tsconfig.json` covers `src/` and `__tests__/` with `noEmit` and powers `lint:types` and the editor.
+- Type declarations (`.d.ts`) are emitted by `tsc -p tsconfig.build.json`. `tsconfig.json` covers `src/` and `tests/` with `noEmit` and powers `lint:types` and the editor.
 
 ### 4.2 Monorepo Task Orchestration: Turborepo
 

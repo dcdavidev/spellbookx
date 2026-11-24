@@ -115,7 +115,7 @@ If you use another editor, install its EditorConfig, ESLint and Prettier integra
 
 ### Directory Structure
 
-- `packages/`: the published packages. Each package has `src/` (source code), `__tests__/` (tests), `dist/` (build output, not committed), `rolldown.config.ts`, `tsconfig.json` and `tsconfig.build.json`.
+- `packages/`: the published packages. Each package has `src/` (source code), `tests/` (tests), `dist/` (build output, not committed), `rolldown.config.ts`, `tsconfig.json` and `tsconfig.build.json`.
 - `.config/`: configuration of the repository tools (commitlint, czg, CSpell, dropdx and Lefthook).
 - `.changeset/`: pending changesets for the next release.
 - `.github/`: CI workflow, issue templates and pull request template.
