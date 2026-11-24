@@ -3,38 +3,41 @@
  * Scopes constants and scope enumeration generator for commitlint, cz-git, and Commitizen.
  */
 
+import { SCOPE_RELEASE, SCOPE_WORKSPACE } from './constants.js';
 import { getScopeDescription } from './get-scope-description.js';
 import { getScopes } from './get-scopes.js';
 
 /**
- * Scope identifier for repository-wide or workspace-level changes.
+ * Discovers the workspace package scopes without throwing.
+ *
+ * The scopes are computed when this module is imported, so a failure here
+ * (for example when the process does not run inside a git repository) must
+ * not crash every tool that loads the commit configuration.
+ *
+ * @returns The discovered package names, or an empty list.
  */
-export const SCOPE_WORKSPACE = 'workspace';
-
-/**
- * Scope identifier for release and versioning commits.
- */
-export const SCOPE_RELEASE = 'release';
+function discoverScopes(): string[] {
+  try {
+    return getScopes();
+  } catch {
+    return [];
+  }
+}
 
 /**
  * Array of all valid commit scopes, including workspace, release, and discovered monorepo packages.
  */
 export const scopesArray: string[] = [
-  SCOPE_WORKSPACE,
-  SCOPE_RELEASE,
-  ...getScopes(),
+  ...new Set([SCOPE_WORKSPACE, SCOPE_RELEASE, ...discoverScopes()]),
 ];
 
 /**
  * Record of scopes mapped to their human-readable descriptions for Commitizen interactive prompt.
  */
-export const scopesEnum: Record<string, { description: string }> = {};
-
-for (const scope of scopesArray) {
-  Object.defineProperty(scopesEnum, scope, {
-    value: { description: getScopeDescription(scope) },
-    enumerable: true,
-    writable: true,
-    configurable: true,
-  });
-}
+export const scopesEnum: Record<string, { description: string }> =
+  Object.fromEntries(
+    scopesArray.map((scope) => [
+      scope,
+      { description: getScopeDescription(scope) },
+    ])
+  );

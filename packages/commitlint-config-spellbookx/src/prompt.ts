@@ -5,7 +5,17 @@
 
 import type { UserConfig } from '@commitlint/types';
 
-import { scopesEnum } from '@spellbookx/recipes/git';
+import { COMMIT_TYPE_DEFINITIONS, scopesEnum } from '@spellbookx/recipes/git';
+
+/**
+ * Commit types keyed by type, in the shape expected by the commitlint prompt.
+ */
+const typeEnum = Object.fromEntries(
+  COMMIT_TYPE_DEFINITIONS.map(({ type, description, title, emoji }) => [
+    type,
+    { description, title, emoji },
+  ])
+);
 
 /**
  * Commitizen and cz-git interactive prompt configuration.
@@ -26,55 +36,7 @@ export const prompt: UserConfig['prompt'] = {
   questions: {
     type: {
       description: "Select the type of change that you're committing:",
-      enum: {
-        feat: {
-          description: 'A new feature',
-          title: 'Features',
-          emoji: '✨',
-        },
-        fix: { description: 'A bug fix', title: 'Bug Fixes', emoji: '🐛' },
-        docs: {
-          description: 'Documentation only changes',
-          title: 'Documentation',
-          emoji: '📖',
-        },
-        style: {
-          description: 'Changes that do not affect meaning of the code',
-          title: 'Styles',
-          emoji: '🎨',
-        },
-        refactor: {
-          description: 'Code refactoring',
-          title: 'Code Refactoring',
-          emoji: '🧹',
-        },
-        perf: {
-          description: 'Performance improvements',
-          title: 'Performance Improvements',
-          emoji: '🚀',
-        },
-        test: {
-          description: 'Adding or fixing tests',
-          title: 'Tests',
-          emoji: '🧪',
-        },
-        build: {
-          description: 'Changes that affect build system',
-          title: 'Builds',
-          emoji: '📦',
-        },
-        ci: {
-          description: 'Changes to CI config',
-          title: 'Continuous Integrations',
-          emoji: '🤖',
-        },
-        chore: { description: 'Other changes', title: 'Chores', emoji: '♻️' },
-        revert: {
-          description: 'Reverts a previous commit',
-          title: 'Reverts',
-          emoji: '🔙',
-        },
-      },
+      enum: typeEnum,
     },
     scope: {
       description:

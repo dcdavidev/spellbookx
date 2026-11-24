@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import lint from '@commitlint/lint';
 
-import config from '../src/index.js';
+import { rules } from '../src/index.js';
 
 describe('commitlint-config-spellbookx (lint rules)', () => {
   it.each([
@@ -13,7 +13,7 @@ describe('commitlint-config-spellbookx (lint rules)', () => {
     'docs(@spellbookx/recipes): document ignore globs',
     'test(spellbookx): rewrite test suite with vitest',
   ])('accepts valid conventional commit: "%s"', async (message) => {
-    const result = await lint(message, config.rules);
+    const result = await lint(message, rules);
 
     expect(result.valid).toBe(true);
     expect(result.errors).toHaveLength(0);
@@ -28,7 +28,7 @@ describe('commitlint-config-spellbookx (lint rules)', () => {
   ])(
     'rejects invalid commit "%s" with rule "%s"',
     async (message, expectedRule) => {
-      const result = await lint(message, config.rules);
+      const result = await lint(message, rules);
 
       expect(result.valid).toBe(false);
       expect(result.errors.some((err) => err.name === expectedRule)).toBe(true);
