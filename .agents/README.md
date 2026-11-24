@@ -8,13 +8,14 @@ These skills provide AI coding assistants (including **Google Antigravity**, **C
 
 ## Available Skills
 
-| Skill                       | Description                                                                                                                                | Location                                                                           |
-| :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------- |
-| **`spellbookx-setup`**      | Complete guided setup of the full Spellbookx suite (ESLint, Prettier, CSpell, Commitlint, Lefthook) into any JS/TS codebase or monorepo.   | [`skills/spellbookx-setup/SKILL.md`](./skills/spellbookx-setup/SKILL.md)           |
-| **`spellbookx-eslint`**     | Composes ESLint 9+ flat configs across 16 presets, framework integrations (React, Astro, Svelte, Node), and custom import sorting recipes. | [`skills/spellbookx-eslint/SKILL.md`](./skills/spellbookx-eslint/SKILL.md)         |
-| **`spellbookx-prettier`**   | Configures Prettier presets (Tailwind, Astro, Svelte, Prisma, SQL, Nginx) and multi-plugin composition via `defineSbxConfig`.              | [`skills/spellbookx-prettier/SKILL.md`](./skills/spellbookx-prettier/SKILL.md)     |
-| **`spellbookx-cspell`**     | Configures code spell-checking, technical vocabularies, multi-language dictionaries (EN, IT, ES, FR, DE), and ignore globs.                | [`skills/spellbookx-cspell/SKILL.md`](./skills/spellbookx-cspell/SKILL.md)         |
-| **`spellbookx-commitlint`** | Enforces Conventional Commits with automatic monorepo package scope discovery and interactive `cz-git` prompt setup.                       | [`skills/spellbookx-commitlint/SKILL.md`](./skills/spellbookx-commitlint/SKILL.md) |
+| Skill                              | Description                                                                                                                                   | Location                                                                                         |
+| :--------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------- |
+| **`spellbookx-setup`**             | Complete guided setup of the full Spellbookx suite (ESLint, Prettier, CSpell, Commitlint, czg, Lefthook) into any JS/TS codebase or monorepo. | [`skills/spellbookx-setup/SKILL.md`](./skills/spellbookx-setup/SKILL.md)                         |
+| **`spellbookx-eslint-plugin`**     | Composes ESLint 9+ flat configs across 16 presets, framework integrations (React, Astro, Svelte, Node), and custom import sorting recipes.    | [`skills/spellbookx-eslint-plugin/SKILL.md`](./skills/spellbookx-eslint-plugin/SKILL.md)         |
+| **`spellbookx-prettier-config`**   | Configures Prettier presets (Tailwind, Astro, Svelte, Prisma, SQL, Nginx) and multi-plugin composition via `defineSbxConfig`.                 | [`skills/spellbookx-prettier-config/SKILL.md`](./skills/spellbookx-prettier-config/SKILL.md)     |
+| **`spellbookx-cspell-config`**     | Configures code spell-checking, technical vocabularies, multi-language dictionaries (EN, IT, ES, FR, DE), and ignore globs.                   | [`skills/spellbookx-cspell-config/SKILL.md`](./skills/spellbookx-cspell-config/SKILL.md)         |
+| **`spellbookx-commitlint-config`** | Enforces Conventional Commits with automatic monorepo package scope discovery, the commit-msg hook, and the CI check.                         | [`skills/spellbookx-commitlint-config/SKILL.md`](./skills/spellbookx-commitlint-config/SKILL.md) |
+| **`spellbookx-cz-config`**         | Sets up the interactive `czg` commit prompt, with emoji and AI options and monorepo scopes.                                                   | [`skills/spellbookx-cz-config/SKILL.md`](./skills/spellbookx-cz-config/SKILL.md)                 |
 
 ---
 
@@ -30,10 +31,11 @@ npx skills add dcdavidev/spellbookx
 
 # Or install a specific skill:
 npx skills add dcdavidev/spellbookx --skill spellbookx-setup
-npx skills add dcdavidev/spellbookx --skill spellbookx-eslint
-npx skills add dcdavidev/spellbookx --skill spellbookx-prettier
-npx skills add dcdavidev/spellbookx --skill spellbookx-cspell
-npx skills add dcdavidev/spellbookx --skill spellbookx-commitlint
+npx skills add dcdavidev/spellbookx --skill spellbookx-eslint-plugin
+npx skills add dcdavidev/spellbookx --skill spellbookx-prettier-config
+npx skills add dcdavidev/spellbookx --skill spellbookx-cspell-config
+npx skills add dcdavidev/spellbookx --skill spellbookx-commitlint-config
+npx skills add dcdavidev/spellbookx --skill spellbookx-cz-config
 ```
 
 #### Global Installation (Available across all your projects)
@@ -79,7 +81,8 @@ Skills in `.agents/skills` are automatically recognized and loaded by:
 Once installed, prompt your AI assistant naturally:
 
 - _"Set up the Spellbookx developer toolchain in this repository using `spellbookx-setup`."_
-- _"Configure ESLint flat config with Next.js and Tailwind import sorting using `spellbookx-eslint`."_
-- _"Add Svelte and Prisma Prettier formatting with Tailwind sorting using `spellbookx-prettier`."_
-- _"Configure CSpell with technical dictionaries and custom ignore paths using `spellbookx-cspell`."_
-- _"Set up Conventional Commits with automatic monorepo scope detection using `spellbookx-commitlint`."_
+- _"Configure ESLint flat config with Next.js and Tailwind import sorting using `spellbookx-eslint-plugin`."_
+- _"Add Svelte and Prisma Prettier formatting with Tailwind sorting using `spellbookx-prettier-config`."_
+- _"Configure CSpell with technical dictionaries and custom ignore paths using `spellbookx-cspell-config`."_
+- _"Set up Conventional Commits with automatic monorepo scope detection using `spellbookx-commitlint-config`."_
+- _"Turn on emoji in the interactive commit prompt using `spellbookx-cz-config`."_

@@ -21,7 +21,7 @@ Spellbookx streamlines your developer workflow by providing battle-tested, opini
 | [**`eslint-plugin-spellbookx`**](./packages/eslint-plugin-spellbookx)         | Modern ESLint 10 Flat Config plugin bundling 16 modular presets, framework rules (React, Astro, Svelte, Node), and automated import sorting.      |     [![npm](https://img.shields.io/npm/v/eslint-plugin-spellbookx.svg)](https://www.npmjs.com/package/eslint-plugin-spellbookx)     |
 | [**`prettier-config-spellbookx`**](./packages/prettier-config-spellbookx)     | Prettier configuration with 19 ready-to-use presets, plugins for Tailwind, Prisma, Astro, Svelte, SQL, Nginx, and the `defineSbxConfig` composer. |   [![npm](https://img.shields.io/npm/v/prettier-config-spellbookx.svg)](https://www.npmjs.com/package/prettier-config-spellbookx)   |
 | [**`@spellbookx/recipes`**](./packages/recipes)                               | Curated import categorization rules and comprehensive ignore patterns for toolchains, operating systems, and runtimes.                            |          [![npm](https://img.shields.io/npm/v/@spellbookx/recipes.svg)](https://www.npmjs.com/package/@spellbookx/recipes)          |
-| [**`commitlint-config-spellbookx`**](./packages/commitlint-config-spellbookx) | Strict Conventional Commits configuration with automatic workspace package scope discovery and interactive `cz-git` prompt.                       | [![npm](https://img.shields.io/npm/v/commitlint-config-spellbookx.svg)](https://www.npmjs.com/package/commitlint-config-spellbookx) |
+| [**`commitlint-config-spellbookx`**](./packages/commitlint-config-spellbookx) | Strict Conventional Commits configuration with automatic workspace package scope discovery.                                                       | [![npm](https://img.shields.io/npm/v/commitlint-config-spellbookx.svg)](https://www.npmjs.com/package/commitlint-config-spellbookx) |
 | [**`cspell-config-spellbookx`**](./packages/cspell-config-spellbookx)         | Multi-language CSpell spell-checker preset with extensive programming dictionaries, ignore globs, and technical jargon.                           |     [![npm](https://img.shields.io/npm/v/cspell-config-spellbookx.svg)](https://www.npmjs.com/package/cspell-config-spellbookx)     |
 | [**`spellbookx`**](./packages/spellbookx)                                     | 🧙 The Spellbookx CLI (`sbx`) — Automated interactive setup wizard for ESLint, Prettier, CSpell, and Commitlint.                                  |                   [![npm](https://img.shields.io/npm/v/spellbookx.svg)](https://www.npmjs.com/package/spellbookx)                   |
 
@@ -121,13 +121,14 @@ Spellbookx includes official agent skills conforming to the open [Agent Skills s
 
 ### Available Skills
 
-| Skill                       | Description                                                                                        | Location                                                                                  |
-| :-------------------------- | :------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------- |
-| **`spellbookx-setup`**      | Complete guided setup of the full Spellbookx suite into any JS/TS codebase or monorepo.            | [`.agents/skills/spellbookx-setup`](./.agents/skills/spellbookx-setup/SKILL.md)           |
-| **`spellbookx-eslint`**     | Configures ESLint 9+ flat configs with framework presets and `@spellbookx/recipes` import sorting. | [`.agents/skills/spellbookx-eslint`](./.agents/skills/spellbookx-eslint/SKILL.md)         |
-| **`spellbookx-prettier`**   | Composes Prettier presets (Tailwind, Astro, Svelte, Prisma) using the `defineSbxConfig` composer.  | [`.agents/skills/spellbookx-prettier`](./.agents/skills/spellbookx-prettier/SKILL.md)     |
-| **`spellbookx-cspell`**     | Configures multi-language code spell-checking, custom dictionaries, and ignore paths.              | [`.agents/skills/spellbookx-cspell`](./.agents/skills/spellbookx-cspell/SKILL.md)         |
-| **`spellbookx-commitlint`** | Sets up Conventional Commits, monorepo scope discovery, and interactive `cz-git` prompt.           | [`.agents/skills/spellbookx-commitlint`](./.agents/skills/spellbookx-commitlint/SKILL.md) |
+| Skill                              | Description                                                                                        | Location                                                                                                |
+| :--------------------------------- | :------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------ |
+| **`spellbookx-setup`**             | Complete guided setup of the full Spellbookx suite into any JS/TS codebase or monorepo.            | [`.agents/skills/spellbookx-setup`](./.agents/skills/spellbookx-setup/SKILL.md)                         |
+| **`spellbookx-eslint-plugin`**     | Configures ESLint 9+ flat configs with framework presets and `@spellbookx/recipes` import sorting. | [`.agents/skills/spellbookx-eslint-plugin`](./.agents/skills/spellbookx-eslint-plugin/SKILL.md)         |
+| **`spellbookx-prettier-config`**   | Composes Prettier presets (Tailwind, Astro, Svelte, Prisma) using the `defineSbxConfig` composer.  | [`.agents/skills/spellbookx-prettier-config`](./.agents/skills/spellbookx-prettier-config/SKILL.md)     |
+| **`spellbookx-cspell-config`**     | Configures multi-language code spell-checking, custom dictionaries, and ignore paths.              | [`.agents/skills/spellbookx-cspell-config`](./.agents/skills/spellbookx-cspell-config/SKILL.md)         |
+| **`spellbookx-commitlint-config`** | Sets up Conventional Commits, monorepo scope discovery, and the commit-msg hook.                   | [`.agents/skills/spellbookx-commitlint-config`](./.agents/skills/spellbookx-commitlint-config/SKILL.md) |
+| **`spellbookx-cz-config`**         | Sets up the interactive `czg` commit prompt.                                                       | [`.agents/skills/spellbookx-cz-config`](./.agents/skills/spellbookx-cz-config/SKILL.md)                 |
 
 ### Installation
 
@@ -139,10 +140,11 @@ npx skills add dcdavidev/spellbookx
 
 # Or add a specific skill:
 npx skills add dcdavidev/spellbookx --skill spellbookx-setup
-npx skills add dcdavidev/spellbookx --skill spellbookx-eslint
-npx skills add dcdavidev/spellbookx --skill spellbookx-prettier
-npx skills add dcdavidev/spellbookx --skill spellbookx-cspell
-npx skills add dcdavidev/spellbookx --skill spellbookx-commitlint
+npx skills add dcdavidev/spellbookx --skill spellbookx-eslint-plugin
+npx skills add dcdavidev/spellbookx --skill spellbookx-prettier-config
+npx skills add dcdavidev/spellbookx --skill spellbookx-cspell-config
+npx skills add dcdavidev/spellbookx --skill spellbookx-commitlint-config
+npx skills add dcdavidev/spellbookx --skill spellbookx-cz-config
 
 # Or install globally for your personal AI assistant:
 npx skills add -g dcdavidev/spellbookx
@@ -164,9 +166,10 @@ rm -rf /tmp/spellbookx
 Once installed, your AI assistant (Google Antigravity, Cursor, Claude Code, GitHub Copilot, Cline, Windsurf, Zed, or Warp) automatically discovers and activates the skills. You can interact with your agent using natural prompts:
 
 - _"Set up Spellbookx in this project using the `spellbookx-setup` skill."_
-- _"Configure ESLint flat config for my Next.js and Tailwind project using `spellbookx-eslint`."_
-- _"Add a custom technical dictionary and ignore paths using `spellbookx-cspell`."_
-- _"Format my commit using `spellbookx-commitlint`."_
+- _"Configure ESLint flat config for my Next.js and Tailwind project using `spellbookx-eslint-plugin`."_
+- _"Add a custom technical dictionary and ignore paths using `spellbookx-cspell-config`."_
+- _"Check my commit message using `spellbookx-commitlint-config`."_
+- _"Turn on emoji in the commit prompt using `spellbookx-cz-config`."_
 
 For full documentation and skill guides, see [`.agents/README.md`](./.agents/README.md).
 
@@ -181,7 +184,7 @@ spellbookx/
 ├── @spellbookx/
 │   └── recipes/                       # Import sorting recipes & ignore patterns
 ├── packages/
-│   ├── commitlint-config-spellbookx/  # Conventional Commits + cz-git prompt
+│   ├── commitlint-config-spellbookx/  # Conventional Commits rules + scopes
 │   ├── cspell-config-spellbookx/      # CSpell multi-lang & technical dicts
 │   ├── eslint-plugin-spellbookx/      # ESLint 9+ flat configs (16 presets)
 │   ├── prettier-config-spellbookx/    # Prettier configs (19 presets + composer)
@@ -264,7 +267,7 @@ Pass extra flags after the script name, for example `pnpm build --force` to bypa
 | `pnpm run check` | `lint && spellcheck && test` | Local validation suite |
 | `pnpm run check:ci` | `lint:check && fmt:check && ...` | Strict CI pipeline verification |
 | `pnpm run clean` | `rm -rf ...` | Removes `.turbo` caches and package `dist/` folders |
-| `pnpm run commit` | `cz` | Launches interactive Commitizen (`cz-git`) prompt |
+| `pnpm run commit` | `czg --config=./.config/cz.mjs` | Launches the interactive `czg` commit prompt |
 | `pnpm run lint:commits` | `commitlint --config ./.config/commitlint.mjs --from=HEAD~1 --verbose` | Validates recent commit messages against Conventional Commits |
 | `pnpm run changeset` | `changeset` | Creates a new changeset interactively |
 | `pnpm run version` | `changeset version` | Consumes changesets, bumps versions, and updates changelogs |
@@ -279,7 +282,7 @@ This project enforces commit hygiene and pre-commit checks using [Lefthook](http
 
 1. **Pre-commit**: Runs ESLint (with fixes) and Prettier on staged files.
 2. **Commit-msg**: Validates the commit message with `commitlint` according to Conventional Commits.
-3. **Interactive Commits**: Run `pnpm run commit` to use the interactive CLI powered by `cz-git`.
+3. **Interactive Commits**: Run `pnpm run commit` to use the interactive `czg` prompt.
 
 ---
 

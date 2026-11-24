@@ -80,7 +80,7 @@ Spellbookx is organized as a pnpm monorepo managed with [Turborepo](https://turb
 ```text
 spellbookx/
 ├── packages/
-│   ├── commitlint-config-spellbookx/  # Conventional Commits + cz-git prompt
+│   ├── commitlint-config-spellbookx/  # Conventional Commits rules + scopes
 │   ├── cspell-config-spellbookx/      # CSpell multi-language & tech dictionaries
 │   ├── eslint-plugin-spellbookx/      # ESLint 9+ flat configs (16 presets)
 │   ├── prettier-config-spellbookx/    # Prettier configs (19 presets + composer)
@@ -165,7 +165,7 @@ We strictly enforce the [Conventional Commits](https://www.conventionalcommits.o
 
 ### Interactive Commits
 
-To ensure your commit conforms to the rules, use the built-in interactive commit prompt powered by `cz-git`:
+To ensure your commit conforms to the rules, use the built-in interactive commit prompt powered by `czg`:
 
 ```bash
 git add <files>

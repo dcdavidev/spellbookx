@@ -94,7 +94,9 @@ export default defineConfig([spellbookx.configs.node]);
 
 ## 3. Custom Import Sorting with `@spellbookx/recipes`
 
-Spellbookx uses `simple-import-sort` pre-configured with curated regex patterns from `@spellbookx/recipes/imports`. You can customize the sorting order using `defineImports`:
+Spellbookx uses `simple-import-sort` pre-configured with curated regex patterns from `@spellbookx/recipes/imports`. You can customize the sorting order using `defineImports`.
+
+The config file imports `@spellbookx/recipes` directly, so add it to the project's `devDependencies` (`pnpm add -D @spellbookx/recipes`): pnpm does not expose transitive dependencies.
 
 ```javascript
 // eslint.config.mjs

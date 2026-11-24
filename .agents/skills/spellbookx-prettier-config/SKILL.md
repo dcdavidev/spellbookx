@@ -20,9 +20,11 @@ This skill guides an AI agent through selecting, composing, and customizing Pret
 | **`tailwind`**                | Base + Tailwind CSS class sorting  | `base` + `prettier-plugin-tailwindcss`                                   |
 | **`astro`**                   | Base + Astro component formatting  | `base` + `prettier-plugin-astro`                                         |
 | **`astro-tailwind`**          | Base + Astro + Tailwind CSS        | `astro` + `prettier-plugin-tailwindcss`                                  |
+| **`astro-prisma`**            | Base + Astro + Prisma              | `astro` + `prettier-plugin-prisma`                                       |
 | **`astro-prisma-tailwind`**   | Full-stack Astro preset            | `astro` + `prisma` + `tailwindcss`                                       |
 | **`svelte`**                  | Base + Svelte component formatting | `base` + `prettier-plugin-svelte`                                        |
 | **`svelte-tailwind`**         | Base + Svelte + Tailwind CSS       | `svelte` + `prettier-plugin-tailwindcss`                                 |
+| **`svelte-prisma`**           | Base + Svelte + Prisma             | `svelte` + `prettier-plugin-prisma`                                      |
 | **`svelte-prisma-tailwind`**  | Full-stack Svelte preset           | `svelte` + `prisma` + `tailwindcss`                                      |
 | **`prisma`**                  | Base + Prisma schema formatting    | `base` + `prettier-plugin-prisma`                                        |
 | **`prisma-tailwind`**         | Base + Prisma + Tailwind CSS       | `prisma` + `prettier-plugin-tailwindcss`                                 |
@@ -58,32 +60,28 @@ export { default } from 'prettier-config-spellbookx/astro-tailwind';
 
 ## 3. Deep Customization with `defineSbxConfig`
 
-When a project requires custom overrides or a specific combination of plugins, use the `defineSbxConfig` composer. It automatically orders plugins by priority to prevent parse conflicts:
+When a project needs its own options or a combination of presets, use the `defineSbxConfig` composer. It takes any number of Prettier configs (or arrays of configs) and merges them in order: later options win, plugins are deduplicated and sorted by priority (with `prettier-plugin-tailwindcss` always last), and `overrides` are merged by file pattern. Falsy entries are skipped, so `condition && config` works.
+
+The presets are available in the `configs` object, keyed by preset name:
 
 ```javascript
 // prettier.config.mjs
-import { defineSbxConfig } from 'prettier-config-spellbookx';
+import { configs, defineSbxConfig } from 'prettier-config-spellbookx';
 
-export default defineSbxConfig({
-  baseConfig: 'astro-tailwind',
-  rules: {
-    singleQuote: true,
-    semi: true,
-    printWidth: 100,
-    tabWidth: 2,
-  },
+export default defineSbxConfig(configs['astro-tailwind'], configs.sql, {
+  printWidth: 100,
   overrides: [
     {
       files: '*.json5',
-      options: {
-        parser: 'json5',
-      },
+      options: { parser: 'json5' },
     },
   ],
 });
 ```
 
-.prettierignore:
+`defineConfig` is an alias of `defineSbxConfig`.
+
+### `.prettierignore`
 
 ```
 # ==============================================================================
@@ -168,15 +166,17 @@ desktop.ini
 
 ---
 
-5. vscode Prettier Extension
+## 5. VS Code Prettier Extension
 
 `./.vscode/extensions.json`:
 
-```json
+```jsonc
 {
-  "recommendations": ["esbenp.prettier-vscode"]
+  "recommendations": ["esbenp.prettier-vscode"],
 }
 ```
+
+`./.vscode/settings.json`:
 
 ```jsonc
 {

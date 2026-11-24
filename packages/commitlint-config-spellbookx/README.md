@@ -1,18 +1,18 @@
 # commitlint-config-spellbookx
 
-A modern, highly modular, and opinionated [Commitlint](https://commitlint.js.org/) configuration for the Spellbookx ecosystem. It enforces the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification, automatically discovers monorepo package scopes, and provides an interactive [cz-git](https://cz-git.qbb.sh/) prompt with emojis.
+A modern, highly modular, and opinionated [Commitlint](https://commitlint.js.org/) configuration for the Spellbookx ecosystem. It enforces the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification, and automatically discovers monorepo package scopes. For the interactive commit prompt, use [`cz-config-spellbookx`](../cz-config-spellbookx/README.md) with the [`czg`](https://cz-git.qbb.sh/cli/) CLI.
 
 ---
 
 ## Features
 
-| Feature                       | Description                                                                                                                               |
-| :---------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------- |
-| **Conventional Commits**      | Extends `@commitlint/config-conventional` with strict, opinionated rules (72-char headers, 100-char bodies/footers, no trailing periods). |
-| **Dynamic Monorepo Scopes**   | Automatically discovers workspace packages from `pnpm-workspace.yaml`, `package.json`, and `lerna.json`.                                  |
-| **Standard Special Scopes**   | Built-in support for `workspace` (root/infra changes) and `release` (versioning commits).                                                 |
-| **Interactive cz-git Prompt** | Out-of-the-box support for `commitizen` with rich emojis, descriptions, and multi-scope selection.                                        |
-| **Modular Architecture**      | Import individual building blocks (`config`, `rules`, `prompt`) and combine with `@spellbookx/recipes/git`.                               |
+| Feature                     | Description                                                                                                                               |
+| :-------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------- |
+| **Conventional Commits**    | Extends `@commitlint/config-conventional` with strict, opinionated rules (72-char headers, 100-char bodies/footers, no trailing periods). |
+| **Dynamic Monorepo Scopes** | Automatically discovers workspace packages from `pnpm-workspace.yaml`, `package.json`, and `lerna.json`.                                  |
+| **Standard Special Scopes** | Built-in support for `workspace` (root/infra changes) and `release` (versioning commits).                                                 |
+| **Multiple Scopes**         | Separate scopes with `,`, including scoped packages: `fix(cspell-config-spellbookx,@spellbookx/recipes): …`.                              |
+| **Modular Architecture**    | Import individual building blocks (`config`, `rules`, `prompt`) and combine with `@spellbookx/recipes/git`.                               |
 
 ---
 
@@ -116,7 +116,7 @@ Available building blocks:
 
 - `config`: Complete, ready-to-use commitlint configuration object.
 - `rules`: Strict Conventional Commit rules (`type-enum`, `scope-enum`, `header-max-length`, etc.).
-- `prompt`: Commitizen / `cz-git` interactive questionnaire configuration with emojis and multi-scope support.
+- `prompt`: commitlint prompt questions (the `prompt` field of a commitlint config). For `czg`, use `cz-config-spellbookx`.
 
 Shared git constants (`COMMIT_TYPES`, `SCOPE_WORKSPACE`, `SCOPE_RELEASE`, `scopesArray`, `scopesEnum`) and workspace discovery utilities (`findGitRoot`, `getScopes`, `getScopeDescription`, `getWorkspacesRawPath`) are provided by [`@spellbookx/recipes/git`](../recipes/README.md).
 
@@ -124,7 +124,9 @@ Shared git constants (`COMMIT_TYPES`, `SCOPE_WORKSPACE`, `SCOPE_RELEASE`, `scope
 
 ## Configuration File Formats
 
-According to the [Commitlint Shareable Configuration Documentation](https://commitlint.js.org/reference/configuration.html#shareable-configuration), you can define your configuration in any of the following formats:
+According to the [Commitlint Shareable Configuration Documentation](https://commitlint.js.org/reference/configuration.html#shareable-configuration), you can define your configuration in any of the following formats.
+
+Spellbookx naming rule: a name with `.config.` in it (`commitlint.config.mjs`) goes in the repository root, where commitlint finds it. A name that is only the tool name goes in `.config/`, for example `.config/commitlint.mjs`, and every command passes `--config ./.config/commitlint.mjs`.
 
 ### In `commitlint.config.mjs` (ES Modules)
 
@@ -184,101 +186,49 @@ extends:
 
 ## Git Hooks Integration
 
-To enforce commit message conventions automatically before commits are finalized, configure a git hook manager:
-
-### Using Lefthook
-
-Add a `commit-msg` hook in your `lefthook.yml`:
+To check every commit message before the commit is created, add a `commit-msg` job to Lefthook. Lefthook finds `.config/lefthook.yml` on its own:
 
 ```yaml
+# .config/lefthook.yml
 commit-msg:
-  commands:
-    commitlint:
-      run: pnpm exec commitlint --edit {1}
+  jobs:
+    - name: commitlint
+      run: pnpm exec commitlint --config ./.config/commitlint.mjs --edit {1} --verbose
 ```
 
-### Using Husky
-
-Add a `commit-msg` hook with Husky:
-
-```bash
-npx husky add .husky/commit-msg 'npx --no -- commitlint --edit "$1"'
-```
+With a root `commitlint.config.mjs`, drop `--config ./.config/commitlint.mjs`.
 
 ---
 
-## Interactive Commits (`cz-git` / `czg` / Commitizen)
+## Interactive Commits
 
-`commitlint-config-spellbookx` ships with a preconfigured [`cz-git`](https://cz-git.qbb.sh/config/) prompt. You can use it either with **Commitizen** (`cz`) or standalone with **`czg`** / **`cz-git`** without Commitizen.
-
-### Option 1: Using Commitizen (`cz`)
-
-Configure Commitizen to use the `cz-git` adapter in your `package.json`:
-
-```json
-{
-  "scripts": {
-    "commit": "cz"
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-git"
-    }
-  }
-}
-```
-
-Then run:
+Spellbookx writes commit messages with the [`czg`](https://cz-git.qbb.sh/cli/) CLI and the [`cz-config-spellbookx`](../cz-config-spellbookx/README.md) preset, which uses the same commit types and scopes as these rules:
 
 ```bash
-npm run commit
+npm install -g czg
+npm install --save-dev cz-config-spellbookx czg
 ```
 
-### Option 2: Using `czg` or `cz-git` Without Commitizen
-
-If you use [`czg`](https://cz-git.qbb.sh/cli/) or `cz-git` without Commitizen, create a `cz.config.(js|cjs|mjs|ts)` file in your project root (see the [cz-git Configuration Documentation](https://cz-git.qbb.sh/config/)):
-
-#### In `cz.config.mjs` (ES Modules)
-
 ```javascript
-import { definePrompt } from 'cz-git';
-import { prompt } from 'commitlint-config-spellbookx';
+// .config/cz.mjs
+import { config } from 'cz-config-spellbookx';
+import { definePrompt } from 'czg';
 
 export default definePrompt({
-  ...prompt,
+  ...config,
+  useEmoji: true,
 });
 ```
-
-Or re-export `prompt` directly:
-
-```javascript
-export { prompt as default } from 'commitlint-config-spellbookx';
-```
-
-#### In `cz.config.cjs` (CommonJS)
-
-```javascript
-const { definePrompt } = require('cz-git');
-const { prompt } = require('commitlint-config-spellbookx');
-
-module.exports = definePrompt({
-  ...prompt,
-});
-```
-
-Then add a script in `package.json` or run `czg` directly:
 
 ```json
 {
   "scripts": {
-    "commit": "czg"
+    "commit": "czg --config=./.config/cz.mjs"
   }
 }
 ```
 
-```bash
-npx czg
-```
+`czg` needs `--config=<path>` with `=`. See the [`cz-config-spellbookx` README](../cz-config-spellbookx/README.md) for the details.
 
 ---
 
