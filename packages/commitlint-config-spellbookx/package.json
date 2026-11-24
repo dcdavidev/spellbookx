@@ -67,7 +67,6 @@
     "@commitlint/lint": "^21.2.4",
     "@commitlint/load": "^21.2.4",
     "@commitlint/types": "^21.2.3",
-    "@dcdavidev/tsconfig": "^0.1.0",
     "@types/node": "^25.9.9",
     "rolldown": "1.3.3",
     "typescript": "6.0.3",
