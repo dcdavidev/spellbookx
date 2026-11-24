@@ -30,8 +30,7 @@
     "lint:spelling": "cspell --no-progress --no-summary .",
     "lint:types": "turbo run lint:types",
     "prepare": "lefthook install",
-    "release": "pnpm changeset:commits && pnpm changeset:version && pnpm release:publish",
-    "release:publish": "dropdx",
+    "release": "dropdx",
     "test": "turbo run test",
     "test:watch": "turbo run test -- --watch",
     "update:turbo": "pnpm dlx @turbo/codemod@latest update --force"
