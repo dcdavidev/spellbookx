@@ -301,27 +301,26 @@ pnpm build
 
 Script names follow the `action[:target][:modifier]` convention described in [`docs/npm-scripts.md`](docs/npm-scripts.md).
 
-| Script                   | Purpose                                                                     |
-| :----------------------- | :-------------------------------------------------------------------------- |
-| `pnpm build`             | Compiles all workspace packages with Rolldown and `tsc`                     |
-| `pnpm test`              | Runs all unit test suites with Vitest                                       |
-| `pnpm test:watch`        | Runs Vitest in watch mode                                                   |
-| `pnpm lint`              | Runs `lint:code`, `lint:spelling` and `lint:types` (checks only)            |
-| `pnpm lint:code`         | Lints JavaScript, TypeScript, JSON and Markdown with ESLint                 |
-| `pnpm lint:code:fix`     | Lints and applies automatic fixes                                           |
-| `pnpm lint:spelling`     | Spell-checks the repository with CSpell                                     |
-| `pnpm lint:types`        | Type-checks sources and tests of every package                              |
-| `pnpm lint:commits`      | Validates the last commit message against Conventional Commits              |
-| `pnpm fmt`               | Formats all supported files                                                 |
-| `pnpm fmt:check`         | Verifies formatting without writing changes                                 |
-| `pnpm clean`             | Removes `.turbo` caches and package `dist/` folders                         |
-| `pnpm commit`            | Launches the interactive `czg` commit prompt (`cz` and `czg` are aliases)   |
-| `pnpm changeset`         | Creates a new changeset interactively                                       |
-| `pnpm changeset:commits` | Creates changesets from Conventional Commits                                |
-| `pnpm changeset:version` | Consumes changesets, bumps versions and updates changelogs                  |
-| `pnpm release`           | Full release: `changeset:commits` → `changeset:version` → `release:publish` |
-| `pnpm release:publish`   | Builds, tags and publishes all packages with `dropdx`                       |
-| `pnpm update:turbo`      | Updates Turborepo and applies its codemods                                  |
+| Script                   | Purpose                                                                   |
+| :----------------------- | :------------------------------------------------------------------------ |
+| `pnpm build`             | Compiles all workspace packages with Rolldown and `tsc`                   |
+| `pnpm test`              | Runs all unit test suites with Vitest                                     |
+| `pnpm test:watch`        | Runs Vitest in watch mode                                                 |
+| `pnpm lint`              | Runs `lint:code`, `lint:spelling` and `lint:types` (checks only)          |
+| `pnpm lint:code`         | Lints JavaScript, TypeScript, JSON and Markdown with ESLint               |
+| `pnpm lint:code:fix`     | Lints and applies automatic fixes                                         |
+| `pnpm lint:spelling`     | Spell-checks the repository with CSpell                                   |
+| `pnpm lint:types`        | Type-checks sources and tests of every package                            |
+| `pnpm lint:commits`      | Validates the last commit message against Conventional Commits            |
+| `pnpm fmt`               | Formats all supported files                                               |
+| `pnpm fmt:check`         | Verifies formatting without writing changes                               |
+| `pnpm clean`             | Removes `.turbo` caches and package `dist/` folders                       |
+| `pnpm commit`            | Launches the interactive `czg` commit prompt (`cz` and `czg` are aliases) |
+| `pnpm changeset`         | Creates a new changeset interactively                                     |
+| `pnpm changeset:commits` | Creates changesets from the Conventional Commits of the current branch    |
+| `pnpm changeset:version` | Consumes changesets, bumps versions and updates changelogs                |
+| `pnpm release`           | Versions, builds, commits, tags and publishes all packages with `dropdx`  |
+| `pnpm update:turbo`      | Updates Turborepo and applies its codemods                                |
 
 Pass extra flags after the script name, for example `pnpm build --force` to bypass the Turborepo cache.
 

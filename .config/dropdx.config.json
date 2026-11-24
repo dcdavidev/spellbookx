@@ -1,0 +1,9 @@
+{
+  "version": "0.4.0",
+  "conventionalCommits": true,
+  "engine": "changeset",
+  "skipBuild": false,
+  "skipGit": false,
+  "skipPublish": false,
+  "allowDirty": false
+}

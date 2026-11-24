@@ -30,8 +30,8 @@ The bare action has the behaviour that people expect from it:
 
 1. **Full words in targets.** Write `commits`, not `cm`; `spelling`, not `spell`.
 2. **Group related scripts under one action.** All checks that read the code without changing it are `lint:*`: `lint:code`, `lint:spelling`, `lint:types`, `lint:commits`. Do not add separate top-level names such as `spellcheck`, `typecheck` or `commit:lint`.
-3. **An aggregate script runs every script in its group.** `lint` runs `lint:code`, `lint:spelling` and `lint:types` (commit messages are checked by the `commit-msg` hook and by CI). `release` runs `changeset:commits`, `changeset:version` and `release:publish`.
-4. **Do not shadow pnpm built-ins.** `pnpm publish` and `pnpm version` are built-in commands, so the release scripts are `release`, `release:publish` and `changeset:version`. A script name must work with the short form `pnpm <name>`.
+3. **An aggregate script runs every script in its group.** `lint` runs `lint:code`, `lint:spelling` and `lint:types` (commit messages are checked by the `commit-msg` hook and by CI).
+4. **Do not shadow pnpm built-ins.** `pnpm publish` and `pnpm version` are built-in commands, so the release scripts are `release` and `changeset:version`. A script name must work with the short form `pnpm <name>`.
 5. **No catch-all `check` script.** CI runs `build`, `lint:code`, `lint:spelling`, `fmt:check`, `lint:types` and `test` directly, as separate steps (see [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)).
 6. **Files in `scripts/` take the name of the script that runs them**, with `-` in place of `:`.
 7. **Keep the `scripts` field sorted alphabetically.**
@@ -48,29 +48,28 @@ These scripts do not follow the grammar, because the names are conventions of th
 
 ## Root scripts
 
-| Script              | What it does                                                             |
-| ------------------- | ------------------------------------------------------------------------ |
-| `build`             | Builds every package with Rolldown and `tsc` (`turbo run build`).        |
-| `changeset`         | Creates a changeset interactively.                                       |
-| `changeset:commits` | Creates changesets from the Conventional Commits since the last release. |
-| `changeset:version` | Consumes the changesets, bumps the versions and updates the changelogs.  |
-| `clean`             | Removes the `.turbo` caches and the `dist/` folders.                     |
-| `commit`            | Guided commit (Conventional Commits).                                    |
-| `cz`, `czg`         | Aliases of `commit`.                                                     |
-| `fmt`               | Formats all files.                                                       |
-| `fmt:check`         | Checks formatting and changes nothing.                                   |
-| `lint`              | Runs `lint:code`, `lint:spelling` and `lint:types`.                      |
-| `lint:code`         | Checks the source code with ESLint.                                      |
-| `lint:code:fix`     | Checks the source code and applies automatic fixes.                      |
-| `lint:commits`      | Checks the last commit message.                                          |
-| `lint:spelling`     | Checks spelling with CSpell.                                             |
-| `lint:types`        | Type-checks the sources and the tests of every package.                  |
-| `prepare`           | Installs the git hooks.                                                  |
-| `release`           | Runs `changeset:commits`, `changeset:version` and `release:publish`.     |
-| `release:publish`   | Builds, tags and publishes the packages with `dropdx`.                   |
-| `test`              | Runs the tests once (`turbo run test`).                                  |
-| `test:watch`        | Runs the tests in watch mode.                                            |
-| `update:turbo`      | Updates Turborepo and applies its codemods.                              |
+| Script              | What it does                                                            |
+| ------------------- | ----------------------------------------------------------------------- |
+| `build`             | Builds every package with Rolldown and `tsc` (`turbo run build`).       |
+| `changeset`         | Creates a changeset interactively.                                      |
+| `changeset:commits` | Creates changesets from the Conventional Commits of the current branch. |
+| `changeset:version` | Consumes the changesets, bumps the versions and updates the changelogs. |
+| `clean`             | Removes the `.turbo` caches and the `dist/` folders.                    |
+| `commit`            | Guided commit (Conventional Commits).                                   |
+| `cz`, `czg`         | Aliases of `commit`.                                                    |
+| `fmt`               | Formats all files.                                                      |
+| `fmt:check`         | Checks formatting and changes nothing.                                  |
+| `lint`              | Runs `lint:code`, `lint:spelling` and `lint:types`.                     |
+| `lint:code`         | Checks the source code with ESLint.                                     |
+| `lint:code:fix`     | Checks the source code and applies automatic fixes.                     |
+| `lint:commits`      | Checks the last commit message.                                         |
+| `lint:spelling`     | Checks spelling with CSpell.                                            |
+| `lint:types`        | Type-checks the sources and the tests of every package.                 |
+| `prepare`           | Installs the git hooks.                                                 |
+| `release`           | Versions, builds, commits, tags and publishes the packages (`dropdx`).  |
+| `test`              | Runs the tests once (`turbo run test`).                                 |
+| `test:watch`        | Runs the tests in watch mode.                                           |
+| `update:turbo`      | Updates Turborepo and applies its codemods.                             |
 
 Pass extra flags after the script name, for example `pnpm build --force` to bypass the Turborepo cache.
 

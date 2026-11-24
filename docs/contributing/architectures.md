@@ -170,10 +170,9 @@ Turborepo coordinates dependencies and parallel execution across the workspace:
 - Versioning is synchronized across packages using `@changesets/cli` with a `fixed` configuration group.
 - Conventional Commits are mapped into changeset entries via `changeset-conventional-commits`.
 - Packages are built, tagged, and published by [`dropdx`](https://github.com/dcdavidev/dropdx).
-- Publishing workflow (`pnpm release` runs steps 1–3):
-  1. `pnpm changeset:commits` (or `pnpm changeset` interactively) to create release intents.
-  2. `pnpm changeset:version` (`changeset version`) to update package versions and changelogs.
-  3. `pnpm release:publish` (`dropdx`) to build and push artifacts to the npm registry.
+- Publishing workflow:
+  1. On the feature branch, `pnpm changeset:commits` (or `pnpm changeset` interactively) creates the release intents. Commit them with the change.
+  2. On a clean, up-to-date `main`, `pnpm release` runs `dropdx`. It runs `changeset version` on the committed changesets, builds, commits `chore(release): bump to vX.Y.Z`, tags, pushes and publishes to npm. `.config/dropdx.config.json` sets `conventionalCommits: true`, so the release commit passes commitlint on every OS.
 
 ### 4.4 Continuous Integration
 
