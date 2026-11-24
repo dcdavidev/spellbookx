@@ -69,10 +69,17 @@ describe('spellbookx (runInit)', () => {
     const pkg = JSON.parse(
       readFileSync(path.join(tempDir, 'package.json'), 'utf8')
     );
-    expect(pkg.scripts.lint).toBeDefined();
+    expect(pkg.scripts.lint).toBe(
+      'pnpm run lint:code && pnpm run lint:spelling'
+    );
+    expect(pkg.scripts['lint:code']).toBeDefined();
+    expect(pkg.scripts['lint:spelling']).toBeDefined();
+    expect(pkg.scripts['lint:commits']).toBeDefined();
     expect(pkg.scripts.fmt).toBeDefined();
-    expect(pkg.scripts.spellcheck).toBeDefined();
+    expect(pkg.scripts['fmt:check']).toBeDefined();
     expect(pkg.scripts.commit).toBe('cz');
+    expect(pkg.scripts.spellcheck).toBeUndefined();
+    expect(pkg.scripts['lint:check']).toBeUndefined();
   });
 
   it('honors explicit tool selection and installs dependencies', async () => {

@@ -48,6 +48,8 @@ yarn add -D eslint-plugin-spellbookx eslint
 bun add -d eslint-plugin-spellbookx eslint
 ```
 
+> **Requirements:** ESLint `^10.4.0` (peer dependency) and Node.js 24 or newer.
+
 ---
 
 ## Usage

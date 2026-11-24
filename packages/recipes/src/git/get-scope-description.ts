@@ -3,15 +3,7 @@
  * Formats user-facing description strings for commit scopes.
  */
 
-/**
- * Scope identifier for workspace-level changes.
- */
-const SCOPE_WORKSPACE = 'workspace';
-
-/**
- * Scope identifier for release commits.
- */
-const SCOPE_RELEASE = 'release';
+import { SCOPE_RELEASE, SCOPE_WORKSPACE } from './constants.js';
 
 /**
  * Returns a human-readable description for a given commit scope.

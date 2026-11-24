@@ -5,7 +5,6 @@
 
 import type { Linter } from 'eslint';
 import { defineConfig } from 'eslint/config';
-import importPlugin from 'eslint-plugin-import';
 import jsdoc from 'eslint-plugin-jsdoc';
 import nodeDependencies from 'eslint-plugin-node-dependencies';
 import prettierPlugin from 'eslint-plugin-prettier';
@@ -29,7 +28,6 @@ export const configJavascript: Linter.Config[] = defineConfig([
     files: ['**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}'],
     plugins: {
       jsdoc,
-      import: importPlugin,
       prettier: prettierPlugin,
       'simple-import-sort': simpleImportSort,
     },

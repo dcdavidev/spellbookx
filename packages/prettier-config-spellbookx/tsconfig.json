@@ -4,13 +4,8 @@
     "target": "ES2023",
     "lib": ["ES2023"],
     "types": ["node"],
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "tsBuildInfoFile": "./dist/.tsbuildinfo",
-    "declaration": true,
-    "declarationMap": true,
-    "emitDeclarationOnly": true
+    "noEmit": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.test.ts"]
+  "include": ["src/**/*", "__tests__/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

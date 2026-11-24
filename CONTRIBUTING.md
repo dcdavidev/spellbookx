@@ -100,20 +100,23 @@ spellbookx/
 
 ### Useful Commands
 
-| Command                | Description                                                                             |
-| :--------------------- | :-------------------------------------------------------------------------------------- |
-| `pnpm run build`       | Compiles all packages using Rolldown and TypeScript (`tsc`).                            |
-| `pnpm run build:force` | Rebuilds all packages bypassing Turborepo cache.                                        |
-| `pnpm run test`        | Runs unit tests across all packages using Vitest.                                       |
-| `pnpm run test:watch`  | Runs Vitest in interactive watch mode.                                                  |
-| `pnpm run test:force`  | Re-runs all test suites bypassing Turborepo cache.                                      |
-| `pnpm run lint`        | Lints and auto-fixes JavaScript, TypeScript, JSON, and Markdown.                        |
-| `pnpm run lint:check`  | Verifies ESLint rules without applying automated fixes.                                 |
-| `pnpm run fmt`         | Formats all code files using Prettier.                                                  |
-| `pnpm run fmt:check`   | Verifies code formatting with Prettier without writing.                                 |
-| `pnpm run spellcheck`  | Runs CSpell across the entire codebase.                                                 |
-| `pnpm run check:ci`    | **Full verification suite**: lints, checks formatting, spellchecks, and runs all tests. |
-| `pnpm run clean`       | Cleans build caches (`.turbo/` and `dist/` folders).                                    |
+Script names follow the `action[:target][:modifier]` convention described in [`docs/npm-scripts.md`](docs/npm-scripts.md).
+
+| Command              | Description                                                             |
+| :------------------- | :---------------------------------------------------------------------- |
+| `pnpm build`         | Compiles all packages using Rolldown and TypeScript (`tsc`).            |
+| `pnpm test`          | Runs unit tests across all packages using Vitest.                       |
+| `pnpm test:watch`    | Runs Vitest in interactive watch mode.                                  |
+| `pnpm lint`          | Runs every read-only check: `lint:code`, `lint:spelling`, `lint:types`. |
+| `pnpm lint:code`     | Lints JavaScript, TypeScript, JSON, and Markdown with ESLint.           |
+| `pnpm lint:code:fix` | Lints and applies automatic ESLint fixes.                               |
+| `pnpm lint:spelling` | Runs CSpell across the entire codebase.                                 |
+| `pnpm lint:types`    | Type-checks the sources and tests of every package.                     |
+| `pnpm fmt`           | Formats all code files using Prettier.                                  |
+| `pnpm fmt:check`     | Verifies code formatting with Prettier without writing.                 |
+| `pnpm clean`         | Cleans build caches (`.turbo/` and `dist/` folders).                    |
+
+Add `--force` to bypass the Turborepo cache, for example `pnpm test --force`.
 
 ### Targeting Specific Packages
 
@@ -166,7 +169,7 @@ To ensure your commit conforms to the rules, use the built-in interactive commit
 
 ```bash
 git add <files>
-pnpm run commit
+pnpm commit
 ```
 
 ### Git Hooks with Lefthook
@@ -186,7 +189,7 @@ When you commit, [Lefthook](https://github.com/evilmartians/lefthook) runs:
 - Ensure all tests pass with:
 
 ```bash
-pnpm run test:force
+pnpm test
 ```
 
 ---
@@ -207,14 +210,14 @@ pnpm run test:force
 3. **Verify everything passes:**
 
    ```bash
-   pnpm run check:ci
+   pnpm build && pnpm lint && pnpm fmt:check && pnpm test
    ```
 
 4. **Commit your changes using Conventional Commits:**
 
    ```bash
    git add .
-   pnpm run commit
+   pnpm commit
    ```
 
 5. **Push your branch and open a Pull Request:**
@@ -231,9 +234,12 @@ pnpm run test:force
 
 ## Release Process
 
-Releases and versioning are managed using [Changesets](https://github.com/changesets/changesets) and Turborepo:
+Releases are driven by [Changesets](https://github.com/changesets/changesets) and published with [`dropdx`](https://github.com/dcdavidev/dropdx):
 
-1. **`pnpm run changeset`**: Creates a changeset describing your change (or use `pnpm run changeset:conventional` to extract changesets from Conventional Commits).
-2. **`pnpm run version`**: Consumes changesets, bumps package versions in lockstep, and updates package changelogs.
-3. **`pnpm run release`**: Builds all packages and publishes `packages/*` to npmjs via `turbo run release`.
-4. **`pnpm run publish`**: Runs the complete release flow (`pnpm run version && pnpm run release`).
+1. **`pnpm changeset`**: Creates a changeset describing your change.
+2. **`pnpm changeset:commits`**: Creates changesets automatically from Conventional Commits.
+3. **`pnpm changeset:version`**: Consumes the changesets, bumps package versions in lockstep, and updates the changelogs.
+4. **`pnpm release:publish`**: Builds, tags, and publishes the packages to npm with `dropdx`.
+5. **`pnpm release`**: Runs steps 2–4 in sequence.
+
+Simulate a release without side effects with `pnpm exec dropdx --dry-run`.

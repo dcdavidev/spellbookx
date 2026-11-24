@@ -13,7 +13,11 @@ import { normalizeWords } from './normalize-words.js';
  */
 export type CSpellConfigInput = CSpellSettings | undefined | null | false;
 
-type IgnorePathItem = NonNullable<CSpellSettings['ignorePaths']>[number];
+/**
+ * A configuration input or an arbitrarily nested list of inputs.
+ */
+export type CSpellConfigInputs =
+  CSpellConfigInput | readonly CSpellConfigInputs[];
 
 /**
  * Merges multiple CSpell configuration objects into one.
@@ -32,11 +36,15 @@ type IgnorePathItem = NonNullable<CSpellSettings['ignorePaths']>[number];
  * ```
  */
 export function mergeCSpellConfigs(
-  ...configs: (CSpellConfigInput | CSpellConfigInput[])[]
+  ...configs: CSpellConfigInputs[]
 ): CSpellSettings {
+  type IgnorePathItem = NonNullable<CSpellSettings['ignorePaths']>[number];
+
   const flattened: CSpellSettings[] = configs
     .flat(Infinity as 1)
-    .filter((c): c is CSpellSettings => Boolean(c) && typeof c === 'object');
+    .filter(
+      (c: unknown): c is CSpellSettings => Boolean(c) && typeof c === 'object'
+    );
 
   if (flattened.length === 0) {
     return {};

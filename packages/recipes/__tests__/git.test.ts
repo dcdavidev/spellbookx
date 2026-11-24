@@ -12,6 +12,7 @@ import { fileURLToPath } from 'node:url';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import defaultGit, {
+  COMMIT_TYPE_DEFINITIONS,
   COMMIT_TYPES,
   commitTypes,
   findGitRoot,
@@ -57,6 +58,21 @@ describe('@spellbookx/recipes/git', () => {
       'build',
       'revert',
     ]);
+  });
+
+  it('defines prompt metadata for every commit type', () => {
+    expect(git.COMMIT_TYPE_DEFINITIONS).toBe(COMMIT_TYPE_DEFINITIONS);
+    expect(
+      COMMIT_TYPE_DEFINITIONS.map(({ type }) => type).toSorted((a, b) =>
+        a.localeCompare(b)
+      )
+    ).toEqual([...COMMIT_TYPES].toSorted((a, b) => a.localeCompare(b)));
+
+    for (const definition of COMMIT_TYPE_DEFINITIONS) {
+      expect(definition.title).not.toBe('');
+      expect(definition.emoji).not.toBe('');
+      expect(definition.description).not.toBe('');
+    }
   });
 
   describe('scopes', () => {

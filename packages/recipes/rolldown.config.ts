@@ -1,20 +1,3 @@
-import { defineConfig } from 'rolldown';
+import { definePackageBuild } from '../../rolldown.base.ts';
 
-export default defineConfig([
-  {
-    input: {
-      index: 'src/index.ts',
-      'git/index': 'src/git/index.ts',
-      'imports/index': 'src/imports/index.ts',
-      'ignores/index': 'src/ignores/index.ts',
-    },
-    output: {
-      format: 'esm',
-      dir: 'dist',
-      entryFileNames: '[name].js',
-      chunkFileNames: '[name]-[hash].js',
-      assetFileNames: '[name]-[hash][extname]',
-    },
-    platform: 'node',
-  },
-]);
+export default definePackageBuild();

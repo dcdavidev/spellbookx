@@ -130,9 +130,10 @@ flowchart TD
 
 ### 4.1 Build Engine: Rolldown & TypeScript
 
-- Packages compile using **Rolldown** (`rolldown -c`), delivering ultra-fast bundling of ECMAScript modules.
-- Type definitions (`.d.ts`) are generated concurrently with `tsc`.
-- All sub-packages output cleanly to their local `dist/` directories with root-level and sub-path exports defined in `package.json`.
+- Every package builds with **Rolldown** (`rolldown -c`) from the shared [`rolldown.base.ts`](../rolldown.base.ts). Each `rolldown.config.ts` only calls `definePackageBuild()`.
+- Every file in `src/` is an entry and `preserveModules` is enabled, so `dist/` mirrors `src/` one-to-one (no hashed chunks).
+- Bare imports (npm packages, workspace packages, `node:` built-ins) stay external: runtime dependencies are installed by consumers, not bundled.
+- Type declarations (`.d.ts`) are emitted by `tsc -p tsconfig.build.json`. `tsconfig.json` covers `src/` and `__tests__/` with `noEmit` and powers `lint:types` and the editor.
 
 ### 4.2 Monorepo Task Orchestration: Turborepo
 
@@ -140,33 +141,43 @@ Turborepo coordinates dependencies and parallel execution across the workspace:
 
 ```json
 {
-  "$schema": "https://turbo.build/schema.json",
+  "$schema": "https://turborepo.dev/schema.json",
+  "ui": "tui",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**"]
     },
-    "lint": {},
-    "test": {},
-    "release": {
+    "test": {
       "dependsOn": ["build"],
-      "cache": false
+      "inputs": ["$TURBO_DEFAULT$"]
+    },
+    "lint:types": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$"],
+      "outputs": []
     }
   }
 }
 ```
 
 - `dependsOn: ["^build"]` ensures that foundational dependencies (such as `@spellbookx/recipes`) are built before consuming packages (`eslint-plugin-spellbookx`, `prettier-config-spellbookx`).
-- `turbo run release` executes each package's `release` script (`pnpm publish --access public --no-git-checks`) with fresh compilation and zero caching.
+- `lint:types` needs the declarations of the workspace dependencies, so it also depends on `^build`.
 
-### 4.3 Versioning & Publishing: Changesets
+### 4.3 Versioning & Publishing: Changesets and dropdx
 
 - Versioning is synchronized across packages using `@changesets/cli` with a `fixed` configuration group.
 - Conventional Commits are mapped into changeset entries via `changeset-conventional-commits`.
-- Publishing workflow:
-  1. `pnpm run changeset` / `pnpm run changeset:conventional` to create release intents.
-  2. `pnpm run version` (`changeset version`) to update package versions and changelogs.
-  3. `pnpm run release` (`turbo run release`) to build and push artifacts to the npm registry.
+- Packages are built, tagged, and published by [`dropdx`](https://github.com/dcdavidev/dropdx).
+- Publishing workflow (`pnpm release` runs steps 1–3):
+  1. `pnpm changeset:commits` (or `pnpm changeset` interactively) to create release intents.
+  2. `pnpm changeset:version` (`changeset version`) to update package versions and changelogs.
+  3. `pnpm release:publish` (`dropdx`) to build and push artifacts to the npm registry.
+
+### 4.4 Continuous Integration
+
+[`.github/workflows/ci.yml`](../.github/workflows/ci.yml) runs on every pull request and on pushes to `main`. It runs each check as a separate step: build, commit messages, `lint:code`, `lint:spelling`, `fmt:check`, `lint:types`, and `test`. Script names follow [`docs/npm-scripts.md`](npm-scripts.md).
 
 ---
 

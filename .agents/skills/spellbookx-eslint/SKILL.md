@@ -133,5 +133,5 @@ export default defineConfig([
 1. **Always use `defineConfig`**: Wrap the array with `import { defineConfig } from 'eslint/config'` for full TypeScript autocompletion and flat config type validation.
 2. **Prettier Conflict Management**: Put `spellbookx.configs.prettier` or any custom formatting override at the **end** of your config array to avoid conflicting rules.
 3. **Running the Linter**:
-   - To auto-fix: `pnpm exec eslint --no-warn-ignored --fix .`
-   - In CI: `pnpm exec eslint --no-warn-ignored .`
+   - Check (also in CI): `pnpm lint:code` (`eslint --no-warn-ignored .`)
+   - Auto-fix: `pnpm lint:code:fix` (`eslint --no-warn-ignored --fix .`)

@@ -7,7 +7,7 @@ import type { CSpellSettings } from '@cspell/cspell-types';
 
 import { config as baseConfig } from '../config.js';
 import {
-  type CSpellConfigInput,
+  type CSpellConfigInputs,
   mergeCSpellConfigs,
 } from './merge-cspell-configs.js';
 
@@ -28,7 +28,7 @@ import {
  * ```
  */
 export function defineSbxConfig(
-  ...overrides: (CSpellConfigInput | CSpellConfigInput[])[]
+  ...overrides: CSpellConfigInputs[]
 ): CSpellSettings {
   return mergeCSpellConfigs(baseConfig, ...overrides);
 }

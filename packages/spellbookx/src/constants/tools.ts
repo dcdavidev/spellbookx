@@ -94,7 +94,7 @@ export const ESLINT_CONFIG_OPTIONS: {
   {
     value: 'react',
     title: 'React',
-    description: 'React and JSX rules with accessibility checks',
+    description: 'React and JSX rules for function components and hooks',
   },
   {
     value: 'astro',
@@ -143,8 +143,7 @@ export const TOOLS: ToolDefinition[] = [
       },
     ],
     getScripts: () => ({
-      spellcheck: 'cspell --no-progress --no-summary .',
-      'spellcheck:all': 'cspell .',
+      'lint:spelling': 'cspell --no-progress --no-summary .',
     }),
   },
   {
@@ -179,7 +178,7 @@ export const TOOLS: ToolDefinition[] = [
     ],
     getScripts: (context: ToolContext) => ({
       commit: 'cz',
-      'commit:lint': 'commitlint --from=HEAD~1',
+      'lint:commits': 'commitlint --from=HEAD~1',
       ...getHookManagerScripts(context.choices.hookManager),
     }),
     getExtraPackageJson: () => ({
@@ -207,8 +206,8 @@ export const TOOLS: ToolDefinition[] = [
       },
     ],
     getScripts: () => ({
-      lint: 'eslint --no-warn-ignored --fix .',
-      'lint:check': 'eslint --no-warn-ignored .',
+      'lint:code': 'eslint --no-warn-ignored .',
+      'lint:code:fix': 'eslint --no-warn-ignored --fix .',
     }),
   },
   {

@@ -19,6 +19,7 @@ import { TOOLS, TOOLS_MAP } from '../constants/tools.js';
 import { printBanner } from '../lib/banner.js';
 import { detectPackageManager } from '../lib/detect-pm.js';
 import { installDeps } from '../lib/install-deps.js';
+import { didSyncLintScript } from '../lib/lint-script.js';
 import {
   promptESLintConfig,
   promptHookManager,
@@ -187,6 +188,10 @@ export async function runInit(
       }
     }
   }
+
+  // The aggregate `lint` script runs every `lint:*` target, including the ones
+  // configured by earlier runs.
+  didSyncLintScript({ cwd, packageManager: pm });
 
   if (!options.silent) {
     console.log(
