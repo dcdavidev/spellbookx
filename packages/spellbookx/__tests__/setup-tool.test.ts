@@ -55,7 +55,9 @@ describe('spellbookx (setupTool)', () => {
     const pkg = JSON.parse(
       readFileSync(path.join(tempDir, 'package.json'), 'utf8')
     );
-    expect(pkg.scripts.spellcheck).toBeDefined();
+    expect(pkg.scripts['lint:spelling']).toBe(
+      'cspell --no-progress --no-summary .'
+    );
   });
 
   it('sets up commitlint, .czrc, cz-git settings, and lefthook by default', () => {
@@ -75,7 +77,7 @@ describe('spellbookx (setupTool)', () => {
       readFileSync(path.join(tempDir, 'package.json'), 'utf8')
     );
     expect(pkg.scripts.commit).toBe('cz');
-    expect(pkg.scripts['commit:lint']).toBe('commitlint --from=HEAD~1');
+    expect(pkg.scripts['lint:commits']).toBe('commitlint --from=HEAD~1');
     expect(pkg.scripts.prepare).toBe('lefthook install');
     expect(pkg.config.commitizen.path).toBe('cz-git');
   });
@@ -115,7 +117,10 @@ describe('spellbookx (setupTool)', () => {
     const pkg = JSON.parse(
       readFileSync(path.join(tempDir, 'package.json'), 'utf8')
     );
-    expect(pkg.scripts.lint).toBeDefined();
+    expect(pkg.scripts['lint:code']).toBe('eslint --no-warn-ignored .');
+    expect(pkg.scripts['lint:code:fix']).toBe(
+      'eslint --no-warn-ignored --fix .'
+    );
   });
 
   it('generates the requested prettier preset plus .prettierignore and .editorconfig', () => {
@@ -145,8 +150,8 @@ describe('spellbookx (setupTool)', () => {
   });
 
   it('throws an error for an unknown tool identifier', () => {
-    // @ts-expect-error Testing runtime validation for invalid toolId
     expect(() =>
+      // @ts-expect-error Testing runtime validation for invalid toolId
       setupTool('unknown-tool', { cwd: tempDir, context: context() })
     ).toThrow(/Unknown tool: unknown-tool/);
   });

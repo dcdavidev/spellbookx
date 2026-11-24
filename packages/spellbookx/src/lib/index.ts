@@ -8,6 +8,7 @@ export * from './detect-pm.js';
 export * from './get-install-args.js';
 export * from './hooks.js';
 export * from './install-deps.js';
+export * from './lint-script.js';
 export * from './package-json.js';
 export * from './prompt-tools.js';
 export * from './setup-tool.js';
