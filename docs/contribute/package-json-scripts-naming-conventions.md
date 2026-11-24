@@ -32,7 +32,7 @@ The bare action has the behaviour that people expect from it:
 2. **Group related scripts under one action.** All checks that read the code without changing it are `lint:*`: `lint:code`, `lint:spelling`, `lint:types`, `lint:commits`. Do not add separate top-level names such as `spellcheck`, `typecheck` or `commit:lint`.
 3. **An aggregate script runs every script in its group.** `lint` runs `lint:code`, `lint:spelling` and `lint:types` (commit messages are checked by the `commit-msg` hook and by CI).
 4. **Do not shadow pnpm built-ins.** `pnpm publish` and `pnpm version` are built-in commands, so the release scripts are `release` and `changeset:version`. A script name must work with the short form `pnpm <name>`.
-5. **No catch-all `check` script.** CI runs `build`, `lint:code`, `lint:spelling`, `fmt:check`, `lint:types` and `test` directly, as separate steps (see [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)).
+5. **No catch-all `check` script.** CI runs `build`, `lint:code`, `lint:spelling`, `fmt:check`, `lint:types` and `test` directly, as separate steps (see [`.github/workflows/code-quality-and-tests.yml`](../../.github/workflows/code-quality-and-tests.yml)).
 6. **Files in `scripts/` take the name of the script that runs them**, with `-` in place of `:`.
 7. **Keep the `scripts` field sorted alphabetically.**
 

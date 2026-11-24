@@ -40,8 +40,6 @@ This page is the entry point. The guides in [`docs/contribute/`](./contribute/) 
 | [Package.json Scripts Naming Conventions](./contribute/package-json-scripts-naming-conventions.md) | Defines the `action[:target][:modifier]` grammar for scripts and lists the root and package scripts.                     |
 | [Tests](./contribute/tests.md)                                                                     | Explains how to build the packages and run the test suites.                                                              |
 
-Architecture Decision Records (ADRs) are in [`docs/decisions/`](./decisions/).
-
 ---
 
 ## Prerequisites
@@ -49,14 +47,10 @@ Architecture Decision Records (ADRs) are in [`docs/decisions/`](./decisions/).
 Before contributing, make sure your development environment meets the following requirements:
 
 - **Node.js**: version `26.x` (see [`.nvmrc`](../.nvmrc) and the `engines` field of the root `package.json`).
-- **pnpm**: version `12.x` (the exact version is pinned in the `packageManager` field of the root `package.json`). We recommend using [Corepack](https://nodejs.org/api/corepack.html):
+- **pnpm**: version `12.x` (the exact version is pinned in the `packageManager` field of the root `package.json`). Install it as described in the [pnpm installation guide](https://pnpm.io/installation):
 
 ```bash
-corepack enable
-```
-
-```bash
-corepack install
+npx get-pnpm
 ```
 
 For the full setup, see [Development Environment](./contribute/development-environment.md).
@@ -110,7 +104,7 @@ spellbookx/
 │   └── spellbookx/                    # 🧙 The Spellbookx CLI (`sbx`)
 ├── .agents/skills/                    # AI Agent skills for developer assistants
 ├── .config/                           # Tool configs (commitlint, cz, cspell, dropdx, lefthook)
-├── docs/                              # Contributor guides & Architecture Decision Records
+├── docs/                              # Contributing guide, contributor guides & security policy
 ├── rolldown.base.ts                   # Shared Rolldown build configuration
 ├── pnpm-workspace.yaml                # Workspace package mappings
 └── turbo.json                         # Turborepo task pipeline configuration

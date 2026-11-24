@@ -24,14 +24,16 @@ spellbookx/
 │   ├── prettier-config-spellbookx/   # Prettier presets, plugins & defineSbxConfig composer
 │   ├── commitlint-config-spellbookx/ # Conventional Commits rules and monorepo scope discovery
 │   ├── cspell-config-spellbookx/     # Multi-language & technical spellcheck configuration
+│   ├── cz-config-spellbookx/         # czg interactive commit prompt configuration
 │   ├── recipes/                      # Core shared recipes (import regexes & ignore patterns)
 │   └── spellbookx/                   # CLI wizard (`sbx`) for interactive toolchain scaffolding
 ├── .agents/
 │   └── skills/                       # Built-in AI Agent skills for assisted toolchain adoption
 ├── .changeset/                       # Changesets release orchestration & lockstep versioning
-├── docs/                             # Architecture documentation & Architecture Decision Records (ADRs)
-│   ├── architectures.md              # System architecture documentation
-│   └── decisions/                    # Architecture Decision Records (ADRs)
+├── docs/                             # Contributing guide, contributor guides & security policy
+│   ├── CONTRIBUTING.md               # Contributing guide (entry point)
+│   ├── contribute/                   # Contributor guides, including this architecture document
+│   └── SECURITY.md                   # Security policy
 └── turbo.json                        # Monorepo pipeline definition
 ```
 
@@ -130,7 +132,7 @@ flowchart TD
 
 ### 4.1 Build Engine: Rolldown & TypeScript
 
-- Every package builds with **Rolldown** (`rolldown -c`) from the shared [`rolldown.base.ts`](../rolldown.base.ts). Each `rolldown.config.ts` only calls `definePackageBuild()`.
+- Every package builds with **Rolldown** (`rolldown -c`) from the shared [`rolldown.base.ts`](../../rolldown.base.ts). Each `rolldown.config.ts` only calls `definePackageBuild()`.
 - Every file in `src/` is an entry and `preserveModules` is enabled, so `dist/` mirrors `src/` one-to-one (no hashed chunks).
 - Bare imports (npm packages, workspace packages, `node:` built-ins) stay external: runtime dependencies are installed by consumers, not bundled.
 - Type declarations (`.d.ts`) are emitted by `tsc -p tsconfig.build.json`. `tsconfig.json` covers `src/` and `__tests__/` with `noEmit` and powers `lint:types` and the editor.
@@ -176,7 +178,7 @@ Turborepo coordinates dependencies and parallel execution across the workspace:
 
 ### 4.4 Continuous Integration
 
-[`.github/workflows/ci.yml`](../.github/workflows/ci.yml) runs on every pull request and on pushes to `main`. It runs each check as a separate step: build, commit messages, `lint:code`, `lint:spelling`, `fmt:check`, `lint:types`, and `test`. Script names follow [`docs/npm-scripts.md`](npm-scripts.md).
+[`.github/workflows/code-quality-and-tests.yml`](../../.github/workflows/code-quality-and-tests.yml) runs on every pull request and on pushes to `main`. It runs each check as a separate step: build, commit messages, `lint:code`, `lint:spelling`, `fmt:check`, `lint:types`, and `test`. Script names follow [Package.json Scripts Naming Conventions](package-json-scripts-naming-conventions.md).
 
 ---
 
