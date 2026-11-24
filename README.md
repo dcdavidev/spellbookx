@@ -181,25 +181,48 @@ For full documentation and skill guides, see [`.agents/README.md`](./.agents/REA
 spellbookx/
 ├── .agents/
 │   └── skills/                        # AI agent skills (setup, eslint, prettier, etc.)
-├── @spellbookx/
-│   └── recipes/                       # Import sorting recipes & ignore patterns
+├── .changeset/                        # Pending changesets for the next release
+├── .config/                           # Tool configs named after the tool
+│   ├── commitlint.mjs                 # Commitlint config (--config ./.config/commitlint.mjs)
+│   ├── cspell.yml                     # CSpell config
+│   ├── cspell/
+│   │   └── custom.txt                 # Project word list
+│   ├── cz.mjs                         # czg prompt (--config=./.config/cz.mjs)
+│   └── lefthook.yml                   # Git hooks (pre-commit, commit-msg)
+├── .github/
+│   ├── ISSUE_TEMPLATE/                # Bug report and feature request forms
+│   ├── workflows/                     # CI: code quality and tests
+│   └── PULL_REQUEST_TEMPLATE.md
+├── .vscode/                           # Recommended extensions and settings
+├── docs/
+│   ├── contributing/                  # Architecture, commit style, npm scripts
+│   ├── decisions/                     # Architecture decision records (ADRs)
+│   ├── CODE_OF_CONDUCT.md
+│   ├── CONTRIBUTING.md
+│   └── SECURITY.md
+├── images/                            # README banner and assets
 ├── packages/
 │   ├── commitlint-config-spellbookx/  # Conventional Commits rules + scopes
 │   ├── cspell-config-spellbookx/      # CSpell multi-lang & technical dicts
-│   ├── eslint-plugin-spellbookx/      # ESLint 9+ flat configs (16 presets)
+│   ├── cz-config-spellbookx/          # czg interactive commit prompt
+│   ├── eslint-plugin-spellbookx/      # ESLint flat configs (16 presets)
 │   ├── prettier-config-spellbookx/    # Prettier configs (19 presets + composer)
+│   ├── recipes/                       # @spellbookx/recipes: import groups, ignore globs, git scopes
 │   └── spellbookx/                    # 🧙 The Spellbookx CLI (`sbx`)
-├── .config/cspell/                    # Monorepo CSpell custom dictionary
 ├── .editorconfig                      # Consistent indentation and coding styles
+├── .gitattributes                     # LF line endings and binary files
 ├── .nvmrc                             # Node.js LTS version (>= v24.x)
 ├── .prettierignore                    # Global format exclusions
 ├── eslint.config.mjs                  # Monorepo ESLint flat configuration
-├── .config/lefthook.yml               # Fast Git hooks manager
 ├── package.json                       # Monorepo workspace root scripts & devDeps
 ├── pnpm-workspace.yaml                # pnpm workspace definition
 ├── prettier.config.mjs                # Monorepo Prettier configuration
+├── rolldown.base.ts                   # Shared Rolldown build config for all packages
+├── skills-lock.json                   # Third-party agent skills (dropdx, vuoto)
 └── turbo.json                         # Turborepo task pipeline configuration
 ```
+
+Configs whose name contains `.config.` (`eslint.config.mjs`, `prettier.config.mjs`) live in the root. Configs named only after the tool live in `.config/`, and every script and hook passes their path.
 
 ---
 
