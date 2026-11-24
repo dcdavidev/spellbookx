@@ -17,13 +17,24 @@ import {
 } from '../constants/theme.js';
 import { TOOLS, TOOLS_MAP } from '../constants/tools.js';
 import { printBanner } from '../lib/banner.js';
+import {
+  canChooseCSpellLocation,
+  getCommitlintConfigPath,
+  getCSpellConfigPath,
+  getCzgConfigPath,
+  normalizeChoices,
+} from '../lib/config-files.js';
 import { detectPackageManager } from '../lib/detect-pm.js';
 import { installDeps } from '../lib/install-deps.js';
 import { didSyncLintScript } from '../lib/lint-script.js';
 import {
+  promptConfigLocation,
+  promptCSpellFormat,
   promptESLintConfig,
-  promptHookManager,
+  promptESLintFormat,
+  promptLefthookFormat,
   promptPrettierConfig,
+  promptPrettierFormat,
   promptTools,
 } from '../lib/prompt-tools.js';
 import { setupTool } from '../lib/setup-tool.js';
@@ -45,12 +56,18 @@ function isInteractiveTTY(): boolean {
 }
 
 /**
- * Resolves the Prettier preset, ESLint preset, and hook manager choices.
+ * Resolves the presets, config file formats, and config file locations.
  *
- * Prompts only for the tools that were selected and only when the choice was
- * not provided explicitly and interactive mode is enabled.
+ * For each selected tool, asks only for the choices that were not provided
+ * explicitly, and only in interactive mode. Every other choice takes its
+ * default value (the `.config/` layout).
  *
- * @param options - The setup options carrying explicit or default choices.
+ * - ESLint and Prettier: preset and format. Their files always go in root.
+ * - CSpell: format, then the location when the format allows both.
+ * - commitlint and czg: the location (the format is always `.mjs`).
+ * - Lefthook: format. The file always goes in `.config/`.
+ *
+ * @param options - The setup options carrying explicit choices.
  * @param selectedTools - The tools that will be configured.
  * @param isInteractive - Whether interactive prompts are enabled.
  * @returns The fully resolved choices used to generate configuration files.
@@ -60,27 +77,60 @@ async function resolveChoices(
   selectedTools: ToolId[],
   isInteractive: boolean
 ): Promise<ResolvedChoices> {
-  const isSelected = (tool: ToolId): boolean => selectedTools.includes(tool);
+  const explicit = options.choices ?? {};
+  const choices: Partial<ResolvedChoices> = { ...explicit };
+  const shouldAsk = (tool: ToolId, key: keyof ResolvedChoices): boolean =>
+    isInteractive &&
+    selectedTools.includes(tool) &&
+    explicit[key] === undefined;
 
-  const prettierConfig =
-    options.prettierConfig ??
-    (isInteractive && isSelected('prettier')
-      ? await promptPrettierConfig()
-      : 'base');
+  if (shouldAsk('eslint', 'eslintConfig')) {
+    choices.eslintConfig = await promptESLintConfig();
+  }
+  if (shouldAsk('eslint', 'eslintFormat')) {
+    choices.eslintFormat = await promptESLintFormat();
+  }
 
-  const eslintConfig =
-    options.eslintConfig ??
-    (isInteractive && isSelected('eslint')
-      ? await promptESLintConfig()
-      : 'recommended-spellcheck');
+  if (shouldAsk('prettier', 'prettierConfig')) {
+    choices.prettierConfig = await promptPrettierConfig();
+  }
+  if (shouldAsk('prettier', 'prettierFormat')) {
+    choices.prettierFormat = await promptPrettierFormat();
+  }
 
-  const hookManager =
-    options.hookManager ??
-    (isInteractive && isSelected('commitlint')
-      ? await promptHookManager()
-      : 'lefthook');
+  if (shouldAsk('cspell', 'cspellFormat')) {
+    choices.cspellFormat = await promptCSpellFormat();
+  }
+  const cspellFormat = normalizeChoices(choices).cspellFormat;
+  if (
+    shouldAsk('cspell', 'cspellLocation') &&
+    canChooseCSpellLocation(cspellFormat)
+  ) {
+    choices.cspellLocation = await promptConfigLocation(
+      getCSpellConfigPath(cspellFormat, 'config-dir'),
+      getCSpellConfigPath(cspellFormat, 'root')
+    );
+  }
 
-  return { prettierConfig, eslintConfig, hookManager };
+  if (shouldAsk('commitlint', 'commitlintLocation')) {
+    choices.commitlintLocation = await promptConfigLocation(
+      getCommitlintConfigPath('config-dir'),
+      getCommitlintConfigPath('root')
+    );
+  }
+
+  if (shouldAsk('czg', 'czgLocation')) {
+    choices.czgLocation = await promptConfigLocation(
+      getCzgConfigPath('config-dir'),
+      getCzgConfigPath('root')
+    );
+  }
+
+  if (shouldAsk('lefthook', 'lefthookFormat')) {
+    choices.lefthookFormat = await promptLefthookFormat();
+  }
+
+  return normalizeChoices(choices);
 }
 
 /**
@@ -128,7 +178,7 @@ export async function runInit(
     };
   }
 
-  const context: ToolContext = { choices, packageManager: pm };
+  const context: ToolContext = { choices, packageManager: pm, selectedTools };
 
   if (!options.silent) {
     console.log(`\n${step(1, 2, 'Installing dependencies...')}`);
@@ -199,9 +249,19 @@ export async function runInit(
     );
     console.log(
       dim(
-        `Run ${brand(`${pm} run lint`)} or ${brand(`${pm} run fmt`)} to verify your code styling.\n`
+        `Run ${brand(`${pm} run lint`)} or ${brand(`${pm} run fmt`)} to verify your code styling.`
       )
     );
+    if (selectedTools.includes('czg')) {
+      // The devDependency pins the version the `commit` script uses; the
+      // global install makes `czg` work outside the project scripts too.
+      console.log(
+        info(
+          `Also install czg globally: ${brand('npm install -g czg')}. Then run ${brand(`${pm} run commit`)} to write a commit.`
+        )
+      );
+    }
+    console.log('');
   }
 
   return {

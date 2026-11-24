@@ -4,10 +4,11 @@
  */
 
 export * from './banner.js';
+export * from './config-files.js';
 export * from './detect-pm.js';
 export * from './get-install-args.js';
-export * from './hooks.js';
 export * from './install-deps.js';
+export * from './lefthook.js';
 export * from './lint-script.js';
 export * from './package-json.js';
 export * from './prompt-tools.js';

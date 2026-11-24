@@ -45,7 +45,7 @@ npx spellbookx init
 bunx spellbookx init
 ```
 
-> The wizard still writes the older layout: `cspell.config.cjs`, `commitlint.config.mjs`, `.czrc`, and `lefthook.yml` in the repository root. To use the `.config/` layout described below, move those files after the wizard runs and add the `--config` flags from section 4.
+> The wizard follows the naming rule in section 3. For each selected tool it asks the config format and, where the format allows both, whether the file goes in `.config/`: ESLint and Prettier (`.mjs` or `.ts`, root), CSpell (YAML, JSON, or JavaScript with `defineSbxConfig`; YAML and JSON can go in `.config/`), commitlint and czg (`.config/` or root), and Lefthook (YAML, JSON, or TOML in `.config/`). The defaults give the `.config/` layout below, and the generated scripts and hooks pass `--config` / `--config=` where needed. It sets up Lefthook only (no husky) and czg only (no Commitizen). Non-interactive runs take flags such as `--cspell-format json`, `--lefthook-format toml`, or `--root czg` (`sbx init --help`).
 
 ### Option B: Manual Dependency Installation
 
