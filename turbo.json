@@ -11,9 +11,10 @@
       "dependsOn": ["build"],
       "inputs": ["$TURBO_DEFAULT$"]
     },
-    "release": {
-      "dependsOn": ["build"],
-      "cache": false
+    "lint:types": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$"],
+      "outputs": []
     }
   }
 }
