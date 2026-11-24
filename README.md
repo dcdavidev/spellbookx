@@ -191,7 +191,7 @@ spellbookx/
 ├── .nvmrc                             # Node.js LTS version (>= v24.x)
 ├── .prettierignore                    # Global format exclusions
 ├── eslint.config.mjs                  # Monorepo ESLint flat configuration
-├── lefthook.yml                       # Fast Git hooks manager
+├── .config/lefthook.yml               # Fast Git hooks manager
 ├── package.json                       # Monorepo workspace root scripts & devDeps
 ├── pnpm-workspace.yaml                # pnpm workspace definition
 ├── prettier.config.mjs                # Monorepo Prettier configuration

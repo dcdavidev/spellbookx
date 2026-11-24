@@ -1,0 +1,57 @@
+# Lefthook configuration
+# Documentation: https://lefthook.dev/configuration/
+#
+# Skip every hook for one command:   LEFTHOOK=0 git commit ...
+# Skip some jobs for one command:    LEFTHOOK_EXCLUDE=types git commit ...
+# Override jobs locally (ignored by Git): lefthook-local.yml
+
+min_version: 2.0.0
+assert_lefthook_installed: true
+skip_lfs: true
+
+# ------------------------------------------------------------------------------
+# Before the commit is created: check only the staged files.
+# ------------------------------------------------------------------------------
+pre-commit:
+  parallel: true
+  skip:
+    - merge
+    - rebase
+  jobs:
+    # ESLint and Prettier both write files, so they run one after the other.
+    # ESLint also checks spelling through @cspell/eslint-plugin.
+    - name: lint-and-format
+      group:
+        piped: true
+        jobs:
+          - name: eslint
+            run: pnpm exec eslint --no-warn-ignored --fix {staged_files}
+            stage_fixed: true
+            fail_text: ESLint found errors that it cannot fix. Fix them and commit again.
+          - name: prettier
+            run: pnpm exec prettier --ignore-unknown --write {staged_files}
+            stage_fixed: true
+
+    # Turbo builds the workspace dependencies first, then type-checks every
+    # package.
+    - name: types
+      glob: '*.{ts,tsx,mts,cts}'
+      run: pnpm run lint:types
+      fail_text: TypeScript found type errors.
+
+    - name: lockfile
+      glob: '{package.json,pnpm-workspace.yaml,packages/*/package.json}'
+      run: pnpm install --frozen-lockfile --lockfile-only
+      fail_text: pnpm-lock.yaml is out of date. Run "pnpm install" and stage pnpm-lock.yaml.
+
+# ------------------------------------------------------------------------------
+# Commit message: enforce Conventional Commits.
+# ------------------------------------------------------------------------------
+commit-msg:
+  jobs:
+    - name: commitlint
+      run: pnpm exec commitlint --edit {1} --verbose
+      fail_text: 'Use Conventional Commits, for example "feat(cspell): add a word list". Run "pnpm commit" for a guided prompt.'
+
+# No pre-push hook: the whole-project checks (lint, spelling, format, types,
+# tests, build) run in CI, in .github/workflows/ci.yml.
