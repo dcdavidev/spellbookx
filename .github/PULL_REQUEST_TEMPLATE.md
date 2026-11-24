@@ -53,5 +53,5 @@ Before submitting this PR, please verify the following:
 - [ ] I have added unit tests covering my changes in the corresponding `__tests__/` directory.
 - [ ] All unit tests pass locally via `pnpm test`.
 - [ ] The build succeeds: `pnpm build`.
-- [ ] I have updated the relevant documentation ([`README.md`](README.md), package docs, etc.) where appropriate.
+- [ ] I have updated the relevant documentation ([`README.md`](../README.md), package docs, etc.) where appropriate.
 - [ ] My commits conform to the [Conventional Commits](https://www.conventionalcommits.org/) standard (`pnpm commit`).

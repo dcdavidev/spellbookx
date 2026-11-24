@@ -246,8 +246,7 @@ spellbookx/
 │   └── PULL_REQUEST_TEMPLATE.md
 ├── .vscode/                           # Recommended extensions and settings
 ├── docs/
-│   ├── contributing/                  # Architecture, commit style, npm scripts
-│   ├── decisions/                     # Architecture decision records (ADRs)
+│   ├── contribute/                    # Contributor guides (architecture, conventions, tests)
 │   ├── CONTRIBUTING.md
 │   └── SECURITY.md
 ├── images/                            # README banner and assets
@@ -299,7 +298,7 @@ pnpm build
 
 ### Available Scripts
 
-Script names follow the `action[:target][:modifier]` convention described in [`docs/npm-scripts.md`](docs/npm-scripts.md).
+Script names follow the `action[:target][:modifier]` convention described in [Package.json Scripts Naming Conventions](docs/contribute/package-json-scripts-naming-conventions.md).
 
 | Script                   | Purpose                                                                   |
 | :----------------------- | :------------------------------------------------------------------------ |
@@ -338,7 +337,7 @@ This project enforces commit hygiene and pre-commit checks using [Lefthook](http
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome! Please read our [Contributing Guide](./CONTRIBUTING.md) for details on code style, commit conventions, and development workflows.
+Contributions, issues, and feature requests are welcome! Please read our [Contributing Guide](./docs/CONTRIBUTING.md) for details on code style, commit conventions, and development workflows.
 
 ---
 
