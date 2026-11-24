@@ -2,7 +2,7 @@
   "name": "spellbookx",
   "version": "1.3.0",
   "private": false,
-  "description": "🧙 Wizard CLI for the Spellbookx developer toolchain (ESLint, Prettier, CSpell, Commitlint).",
+  "description": "🧙 Wizard CLI for the Spellbookx developer toolchain (ESLint, Prettier, CSpell, Commitlint, czg, Lefthook).",
   "keywords": [
     "cli",
     "spellbookx",
@@ -12,6 +12,8 @@
     "prettier",
     "cspell",
     "commitlint",
+    "czg",
+    "lefthook",
     "toolchain"
   ],
   "homepage": "https://github.com/dcdavidev/spellbookx#readme",

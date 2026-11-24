@@ -22,7 +22,7 @@ spellbookx/
 ├── packages/
 │   ├── eslint-plugin-spellbookx/     # ESLint 9+ Flat Config plugin with 16 modular presets
 │   ├── prettier-config-spellbookx/   # Prettier presets, plugins & defineSbxConfig composer
-│   ├── commitlint-config-spellbookx/ # Monorepo scope auto-discovery & cz-git interactive prompt
+│   ├── commitlint-config-spellbookx/ # Conventional Commits rules and monorepo scope discovery
 │   ├── cspell-config-spellbookx/     # Multi-language & technical spellcheck configuration
 │   ├── recipes/                      # Core shared recipes (import regexes & ignore patterns)
 │   └── spellbookx/                   # CLI wizard (`sbx`) for interactive toolchain scaffolding
@@ -104,7 +104,7 @@ flowchart TD
 - **Role**: Monorepo-aware Conventional Commits configuration.
 - **Key Features**:
   - **Dynamic Scope Resolution**: Inspects workspace manifests (`pnpm-workspace.yaml`, `package.json` workspaces, and `lerna.json`) at runtime to dynamically allow workspace package names as valid commit scopes without hardcoding.
-  - **Interactive Commit Prompt**: Built-in integration with `cz-git` providing a styled CLI prompt for constructing standardized commit messages.
+  - **Interactive Commit Prompt**: The matching `czg` prompt lives in `cz-config-spellbookx`, which shares the same commit types and scopes.
 
 ### 3.5 `cspell-config-spellbookx`
 

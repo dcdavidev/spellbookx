@@ -22,7 +22,7 @@ export interface SetupToolResult {
 /**
  * Executes file generation and package.json configuration for a single tool.
  *
- * @param toolId - The tool to configure ('cspell', 'commitlint', 'eslint', 'prettier').
+ * @param toolId - The tool to configure.
  * @param options - Options specifying target directory, overwrite behavior, and resolution context.
  * @returns Result object containing toolId and list of files created.
  */
@@ -41,7 +41,6 @@ export function setupTool(
     const written = hasWrittenConfigFile(file.path, file.content, {
       cwd: options.cwd,
       overwrite: options.overwrite,
-      mode: file.mode,
     });
     if (written) {
       createdFiles.push(file.path);
@@ -49,13 +48,11 @@ export function setupTool(
   }
 
   const scripts = tool.getScripts?.(options.context);
-  const extraPackageJson = tool.getExtraPackageJson?.(options.context);
 
-  if (scripts || extraPackageJson) {
+  if (scripts) {
     didUpdatePackageJson({
       cwd: options.cwd,
       scripts,
-      extra: extraPackageJson,
     });
   }
 

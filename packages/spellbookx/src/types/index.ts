@@ -6,7 +6,8 @@
 /**
  * Identifier for supported Spellbookx tool configurations.
  */
-export type ToolId = 'commitlint' | 'cspell' | 'eslint' | 'prettier';
+export type ToolId =
+  'commitlint' | 'cspell' | 'czg' | 'eslint' | 'lefthook' | 'prettier';
 
 /**
  * Supported package managers for dependency installation.
@@ -14,9 +15,33 @@ export type ToolId = 'commitlint' | 'cspell' | 'eslint' | 'prettier';
 export type PackageManager = 'bun' | 'npm' | 'pnpm' | 'yarn';
 
 /**
- * Supported Git hook managers wired up during commitlint setup.
+ * Where a configuration file is written.
+ *
+ * - `config-dir`: a file named only after the tool (`cspell.yml`,
+ *   `commitlint.mjs`, `cz.mjs`) in the `.config/` directory.
+ * - `root`: a `TOOL.config.EXT` file in the project root.
  */
-export type HookManager = 'husky' | 'lefthook';
+export type ConfigLocation = 'config-dir' | 'root';
+
+/**
+ * Formats offered for `eslint.config.*` (always in the project root).
+ */
+export type ESLintFormat = 'mjs' | 'ts';
+
+/**
+ * Formats offered for `prettier.config.*` (always in the project root).
+ */
+export type PrettierFormat = 'mjs' | 'ts';
+
+/**
+ * Formats offered for the CSpell configuration.
+ */
+export type CSpellFormat = 'json' | 'mjs' | 'yaml';
+
+/**
+ * Formats offered for the Lefthook configuration (always in `.config/`).
+ */
+export type LefthookFormat = 'json' | 'toml' | 'yaml';
 
 /**
  * Prettier preset identifiers offered by `prettier-config-spellbookx`.
@@ -42,11 +67,20 @@ export type ESLintConfigId =
 
 /**
  * Choices gathered from the user (or defaults) that influence generated files.
+ *
+ * The commitlint and czg configurations are always ES modules (`.mjs`), so
+ * only their location is a choice.
  */
 export interface ResolvedChoices {
   prettierConfig: PrettierConfigId;
+  prettierFormat: PrettierFormat;
   eslintConfig: ESLintConfigId;
-  hookManager: HookManager;
+  eslintFormat: ESLintFormat;
+  cspellFormat: CSpellFormat;
+  cspellLocation: ConfigLocation;
+  commitlintLocation: ConfigLocation;
+  czgLocation: ConfigLocation;
+  lefthookFormat: LefthookFormat;
 }
 
 /**
@@ -55,10 +89,6 @@ export interface ResolvedChoices {
 export interface ConfigFile {
   path: string;
   content: string;
-  /**
-   * Optional POSIX file mode (e.g. 0o755 for executable Git hooks).
-   */
-  mode?: number;
 }
 
 /**
@@ -67,6 +97,11 @@ export interface ConfigFile {
 export interface ToolContext {
   choices: ResolvedChoices;
   packageManager: PackageManager;
+  /**
+   * Every tool selected in this run. Lefthook uses it to decide which hook
+   * jobs to write.
+   */
+  selectedTools: ToolId[];
 }
 
 /**
@@ -80,7 +115,6 @@ export interface ToolDefinition {
   getDependencies: (context: ToolContext) => string[];
   getConfigFiles: (context: ToolContext) => ConfigFile[];
   getScripts?: (context: ToolContext) => Record<string, string>;
-  getExtraPackageJson?: (context: ToolContext) => Record<string, unknown>;
 }
 
 /**
@@ -93,9 +127,11 @@ export interface SetupOptions {
   skipInstall?: boolean;
   silent?: boolean;
   interactive?: boolean;
-  prettierConfig?: PrettierConfigId;
-  eslintConfig?: ESLintConfigId;
-  hookManager?: HookManager;
+  /**
+   * Explicit choices. The missing ones are asked in interactive mode, or take
+   * the values of `DEFAULT_CHOICES` otherwise.
+   */
+  choices?: Partial<ResolvedChoices>;
 }
 
 /**

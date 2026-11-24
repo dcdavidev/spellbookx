@@ -1,9 +1,9 @@
 /**
  * @file prompt.ts
- * Commitizen and cz-git interactive prompt configuration using definePrompt.
+ * czg interactive prompt configuration using definePrompt.
  */
 
-import { type CommitizenGitOptions, definePrompt } from 'cz-git';
+import { type CommitizenGitOptions, definePrompt } from 'czg';
 
 import { COMMIT_TYPE_DEFINITIONS, scopesArray } from '@spellbookx/recipes/git';
 
@@ -14,7 +14,7 @@ const TYPE_COLUMN_WIDTH =
   Math.max(...COMMIT_TYPE_DEFINITIONS.map(({ type }) => type.length)) + 2;
 
 /**
- * Commit type choices shown by cz-git, e.g. `feat:     ✨  A new feature`.
+ * Commit type choices shown by czg, e.g. `feat:     ✨  A new feature`.
  */
 const types = COMMIT_TYPE_DEFINITIONS.map(({ type, emoji, description }) => ({
   value: type,
@@ -28,7 +28,7 @@ const types = COMMIT_TYPE_DEFINITIONS.map(({ type, emoji, description }) => ({
 export const THEME_COLOR_CODE = '38;5;135';
 
 /**
- * Commitizen and cz-git interactive prompt configuration.
+ * czg interactive prompt configuration.
  */
 export const prompt: CommitizenGitOptions = definePrompt({
   alias: { fd: 'docs: fix typos' },

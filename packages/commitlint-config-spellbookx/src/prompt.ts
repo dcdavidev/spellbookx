@@ -1,6 +1,6 @@
 /**
  * @file prompt.ts
- * Commitizen prompt questions and settings for interactive commits with cz-git.
+ * commitlint prompt questions and settings (the `prompt` field of the commitlint config).
  */
 
 import type { UserConfig } from '@commitlint/types';
@@ -18,7 +18,7 @@ const typeEnum = Object.fromEntries(
 );
 
 /**
- * Commitizen and cz-git interactive prompt configuration.
+ * commitlint interactive prompt configuration.
  */
 export const prompt: UserConfig['prompt'] = {
   settings: {

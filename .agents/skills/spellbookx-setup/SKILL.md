@@ -1,11 +1,13 @@
 ---
 name: spellbookx-setup
-description: Guides setup and integration of the Spellbookx developer toolchain (ESLint flat configs, Prettier presets, CSpell, Commitlint, and Lefthook) into any JavaScript/TypeScript project or monorepo.
+description: Guides setup and integration of the Spellbookx developer toolchain (ESLint flat configs, Prettier presets, CSpell, Commitlint, the czg commit prompt, and Lefthook) into any JavaScript/TypeScript project or monorepo, with the tool configs in .config/.
 ---
 
 # Spellbookx Setup Skill
 
 This skill guides an AI agent through setting up, configuring, and verifying the **Spellbookx** toolchain across any modern JavaScript or TypeScript codebase.
+
+For details on one tool, use its own skill: `spellbookx-eslint-plugin`, `spellbookx-prettier-config`, `spellbookx-cspell-config`, `spellbookx-commitlint-config`, or `spellbookx-cz-config`.
 
 ---
 
@@ -43,34 +45,51 @@ npx spellbookx init
 bunx spellbookx init
 ```
 
+> The wizard follows the naming rule in section 3. For each selected tool it asks the config format and, where the format allows both, whether the file goes in `.config/`: ESLint and Prettier (`.mjs` or `.ts`, root), CSpell (YAML, JSON, or JavaScript with `defineSbxConfig`; YAML and JSON can go in `.config/`), commitlint and czg (`.config/` or root), and Lefthook (YAML, JSON, or TOML in `.config/`). The defaults give the `.config/` layout below, and the generated scripts and hooks pass `--config` / `--config=` where needed. It sets up Lefthook only (no husky) and czg only (no Commitizen). Non-interactive runs take flags such as `--cspell-format json`, `--lefthook-format toml`, or `--root czg` (`sbx init --help`).
+
 ### Option B: Manual Dependency Installation
 
-Install the required packages as development dependencies:
-
-```bash
-npm install -g czgit
-```
-
-Then, install the Spellbookx toolchain:
+Install the Spellbookx toolchain as development dependencies:
 
 ```bash
 # pnpm
-pnpm add -D eslint-plugin-spellbookx prettier-config-spellbookx cspell-config-spellbookx commitlint-config-spellbookx eslint prettier cspell czg @commitlint/cli lefthook
+pnpm add -D eslint-plugin-spellbookx prettier-config-spellbookx cspell-config-spellbookx commitlint-config-spellbookx cz-config-spellbookx eslint prettier cspell czg @commitlint/cli lefthook
 
 # npm
-npm install --save-dev eslint-plugin-spellbookx prettier-config-spellbookx cspell-config-spellbookx commitlint-config-spellbookx eslint prettier cspell czg @commitlint/cli lefthook
+npm install --save-dev eslint-plugin-spellbookx prettier-config-spellbookx cspell-config-spellbookx commitlint-config-spellbookx cz-config-spellbookx eslint prettier cspell czg @commitlint/cli lefthook
 
 # bun
-bun add -d eslint-plugin-spellbookx prettier-config-spellbookx cspell-config-spellbookx commitlint-config-spellbookx eslint prettier cspell czg @commitlint/cli lefthook
+bun add -d eslint-plugin-spellbookx prettier-config-spellbookx cspell-config-spellbookx commitlint-config-spellbookx cz-config-spellbookx eslint prettier cspell czg @commitlint/cli lefthook
 ```
 
-`@spellbookx/recipes` is an internal package that exports common configuration files for ESLint, Prettier, CSpell, Commitlint, and Lefthook. It is automatically installed as a dependency of the above packages.
+Install `czg` globally as well (`pnpm add -g czg` or `npm install -g czg`), so it also works outside this project; the devDependency pins the version the scripts use. Spellbookx writes commits with czg, not with Commitizen or `cz-git`. `@spellbookx/recipes` holds the shared building blocks (import groups, ignore globs, commit types and scopes) and is installed as a dependency of the packages above. Add it to `devDependencies` only if a config file imports it directly.
 
 ---
 
 ## 3. Configuration Files Setup
 
-Create the canonical configuration files in the repository root:
+For each tool, ask the user which config format they want, and use an official file name from that tool's documentation. The name decides the location:
+
+- **A name with `.config.` in it** (`<tool>.config.<ext>`, for example `eslint.config.mjs`, `prettier.config.mjs`, `cspell.config.mjs`, `cz.config.mjs`) always goes in the **repository root**.
+- **A name that is only the tool name** (`cspell.yml`, `cz.mjs`, `commitlint.mjs`, `lefthook.yml`) goes in **`.config/`**, but only when the tool's CLI accepts `--config` or finds `.config/` by itself. Configure every script and hook that runs the tool to pass the path.
+
+With the default choices the layout is:
+
+```text
+.
+├── .config/
+│   ├── commitlint.mjs
+│   ├── cspell.yml
+│   ├── cspell/
+│   │   └── custom.txt
+│   ├── cz.mjs
+│   └── lefthook.yml
+├── .editorconfig
+├── eslint.config.mjs
+└── prettier.config.mjs
+```
+
+CSpell and Lefthook find their files in `.config/` on their own. commitlint and czg do not, so their scripts pass the path: `commitlint --config ./.config/commitlint.mjs` and `czg --config=./.config/cz.mjs` (czg needs the `=`; see section 4).
 
 ### A. ESLint Flat Config (`eslint.config.mjs`)
 
@@ -171,7 +190,7 @@ indent_style=tab
 indent_size=4
 ```
 
-### C. CSpell Config (`cspell.config.yaml`)
+### C. CSpell Config (`.config/cspell.yaml`)
 
 ```yaml
 # yaml-language-server: $schema=https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
@@ -208,25 +227,27 @@ Ensure the custom word file exists:
 mkdir -p .config/cspell && touch .config/cspell/custom.txt
 ```
 
-### D. Commitlint Config (`commitlint.config.mjs`)
+### D. Commitlint Config (`.config/commitlint.mjs`)
 
 ```javascript
 export { default } from 'commitlint-config-spellbookx';
 ```
 
-### E. CZG Configuration (`czg.config.mjs`)
+### E. czg Config (`.config/cz.mjs`)
 
 ```javascript
 import { config } from 'cz-config-spellbookx';
-import { defineConfig } from 'cz-git';
+import { definePrompt } from 'czg';
 
-export default defineConfig({
+export default definePrompt({
   ...config,
   useEmoji: true,
 });
 ```
 
-### F. Lefthook Git Hooks (`lefthook.yml`)
+### F. Lefthook Git Hooks (`.config/lefthook.yml`)
+
+This example is for a pnpm monorepo with a `lint:types` script. In other projects, replace `pnpm exec` with the project's runner (`npx`, `bunx`), and drop the `types` or `lockfile` job if the project has no type check or no pnpm lock file.
 
 ```yaml
 # Lefthook configuration
@@ -285,19 +306,19 @@ commit-msg:
       fail_text: 'Use Conventional Commits, for example "feat(cspell): add a word list". Run "pnpm commit" for a guided prompt.'
 
 # No pre-push hook: the whole-project checks (lint, spelling, format, types,
-# tests, build) run in CI, in .github/workflows/ci.yml.
+# tests, build) run in CI.
 ```
 
 ---
 
 ## 4. Package.json Scripts
 
-Add scripts to the root `package.json`. Names follow the `action[:target][:modifier]` convention: `lint` only checks, fixes are opt-in with `:fix`, and every read-only check is a `lint:<target>` script run by the `lint` aggregate (this is what `sbx init` generates):
+Add scripts to the root `package.json`. Names follow the `action[:target][:modifier]` convention: `lint` only checks, fixes are opt-in with `:fix`, and every read-only check is a `lint:<target>` script run by the `lint` aggregate. `sbx init` uses the same names; the `--config` flags are needed only for the `.config/` layout:
 
 ```json
 {
   "scripts": {
-    "commit": "pnpm exec czg",
+    "commit": "pnpm exec czg --config=./.config/cz.mjs",
     "cz": "pnpm commit",
     "czg": "pnpm commit",
     "fmt": "prettier --ignore-unknown --write .",
@@ -305,7 +326,7 @@ Add scripts to the root `package.json`. Names follow the `action[:target][:modif
     "lint": "pnpm run \"/^lint:(code|spelling)$/\"",
     "lint:code": "pnpm exec eslint --no-warn-ignored .",
     "lint:code:fix": "pnpm exec eslint --no-warn-ignored --fix .",
-    "lint:commits": "pnpm exec commitlint --from=HEAD~1 --verbose",
+    "lint:commits": "pnpm exec commitlint --config ./.config/commitlint.mjs --from=HEAD~1 --verbose",
     "lint:spelling": "pnpm exec cspell --no-progress --no-summary .",
     "prepare": "lefthook install"
   }
@@ -325,7 +346,7 @@ Always verify the setup by running:
 
 ---
 
-6. vscode Extensions & Settings
+## 6. VS Code Extensions & Settings
 
 `./.vscode/extensions.json`:
 

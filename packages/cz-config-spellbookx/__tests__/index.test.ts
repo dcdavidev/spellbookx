@@ -10,7 +10,7 @@ import defaultExport, {
 } from '../src/index.js';
 
 describe('cz-config-spellbookx (entrypoint)', () => {
-  it('exports a valid cz-git CommitizenGitOptions object as default and named export', () => {
+  it('exports a valid czg CommitizenGitOptions object as default and named export', () => {
     expect(defaultExport).toBe(config);
     expect(config).toBe(prompt);
     expect(config).toBeTypeOf('object');
@@ -28,7 +28,7 @@ describe('cz-config-spellbookx (entrypoint)', () => {
     expect(packageJson.version).toMatch(/^\d+\.\d+\.\d+/);
   });
 
-  it('configures cz-git interactive prompt types and messages', () => {
+  it('configures the czg prompt types and messages', () => {
     expect(Array.isArray(prompt.types)).toBe(true);
     expect(prompt.types).toHaveLength(COMMIT_TYPES.length);
 
