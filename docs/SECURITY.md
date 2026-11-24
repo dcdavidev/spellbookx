@@ -22,7 +22,7 @@ If you discover a security vulnerability in any Spellbookx package (`spellbookx`
 Instead, please report it through one of the following secure channels:
 
 1. **GitHub Private Vulnerability Reporting (Preferred)**:
-   Navigate to the [Security Advisories](https://github.com/spellbookx/spellbookx/security/advisories) tab of this repository and click **"Report a vulnerability"**.
+   Navigate to the [Security Advisories](https://github.com/dcdavidev/spellbookx/security/advisories) tab of this repository and click **"Report a vulnerability"**.
 
 2. **Direct Contact**:
    Reach out directly to the maintainers via GitHub profile: [@dcdavidev](https://github.com/dcdavidev).
