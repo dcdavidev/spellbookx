@@ -265,7 +265,7 @@ Pass extra flags after the script name, for example `pnpm build --force` to bypa
 | `pnpm run check:ci` | `lint:check && fmt:check && ...` | Strict CI pipeline verification |
 | `pnpm run clean` | `rm -rf ...` | Removes `.turbo` caches and package `dist/` folders |
 | `pnpm run commit` | `cz` | Launches interactive Commitizen (`cz-git`) prompt |
-| `pnpm run commit:lint` | `commitlint --from=HEAD~1` | Validates recent commit messages against Conventional Commits |
+| `pnpm run lint:commits` | `commitlint --config ./.config/commitlint.mjs --from=HEAD~1 --verbose` | Validates recent commit messages against Conventional Commits |
 | `pnpm run changeset` | `changeset` | Creates a new changeset interactively |
 | `pnpm run version` | `changeset version` | Consumes changesets, bumps versions, and updates changelogs |
 | `pnpm run release` | `turbo run release` | Compiles all packages and publishes each to npmjs via Turborepo |

@@ -50,7 +50,7 @@ pre-commit:
 commit-msg:
   jobs:
     - name: commitlint
-      run: pnpm exec commitlint --edit {1} --verbose
+      run: pnpm exec commitlint --config ./.config/commitlint.mjs --edit {1} --verbose
       fail_text: 'Use Conventional Commits, for example "feat(cspell): add a word list". Run "pnpm commit" for a guided prompt.'
 
 # No pre-push hook: the whole-project checks (lint, spelling, format, types,

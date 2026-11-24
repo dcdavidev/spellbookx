@@ -26,7 +26,7 @@
     "lint": "pnpm run \"/^lint:(code|spelling|types)$/\"",
     "lint:code": "eslint --no-warn-ignored .",
     "lint:code:fix": "eslint --no-warn-ignored --fix .",
-    "lint:commits": "commitlint --from=HEAD~1",
+    "lint:commits": "commitlint --config ./.config/commitlint.mjs --from=HEAD~1 --verbose",
     "lint:spelling": "cspell --no-progress --no-summary .",
     "lint:types": "turbo run lint:types",
     "prepare": "lefthook install",

@@ -48,6 +48,7 @@ jobs:
         if: github.event_name == 'pull_request'
         run: >-
           pnpm exec commitlint
+          --config ./.config/commitlint.mjs
           --from ${{ github.event.pull_request.base.sha }}
           --to ${{ github.event.pull_request.head.sha }}
           --verbose
