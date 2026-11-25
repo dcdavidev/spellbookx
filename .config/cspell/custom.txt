@@ -1,8 +1,10 @@
 codemod
 commitlintrc
+dbaeumer
 dropdx
 esmock
 ianvs
+joshbolduc
 nnbsp
 ssot
 vuotoignore

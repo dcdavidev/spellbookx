@@ -35,8 +35,11 @@ import {
   promptPrettierConfig,
   promptPrettierFormat,
   promptTools,
+  shouldConfigureVSCode,
 } from '../lib/prompt-tools.js';
 import { setupTool } from '../lib/setup-tool.js';
+import { getVSCodeConfigFiles } from '../lib/vscode.js';
+import { hasWrittenConfigFile } from '../lib/write-config.js';
 import type {
   ResolvedChoices,
   SetupOptions,
@@ -177,6 +180,9 @@ export async function runInit(
     };
   }
 
+  const useVSCode =
+    options.vscode ?? (isInteractive ? await shouldConfigureVSCode() : false);
+
   const context: ToolContext = { choices, packageManager: pm, selectedTools };
 
   if (!options.silent) {
@@ -234,6 +240,19 @@ export async function runInit(
     if (!options.silent) {
       for (const file of result.createdFiles) {
         console.log(`  ${success(`Created ${chalk.bold(file)}`)}`);
+      }
+    }
+  }
+
+  if (useVSCode) {
+    const vscodeFiles = getVSCodeConfigFiles({ selectedTools, choices });
+    for (const file of vscodeFiles) {
+      if (!hasWrittenConfigFile(file.path, file.content, { cwd })) {
+        continue;
+      }
+      createdFiles.push(file.path);
+      if (!options.silent) {
+        console.log(`  ${success(`Created ${chalk.bold(file.path)}`)}`);
       }
     }
   }

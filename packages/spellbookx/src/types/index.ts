@@ -128,6 +128,12 @@ export interface SetupOptions {
   silent?: boolean;
   interactive?: boolean;
   /**
+   * Whether to generate `.vscode/settings.json` and `.vscode/extensions.json`
+   * for the selected tools. Asked in interactive mode when omitted; defaults
+   * to `false` in non-interactive mode.
+   */
+  vscode?: boolean;
+  /**
    * Explicit choices. The missing ones are asked in interactive mode, or take
    * the values of `DEFAULT_CHOICES` otherwise.
    */

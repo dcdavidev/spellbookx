@@ -43,14 +43,15 @@ sbx init
 
 In an interactive terminal the wizard asks, for each selected tool:
 
-| Tool       | Questions                                                                                          |
-| :--------- | :------------------------------------------------------------------------------------------------- |
-| ESLint     | Preset; format: `eslint.config.mjs` or `eslint.config.ts`                                          |
-| Prettier   | Preset; format: `prettier.config.mjs` or `prettier.config.ts`                                      |
-| CSpell     | Format: YAML, JSON, or JavaScript with `defineSbxConfig`; for YAML and JSON, put it in `.config/`? |
-| Commitlint | Put it in `.config/`? (`.config/commitlint.mjs` or `commitlint.config.mjs`)                        |
-| czg        | Put it in `.config/`? (`.config/cz.mjs` or `cz.config.mjs`)                                        |
-| Lefthook   | Format: `.config/lefthook.yml`, `.config/lefthook.json`, or `.config/lefthook.toml`                |
+| Tool       | Questions                                                                                                   |
+| :--------- | :---------------------------------------------------------------------------------------------------------- |
+| ESLint     | Preset; format: `eslint.config.mjs` or `eslint.config.ts`                                                   |
+| Prettier   | Preset; format: `prettier.config.mjs` or `prettier.config.ts`                                               |
+| CSpell     | Format: YAML, JSON, or JavaScript with `defineSbxConfig`; for YAML and JSON, put it in `.config/`?          |
+| Commitlint | Put it in `.config/`? (`.config/commitlint.mjs` or `commitlint.config.mjs`)                                 |
+| czg        | Put it in `.config/`? (`.config/cz.mjs` or `cz.config.mjs`)                                                 |
+| Lefthook   | Format: `.config/lefthook.yml`, `.config/lefthook.json`, or `.config/lefthook.toml`                         |
+| VS Code    | Are you using VS Code? (generates `.vscode/settings.json` and `.vscode/extensions.json` for selected tools) |
 
 When the process is not attached to a TTY (CI, pipes), it runs
 non-interactively with the defaults, which give this layout:
@@ -118,6 +119,7 @@ Options:
   --lefthook-format <format>  Lefthook config format (yaml, json, toml)
   --config-dir <tools...>     Put these configs in .config/ (cspell, commitlint, czg)
   --root <tools...>           Put these configs in the root (cspell, commitlint, czg)
+  --vscode                    Generate .vscode/settings.json and .vscode/extensions.json
   -i, --interactive           Force interactive prompts
   -h, --help                  display help for command
 ```

@@ -140,3 +140,16 @@ export async function promptConfigLocation(
 
   return useConfigDir ? 'config-dir' : 'root';
 }
+
+/**
+ * Asks whether the user uses VS Code so `.vscode/settings.json` and
+ * `.vscode/extensions.json` can be generated for the selected tools.
+ *
+ * @returns Promise resolving to true when VS Code configuration files should be generated.
+ */
+export async function shouldConfigureVSCode(): Promise<boolean> {
+  return confirm({
+    message: `${brand('Are you using')} ${brandSecondary('VS Code')}${brand('?')} (generates .vscode/settings.json and .vscode/extensions.json)`,
+    default: true,
+  });
+}

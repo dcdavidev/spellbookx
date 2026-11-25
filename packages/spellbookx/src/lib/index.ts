@@ -13,4 +13,5 @@ export * from './package-json.js';
 export * from './prompt-tools.js';
 export * from './setup-tool.js';
 export * from './update-package-json.js';
+export * from './vscode.js';
 export * from './write-config.js';

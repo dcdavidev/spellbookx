@@ -239,6 +239,9 @@ describe('spellbookx (runInit)', () => {
       .mockResolvedValueOnce('root') // CSpell
       .mockResolvedValueOnce('config-dir') // commitlint
       .mockResolvedValueOnce('root'); // czg
+    const vscodePrompt = vi
+      .spyOn(promptToolsModule, 'shouldConfigureVSCode')
+      .mockResolvedValue(false);
 
     const res = await runInit({
       cwd: tempDir,
@@ -255,6 +258,7 @@ describe('spellbookx (runInit)', () => {
       prettierFormat,
       cspellFormat,
       lefthookFormat,
+      vscodePrompt,
     ]) {
       expect(spy).toHaveBeenCalledTimes(1);
     }
@@ -285,6 +289,9 @@ describe('spellbookx (runInit)', () => {
   it('skips the CSpell location question for the JavaScript format', async () => {
     vi.spyOn(promptToolsModule, 'promptTools').mockResolvedValue(['cspell']);
     vi.spyOn(promptToolsModule, 'promptCSpellFormat').mockResolvedValue('mjs');
+    vi.spyOn(promptToolsModule, 'shouldConfigureVSCode').mockResolvedValue(
+      false
+    );
     const location = vi.spyOn(promptToolsModule, 'promptConfigLocation');
 
     const res = await runInit({
@@ -300,6 +307,9 @@ describe('spellbookx (runInit)', () => {
 
   it('does not ask for choices that were passed explicitly', async () => {
     vi.spyOn(promptToolsModule, 'promptTools').mockResolvedValue(['czg']);
+    vi.spyOn(promptToolsModule, 'shouldConfigureVSCode').mockResolvedValue(
+      false
+    );
     const location = vi.spyOn(promptToolsModule, 'promptConfigLocation');
 
     const res = await runInit({
@@ -312,6 +322,79 @@ describe('spellbookx (runInit)', () => {
 
     expect(location).not.toHaveBeenCalled();
     expect(res.createdFiles).toEqual(['cz.config.mjs']);
+  });
+
+  it('prompts for VS Code and writes tailored .vscode files when confirmed', async () => {
+    vi.spyOn(promptToolsModule, 'promptTools').mockResolvedValue([
+      'eslint',
+      'cspell',
+    ]);
+    vi.spyOn(promptToolsModule, 'promptESLintConfig').mockResolvedValue('node');
+    vi.spyOn(promptToolsModule, 'promptESLintFormat').mockResolvedValue('mjs');
+    vi.spyOn(promptToolsModule, 'promptCSpellFormat').mockResolvedValue('json');
+    vi.spyOn(promptToolsModule, 'promptConfigLocation').mockResolvedValue(
+      'config-dir'
+    );
+    const vscodePrompt = vi
+      .spyOn(promptToolsModule, 'shouldConfigureVSCode')
+      .mockResolvedValue(true);
+
+    const res = await runInit({
+      cwd: tempDir,
+      skipInstall: true,
+      silent: true,
+      interactive: true,
+    });
+
+    expect(vscodePrompt).toHaveBeenCalledTimes(1);
+    expect(res.createdFiles).toEqual(
+      expect.arrayContaining([
+        '.vscode/settings.json',
+        '.vscode/extensions.json',
+      ])
+    );
+
+    const settings = JSON.parse(
+      readFileSync(path.join(tempDir, '.vscode/settings.json'), 'utf8')
+    );
+    expect(settings['eslint.validate']).toBeDefined();
+    expect(settings['cSpell.enabled']).toBe(true);
+    expect(settings['editor.defaultFormatter']).toBeUndefined();
+
+    const extensions = JSON.parse(
+      readFileSync(path.join(tempDir, '.vscode/extensions.json'), 'utf8')
+    );
+    expect(extensions.recommendations).toEqual([
+      'dbaeumer.vscode-eslint',
+      'streetsidesoftware.code-spell-checker',
+    ]);
+  });
+
+  it('skips the VS Code prompt when vscode option is passed explicitly', async () => {
+    vi.spyOn(promptToolsModule, 'promptTools').mockResolvedValue(['prettier']);
+    vi.spyOn(promptToolsModule, 'promptPrettierConfig').mockResolvedValue(
+      'base'
+    );
+    vi.spyOn(promptToolsModule, 'promptPrettierFormat').mockResolvedValue(
+      'mjs'
+    );
+    const vscodePrompt = vi.spyOn(promptToolsModule, 'shouldConfigureVSCode');
+
+    const res = await runInit({
+      cwd: tempDir,
+      skipInstall: true,
+      silent: true,
+      interactive: true,
+      vscode: true,
+    });
+
+    expect(vscodePrompt).not.toHaveBeenCalled();
+    expect(res.createdFiles).toEqual(
+      expect.arrayContaining([
+        '.vscode/settings.json',
+        '.vscode/extensions.json',
+      ])
+    );
   });
 
   it('returns an empty result without installing or creating files when no tools are selected', async () => {

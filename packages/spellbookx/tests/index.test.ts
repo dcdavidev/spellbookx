@@ -49,6 +49,7 @@ describe('spellbookx (CLI program & exports)', () => {
         '--lefthook-format',
         '--config-dir',
         '--root',
+        '--vscode',
       ])
     );
     expect(optionFlags).not.toContain('--hook-manager');
@@ -67,10 +68,12 @@ describe('spellbookx (CLI program & exports)', () => {
       '--root',
       'czg',
       'cspell',
+      '--vscode',
     ]);
 
     const options = toSetupOptions(initCmd?.opts() ?? {});
     expect(options.tools).toEqual(['czg', 'lefthook']);
+    expect(options.vscode).toBe(true);
     expect(options.choices).toMatchObject({
       cspellFormat: 'json',
       lefthookFormat: 'toml',

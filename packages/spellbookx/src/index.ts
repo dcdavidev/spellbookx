@@ -62,6 +62,7 @@ interface InitOptions {
   lefthookFormat?: LefthookFormat;
   root?: LocationTool[];
   configDir?: LocationTool[];
+  vscode?: boolean;
   interactive?: boolean;
 }
 
@@ -111,6 +112,7 @@ export function toSetupOptions(options: InitOptions): SetupOptions {
     skipInstall: options.skipInstall,
     tools,
     choices,
+    vscode: options.vscode,
     interactive: options.interactive,
   };
 }
@@ -199,6 +201,10 @@ function addInitOptions(command: Command): Command {
         '--root <tools...>',
         'Put these configs in the root (cspell.config.*, commitlint.config.mjs, cz.config.mjs)'
       ).choices([...LOCATION_TOOLS])
+    )
+    .option(
+      '--vscode',
+      'Generate .vscode/settings.json and .vscode/extensions.json'
     )
     .option('-i, --interactive', 'Force interactive prompts');
 }
