@@ -8,7 +8,7 @@ Each file should be made like this:
 
 ```js
 /**
- * @fileo <file description>
+ * @file <file description>
  * @author <github username>
  */
 ```
