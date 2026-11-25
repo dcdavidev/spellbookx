@@ -1,6 +1,6 @@
 {
   "name": "cz-config-spellbookx",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "private": false,
   "description": "A shareable czg configuration for interactive Conventional Commits.",
   "keywords": [

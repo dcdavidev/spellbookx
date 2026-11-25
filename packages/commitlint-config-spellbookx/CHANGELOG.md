@@ -1,5 +1,13 @@
 # commitlint-config-spellbookx
 
+## 2.1.3
+
+### Patch Changes
+
+- chore(release): automated patch release bump
+- Updated dependencies []:
+  - @spellbookx/recipes@2.1.3
+
 ## 2.1.2
 
 ### Patch Changes
