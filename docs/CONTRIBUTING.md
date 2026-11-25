@@ -48,7 +48,7 @@ This page is the entry point. The guides in [`docs/contribute/`](./contribute/) 
 Before contributing, make sure your development environment meets the following requirements:
 
 - **Node.js**: version `26.x` (pinned in [`.nvmrc`](../.nvmrc)).
-- **pnpm**: version `12.x` (pinned in the `packageManager` and `devEngines.packageManager` fields of the root [`package.json`](../package.json)). Install it as described in the [pnpm installation guide](https://pnpm.io/installation):
+- **pnpm**: version `12.x` (pinned in the `packageManager` field of the root [`package.json`](../package.json)). Install it as described in the [pnpm installation guide](https://pnpm.io/installation):
 
 ```bash
 npx get-pnpm

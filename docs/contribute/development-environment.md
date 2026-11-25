@@ -22,7 +22,7 @@ nvm use
 
 ### Install pnpm
 
-This repository uses **pnpm `12.x`**. The exact version is pinned in the `packageManager` and `devEngines.packageManager` fields of [`package.json`](../../package.json) (with `onFail: "download"` so pnpm can fetch the matching version automatically).
+This repository uses **pnpm `12.x`**. The exact version is pinned in the `packageManager` field of [`package.json`](../../package.json).
 
 Install pnpm following the [pnpm installation guide](https://pnpm.io/installation):
 

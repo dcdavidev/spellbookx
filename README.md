@@ -283,7 +283,7 @@ Configs whose name contains `.config.` (`eslint.config.mjs`, `prettier.config.mj
 ### Prerequisites
 
 - **Node.js**: `26.x` (Active LTS, pinned in [`.nvmrc`](.nvmrc))
-- **Package Manager**: [pnpm](https://pnpm.io/) `12.x` (pinned in `packageManager` and `devEngines` of [`package.json`](package.json))
+- **Package Manager**: [pnpm](https://pnpm.io/) `12.x` (pinned in `packageManager` of [`package.json`](package.json))
 
 ### Setup
 
