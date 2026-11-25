@@ -7,6 +7,10 @@ allowBuilds:
 
 engineStrict: true
 
+minimumReleaseAgeExclude:
+  - eslint-plugin-vuoto@1.0.2
+  - vuoto@1.0.2
+
 publicHoistPattern:
   - '*prettier-plugin-*'
   - '@prettier/plugin-*'

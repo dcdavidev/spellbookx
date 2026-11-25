@@ -390,8 +390,8 @@ importers:
         specifier: ^80.0.0
         version: 80.0.0(@typescript/typescript6@6.0.2)(eslint@10.15.0(jiti@2.6.1)(supports-color@7.2.0))
       eslint-plugin-vuoto:
-        specifier: ^1.0.0
-        version: 1.0.0(eslint@10.15.0(jiti@2.6.1)(supports-color@7.2.0))
+        specifier: ^1.0.2
+        version: 1.0.2(eslint@10.15.0(jiti@2.6.1)(supports-color@7.2.0))
       globals:
         specifier: ^17.14.0
         version: 17.14.0
@@ -2658,6 +2658,10 @@ packages:
     resolution: {integrity: sha512-52r6fkXgxv4GLMjmFcMWRx7X9bw071xTTdrDcdyPGRqU2oE+9pCG0bAOMifSBdLw0JRBZKEF0q3B55qPlLuE8g==}
     engines: {node: '>=6.4.0'}
 
+  cosmiconfig@10.0.1:
+    resolution: {integrity: sha512-/zvGoYn0y27QTBmK+0B+oPdEPC4fKGUmJsMTQbDjqph00TrkqfVFW/M+C6ya54sYCgHC6QCwK/mI6djt8cEGHQ==}
+    engines: {node: ^22.18 || >= 24}
+
   cosmiconfig@9.0.2:
     resolution: {integrity: sha512-gtTZxTDau1wL7Y7zifc2dd8jHSK/k6BTx/2Xp/BpdlAdnlYWFVt7qhJqgwi7637yRwRQ3qL4ZidbB4I8tA5VOg==}
     engines: {node: '>=14'}
@@ -3017,10 +3021,10 @@ packages:
       typescript:
         optional: true
 
-  eslint-plugin-vuoto@1.0.0:
-    resolution: {integrity: sha512-trPFylJoY0+P0GFjn1ePbGBMi2p3uVbSRpApX/hzKMZVEXilPFdPzDQtmqsFm/ADXS90M3Gz5cvjlPvkmYA5fA==}
+  eslint-plugin-vuoto@1.0.2:
+    resolution: {integrity: sha512-9SqHw0NN9EbE9jjgMZv9dXFaNNjB69Ye12RKamzbrc3MTmKDzMQh53HzdnYJiPS8Vo38nb8qi8bBX5sYRiF2Rw==}
     peerDependencies:
-      eslint: '>=9.0.0'
+      eslint: '>10.0.0'
 
   eslint-scope@8.4.0:
     resolution: {integrity: sha512-sNXOfKCn74rt8RICKMvJS7XKV/Xk9kA7DyJr8mJik3S7Cwgy3qlkkmyS2uQB3jiJg6VNdZd/pDBJu0nvG2NlTg==}
@@ -4633,8 +4637,8 @@ packages:
   vscode-uri@3.2.0:
     resolution: {integrity: sha512-m2gXo3bn0G1kT9InzMf07fTbqMbGtyckj3bH5ktLO+1Ssv+yiATZ4dhwaQv9UZWxJh6E9IFGnQyjgWVDWVBDrg==}
 
-  vuoto@1.0.0:
-    resolution: {integrity: sha512-uMGNRwf5C4ken/LlRA0/d0Cab75BnoKwzF6Kuq8LuyUbYjZtLVTX7H5munA8rAswT8iuBeLEHK2whM8+iExd9A==}
+  vuoto@1.0.2:
+    resolution: {integrity: sha512-lqdBOqcEeNNM239HldNcRdh0QFDva8R3DCHCCz0bWbrPG7usIwvvXGiauzs96TUO2hXNJbVc++neyP3dvC9ljQ==}
     hasBin: true
 
   which-command@0.1.0:
@@ -6675,6 +6679,11 @@ snapshots:
     dependencies:
       browserslist: 4.29.4
 
+  cosmiconfig@10.0.1:
+    dependencies:
+      env-paths: 2.2.1
+      js-yaml: 5.5.0
+
   cosmiconfig@9.0.2(@typescript/typescript6@6.0.2):
     dependencies:
       env-paths: 2.2.1
@@ -7160,11 +7169,10 @@ snapshots:
     optionalDependencies:
       typescript: '@typescript/typescript6@6.0.2'
 
-  eslint-plugin-vuoto@1.0.0(eslint@10.15.0(jiti@2.6.1)(supports-color@7.2.0)):
+  eslint-plugin-vuoto@1.0.2(eslint@10.15.0(jiti@2.6.1)(supports-color@7.2.0)):
     dependencies:
       eslint: 10.15.0(jiti@2.6.1)(supports-color@7.2.0)
-      tslib: 2.8.1
-      vuoto: 1.0.0
+      vuoto: 1.0.2
 
   eslint-scope@8.4.0:
     dependencies:
@@ -8826,11 +8834,14 @@ snapshots:
 
   vscode-uri@3.2.0: {}
 
-  vuoto@1.0.0:
+  vuoto@1.0.2:
     dependencies:
       chalk: 5.6.2
       commander: 14.0.3
+      cosmiconfig: 10.0.1
       fast-glob: 3.3.3
+      jsonc-parser: 3.3.1
+      smol-toml: 1.9.1
       tslib: 2.8.1
 
   which-command@0.1.0: {}
