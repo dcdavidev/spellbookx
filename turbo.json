@@ -1,19 +1,50 @@
 {
-  "$schema": "https://turborepo.dev/schema.json",
-  "ui": "tui",
+  "$schema": "https://turborepo.com/schema.json",
+  "ui": "stream",
+  "globalDependencies": [".nvmrc", "pnpm-lock.yaml", "tsconfig.base.json"],
+  "globalPassThroughEnv": ["CI", "FORCE_COLOR"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "inputs": ["src/**", "tsconfig*.json", "package.json"],
       "outputs": ["dist/**"]
     },
-    "test": {
-      "dependsOn": ["build"],
-      "inputs": ["$TURBO_DEFAULT$"]
+    "clean": {
+      "cache": false
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
     },
     "lint:types": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$"],
+      "inputs": ["src/**", "tests/**", "tsconfig*.json", "package.json"],
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "src/**",
+        "tests/**",
+        "vitest.config.*",
+        "tsconfig*.json",
+        "package.json"
+      ],
+      "outputs": ["coverage/**"]
+    },
+    "//#lint:code": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "!**/dist/**", "!**/coverage/**"],
+      "outputs": []
+    },
+    "//#lint:spelling": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "!**/dist/**", "!**/coverage/**"],
+      "outputs": []
+    },
+    "//#fmt:check": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "!**/dist/**", "!**/coverage/**"],
       "outputs": []
     }
   }

@@ -1,31 +1,37 @@
 # Commit Message Style
 
-This guide explains how to write commit messages for Spellbookx. Every commit message must follow the [Conventional Commits](https://www.conventionalcommits.org/) specification. The rules come from `commitlint-config-spellbookx`, and the interactive prompt comes from `cz-config-spellbookx`. Both packages share the same commit types and scopes.
+This guide explains how to write commit messages for Spellbookx. Every commit message must follow the [Conventional Commits](https://www.conventionalcommits.org/) specification. Validation rules come from `commitlint-config-spellbookx` ([`commitlint.config.mjs`](../../commitlint.config.mjs)), and the interactive prompt comes from `cz-config-spellbookx` ([`cz.config.mjs`](../../cz.config.mjs)). Both share the same commit types and dynamically discovered workspace scopes.
 
-## Use the czg Prompt
+## Use the `czg` Prompt
 
-The easiest way to write a valid commit message is the interactive [czg](https://cz-git.qbb.sh/cli/) prompt. `czg` is a dev dependency of the repository, so you do not have to install it. Stage your changes, then run:
+The easiest way to write a valid commit message is the interactive [czg](https://cz-git.qbb.sh/cli/) prompt. `czg` is installed as a `devDependency`, so no global setup is required. Stage your changes, then run:
 
 ```bash
 pnpm commit
 ```
 
-`pnpm cz` and `pnpm czg` are aliases of `pnpm commit`. The command uses the configuration in [`.config/cz.mjs`](../../.config/cz.mjs).
+The command automatically loads the root [`cz.config.mjs`](../../cz.config.mjs) configuration.
 
-The prompt asks for these values, in this order:
+The prompt asks for these values, in order:
 
 1. The **type** of change.
 2. One or more **scopes** (optional).
 3. A short **subject**, in the imperative mood.
 4. A longer **body** (optional). Type `|` to start a new line.
-5. **Breaking changes** (optional, only for `feat` and `fix`).
+5. **Breaking changes** (optional, prompted only for `feat` and `fix`).
 6. The **issues** that the commit closes (optional).
 
-The prompt then shows the full message and asks you to confirm it.
+The prompt then displays the full commit message and asks for confirmation.
 
-### Install czg Globally (Optional)
+You can also use the built-in `fd` alias to quickly commit typo fixes (`docs: fix typos`):
 
-If you prefer to run `czg` directly, install it globally with pnpm:
+```bash
+pnpm commit -- :fd
+```
+
+### Install `czg` Globally (Optional)
+
+If you prefer to invoke `czg` directly instead of `pnpm commit`, install it globally with pnpm:
 
 ```bash
 pnpm add -g czg
@@ -34,30 +40,36 @@ pnpm add -g czg
 or with npm:
 
 ```bash
-npm i -g czg
+npm install -g czg
 ```
 
-Run it from the repository root and pass the configuration file:
+Because [`cz.config.mjs`](../../cz.config.mjs) lives in the repository root, running `czg` from the root discovers the configuration automatically without a `--config` flag:
 
 ```bash
-czg --config=./.config/cz.mjs
+czg
 ```
 
 ## Message Format
 
 ```text
-<type>(<scope>): <emoji> <subject>
+<type>(<scope>): <subject>
 
 [optional body]
 
 [optional footer(s)]
 ```
 
-The repository configuration (`.config/cz.mjs`) turns on emojis, so the prompt adds the emoji of the type before the subject. For example:
+The scope is optional, so `<type>: <subject>` is also valid. For example:
 
 ```text
-docs(workspace): 📖 link the contributor guides from CONTRIBUTING.md
+docs(workspace): update contributor documentation
 ```
+
+```text
+feat(eslint-plugin-spellbookx): add new preset rule
+```
+
+By default, [`cz.config.mjs`](../../cz.config.mjs) uses the `cz-config-spellbookx` default (`useEmoji: false`): emojis are shown in the interactive type picker for readability, but are not inserted into the final commit header.
 
 ### Types
 
@@ -77,48 +89,54 @@ docs(workspace): 📖 link the contributor guides from CONTRIBUTING.md
 
 ### Scopes
 
-The scope is optional. The valid scopes are found at runtime from the workspace (`pnpm-workspace.yaml`), so a new package becomes a valid scope automatically:
+The scope is optional. When provided, it must be one of the scopes allowed by `commitlint-config-spellbookx` for this monorepo:
 
-- The package names: `@spellbookx/recipes`, `commitlint-config-spellbookx`, `cspell-config-spellbookx`, `cz-config-spellbookx`, `eslint-plugin-spellbookx`, `prettier-config-spellbookx` and `spellbookx`.
-- `workspace`: files in the repository root, such as config files and the root `package.json`.
-- `release`: reserved for the release commits that `dropdx` creates. Do not use it for other commits.
+- **Workspace package names** (discovered automatically from [`pnpm-workspace.yaml`](../../pnpm-workspace.yaml)): `@spellbookx/recipes`, `commitlint-config-spellbookx`, `cspell-config-spellbookx`, `cz-config-spellbookx`, `eslint-plugin-spellbookx`, `prettier-config-spellbookx`, and `spellbookx`. Adding a new package under `packages/` registers its `name` as a valid scope automatically.
+- `workspace`: repository-level changes such as root configuration files, `scripts/`, documentation, and CI workflows.
+- `release`: reserved for release commits that `dropdx` creates. Do not use it for other commits.
 
-If a commit changes more than one package, list the scopes separated by `,` without spaces:
+If a commit spans multiple scopes, separate them with `,` (without spaces):
 
 ```text
-fix(@spellbookx/recipes,eslint-plugin-spellbookx): 🐛 fix import groups
+fix(@spellbookx/recipes,eslint-plugin-spellbookx): fix import groups
 ```
 
 ### Rules
 
-Commitlint checks these rules:
+Commitlint enforces the following rules:
 
-- The **type** must be one of the types in the table above.
-- Each **scope** must be one of the valid scopes.
-- The **subject** must not be empty and must not end with a period.
-- The **header** (the first line) has a maximum of 72 characters.
-- Each line of the **body** and of the **footer** has a maximum of 100 characters.
+- The **type** must be one of the 11 types in the table above.
+- Each **scope** (when present) must be one of the valid scopes listed above.
+- The **subject** must not be empty and must not end with a period (`.`).
+- The **header** (first line) has a maximum length of **72 characters**.
+- Each line of the **body** and **footer** has a maximum length of **100 characters**.
 
-Also follow these guidelines:
+Also follow these writing guidelines:
 
 - Write the subject in the imperative mood: "add", not "added" or "adds".
-- Use the body to explain _what_ changed and _why_, not _how_.
-- To mark a breaking change, add a `BREAKING CHANGE:` footer that describes the change and how to migrate.
-- To close an issue, add a footer such as `closed: #31`.
+- Use the body to explain _what_ changed and _why_, rather than _how_.
+- To mark a breaking change, add a `BREAKING CHANGE:` footer explaining the breaking change and migration steps.
+- To close an issue, add a footer such as `Closes #31`.
 
 ## Validation
 
-You do not have to check the message by hand:
+Commit messages are validated automatically:
 
-- The `commit-msg` git hook runs commitlint on every commit. If the message is not valid, the commit is cancelled.
-- CI checks every commit message of a pull request.
+- The Lefthook `commit-msg` hook ([`.config/lefthook.yml`](../../.config/lefthook.yml)) runs Commitlint on every commit and rejects invalid messages.
+- CI checks every commit in a pull request in [`.github/workflows/code-quality-tests-build.yml`](../../.github/workflows/code-quality-tests-build.yml).
 
-To check the last commit message manually, run:
+To check the most recent commit message manually, run:
 
 ```bash
 pnpm lint:commits
 ```
 
+To test a candidate message before committing:
+
+```bash
+echo "docs(workspace): update commit style guide" | pnpm exec commitlint
+```
+
 ## Commits and Releases
 
-The commit types decide how the packages are versioned. `pnpm changeset:commits` creates changesets from the Conventional Commits of your branch: `feat` commits cause a minor release, `fix` commits cause a patch release, and breaking changes cause a major release. For more information, see the [release process](../CONTRIBUTING.md#release-process).
+Commit types drive semantic versioning when generating changesets. Running `pnpm changeset:commits` turns the Conventional Commits on your branch into Changeset files: `feat` commits produce a minor bump, `fix` commits produce a patch bump, and breaking changes produce a major bump. For details, see the [Release Process](../CONTRIBUTING.md#release-process).

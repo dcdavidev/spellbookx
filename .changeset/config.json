@@ -1,5 +1,8 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config/schema.json",
+  "$schema": "https://unpkg.com/@changesets/config@4.0.1/schema.json",
+  "baseBranch": "main",
+  "access": "public",
+  "format": "auto",
   "changelog": [
     "@changesets/changelog-github",
     {
@@ -7,6 +10,7 @@
     }
   ],
   "commit": false,
+  "ignore": [],
   "fixed": [
     [
       "@spellbookx/recipes",
@@ -19,8 +23,5 @@
     ]
   ],
   "linked": [],
-  "access": "public",
-  "baseBranch": "main",
-  "updateInternalDependencies": "patch",
-  "ignore": []
+  "updateInternalDependencies": "patch"
 }

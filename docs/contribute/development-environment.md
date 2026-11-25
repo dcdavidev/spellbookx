@@ -1,14 +1,16 @@
 # Development Environment
 
-This guide explains how to set up a local development environment for Spellbookx: install the required tools, get your own copy of the repository, and build the workspace. Follow these steps before you make your first change.
+This guide explains how to set up a local development environment for Spellbookx: install the required tools, clone your fork, build the workspace packages, and configure your editor.
 
-## Step 1: Install Node.js
+## Step 1: Install Node.js and pnpm
 
-Spellbookx requires **Node.js `26.x`**. The version is set in [`.nvmrc`](../../.nvmrc) and in the `engines` field of the root `package.json`.
+### Install Node.js
 
-You can download Node.js from the [official website](https://nodejs.org/) and follow the [installation guide](https://nodejs.org/en/download).
+Spellbookx requires **Node.js `26.x`**. The major version is pinned in [`.nvmrc`](../../.nvmrc) and enforced by pnpm's `engineStrict: true` setting in [`pnpm-workspace.yaml`](../../pnpm-workspace.yaml).
 
-On macOS, Linux and Windows (WSL), we recommend [nvm](https://github.com/nvm-sh/nvm). It reads the version from `.nvmrc`, so you can run these commands from the repository root after you clone it (Step 2):
+You can download Node.js from the [official website](https://nodejs.org/) or follow the [Node.js download guide](https://nodejs.org/en/download).
+
+On macOS, Linux, and Windows (WSL), we recommend [nvm](https://github.com/nvm-sh/nvm). It reads `.nvmrc` directly, so after cloning the repository (Step 2) you can run:
 
 ```bash
 nvm install
@@ -18,17 +20,11 @@ nvm install
 nvm use
 ```
 
-Update npm to the latest version:
-
-```bash
-npm install -g npm@latest
-```
-
 ### Install pnpm
 
-Spellbookx uses **pnpm `12.x`**. The exact version is pinned in the `packageManager` field of the root `package.json`.
+This repository uses **pnpm `12.x`**. The exact version is pinned in the `packageManager` and `devEngines.packageManager` fields of [`package.json`](../../package.json) (with `onFail: "download"` so pnpm can fetch the matching version automatically).
 
-Install pnpm as described in the [pnpm installation guide](https://pnpm.io/installation):
+Install pnpm following the [pnpm installation guide](https://pnpm.io/installation):
 
 ```bash
 npx get-pnpm
@@ -40,11 +36,11 @@ Keep pnpm up to date with:
 pnpm self-update
 ```
 
-## Step 2: Fork and Checkout Your Own `spellbookx` Repository
+## Step 2: Fork and Clone the Repository
 
-1. Go to [github.com/dcdavidev/spellbookx](https://github.com/dcdavidev/spellbookx) and click **Fork** to create a copy of the repository in your GitHub account.
+1. Go to [github.com/dcdavidev/spellbookx](https://github.com/dcdavidev/spellbookx) and click **Fork** to create a copy in your GitHub account.
 
-2. Clone your fork. Replace `<your-username>` with your GitHub username:
+2. Clone your fork, replacing `<your-username>` with your GitHub username:
 
    ```bash
    git clone https://github.com/ < your-username > /spellbookx.git
@@ -60,25 +56,25 @@ pnpm self-update
    pnpm install
    ```
 
-   This command also runs the `prepare` script, which installs the git hooks with [Lefthook](https://github.com/evilmartians/lefthook).
+   This command installs dependencies for the root workspace and all packages under `packages/*`, and runs the `prepare` lifecycle script to install the Git hooks via [Lefthook](https://github.com/evilmartians/lefthook) using [`.config/lefthook.yml`](../../.config/lefthook.yml).
 
-4. Build all packages:
+4. Build all workspace packages:
 
    ```bash
    pnpm build
    ```
 
-   You must build the packages before you lint, type-check or commit. The repository uses its own packages (for example `eslint-plugin-spellbookx` and `prettier-config-spellbookx`) in its root config files, and these config files load the packages from their `dist/` folders.
+   This runs `turbo run build` and compiles each package's `src/` into `dist/` (JavaScript, type declarations, and source maps) using its `tsconfig.build.json`. Because this repository dogfoods its own packages (such as `eslint-plugin-spellbookx` and `prettier-config-spellbookx`) in its root config files, building first ensures those `dist/` outputs exist.
 
-## Step 3: Add the Upstream Source
+## Step 3: Add the Upstream Remote
 
-The _upstream source_ is the main Spellbookx repository that receives the contributions. Add it as a remote so that you can get the latest changes:
+The _upstream_ remote points to the main Spellbookx repository that receives contributions. Add it so you can pull the latest changes:
 
 ```bash
 git remote add upstream https://github.com/dcdavidev/spellbookx.git
 ```
 
-Before you start new work, update your local `main` branch:
+Before starting new work, update your local `main` branch:
 
 ```bash
 git checkout main
@@ -88,48 +84,44 @@ git checkout main
 git pull upstream main
 ```
 
-Then create a topic branch from `main` for your change.
+Then create a topic branch from `main` for your changes.
 
 ## Step 4: Run the Checks
 
-Make sure that everything works before you change anything:
+Verify that everything passes before making changes:
 
 ```bash
-pnpm build && pnpm lint && pnpm fmt:check && pnpm test
+pnpm check
 ```
 
-CI runs the same checks on every pull request. For more information about the tests, see [Tests](./tests.md).
+`pnpm check` type-checks root `scripts/` and runs `build`, `lint:code`, `lint:spelling`, `lint:types`, `fmt:check`, and `test` through Turborepo. CI runs the same checks on every pull request. For details on running and writing tests, see [Tests](./tests.md).
 
 ## Step 5: Configure Your Editor
 
-The repository includes settings for [Visual Studio Code](https://code.visualstudio.com/) in the `.vscode/` folder:
+The repository includes settings for [Visual Studio Code](https://code.visualstudio.com/) in `.vscode/`:
 
-- **Recommended extensions** (`.vscode/extensions.json`): ESLint, Prettier, EditorConfig, Code Spell Checker, Commitlint, YAML, GitHub Actions and Turborepo. VS Code asks you to install them when you open the folder.
-- **Workspace settings** (`.vscode/settings.json`): format on save with Prettier, ESLint fixes when you save manually, and the workspace version of TypeScript (`node_modules/typescript/lib`).
+- **Recommended extensions** ([`.vscode/extensions.json`](../../.vscode/extensions.json)): ESLint, EditorConfig, Prettier, GitHub Actions, Commitlint, YAML, Code Spell Checker, and Turborepo. VS Code prompts you to install them when you open the workspace.
+- **Workspace settings** ([`.vscode/settings.json`](../../.vscode/settings.json)): format on save with Prettier, ESLint auto-fix on explicit save, CSpell enabled, workspace TypeScript SDK (`node_modules/typescript/lib`), automatic ESLint working directories for workspace packages, and search/watcher exclusions for `node_modules/`, `.turbo/`, and `dist/`.
 
-When VS Code asks which TypeScript version to use, select **Use Workspace Version**. If the editor shows errors about missing files in `node_modules` after a `pnpm install`, run **TypeScript: Restart TS Server** from the command palette.
+When VS Code asks which TypeScript version to use, select **Use Workspace Version**. If the editor reports missing modules after `pnpm install`, run **TypeScript: Restart TS Server** from the command palette.
 
-If you use another editor, install its EditorConfig, ESLint and Prettier integrations. The shared editor settings are in [`.editorconfig`](../../.editorconfig).
+If you use another editor, enable its EditorConfig, ESLint, Prettier, and CSpell integrations. Shared editor settings are defined in [`.editorconfig`](../../.editorconfig).
 
 ## Reference Information
 
 ### Directory Structure
 
-- `packages/`: the published packages. Each package has `src/` (source code), `tests/` (tests), `dist/` (build output, not committed), `rolldown.config.ts`, `tsconfig.json` and `tsconfig.build.json`.
-- `.config/`: configuration of the repository tools (commitlint, czg, CSpell, dropdx and Lefthook).
-- `.changeset/`: pending changesets for the next release.
-- `.github/`: CI workflow, issue templates and pull request template.
+- `packages/*/`: workspace packages, each with `src/` (compiled to `dist/`, not committed), `tests/` (coverage written to `coverage/`, not committed), `tsconfig.json`, and `tsconfig.build.json`.
+- `scripts/`: TypeScript maintenance scripts executed with `tsx` (`update-node.ts`, `update-turbo.ts`).
+- `.config/`: tool configurations for CSpell (`.config/cspell.yml`, `.config/cspell/custom.txt`), `dropdx` (`.config/dropdx.config.json`), and Lefthook (`.config/lefthook.yml`).
+- `.changeset/`: Changesets configuration and pending changeset files for releases.
+- `.github/`: CI workflows, scheduled update workflows, Dependabot configuration, and PR/issue templates.
+- `.vscode/`: workspace settings and recommended extensions for VS Code.
 - `.agents/skills/`: skills for AI coding assistants.
-- `docs/`: the contributing guide, the contributor guides and the security policy.
+- `docs/`: contributing guide, contributor documentation, and the [security policy](../SECURITY.md).
 
-For more information about the packages and how they depend on each other, see [Architecture](./architecture.md).
+For a deeper look at how the configuration, build pipeline, and tooling fit together, see [Architecture](./architecture.md).
 
 ### Workflow
 
-Run any script from the repository root. To run a script for one package only, use `--filter`:
-
-```bash
-pnpm --filter eslint-plugin-spellbookx test
-```
-
-For the full list of scripts, see [Package.json Scripts Naming Conventions](./package-json-scripts-naming-conventions.md).
+Run all commands from the repository root (or target a single package with `pnpm --filter <package> <script>`). For the complete list of scripts and their naming convention, see [Package.json Scripts Naming Conventions](./package-json-scripts-naming-conventions.md).

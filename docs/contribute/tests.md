@@ -1,57 +1,69 @@
 # Tests
 
-This guide explains how to build the packages and run the tests, and how to write new tests. Spellbookx uses [Vitest](https://vitest.dev/) for unit and integration tests.
-
-## Build the Packages
-
-The tests run against the built packages, because the packages import each other from their `dist/` folders. Build them first:
-
-```bash
-pnpm build
-```
-
-You do not have to do this by hand before `pnpm test`: the Turborepo `test` task depends on `build` (see [`turbo.json`](../../turbo.json)), so `pnpm test` builds the packages first. Turborepo caches the results, so unchanged packages are not built or tested again.
+This guide explains how to run the test suite, inspect coverage, and write new tests in Spellbookx. Workspace packages use [Vitest](https://vitest.dev/) with `@vitest/coverage-v8` for unit and integration tests, orchestrated by Turborepo.
 
 ## Run the Tests
 
-Run the tests of every package once:
+Run the full test suite once with coverage across all workspace packages:
 
 ```bash
 pnpm test
 ```
 
-Run the tests in watch mode while you work:
+Under the hood, `pnpm test` runs `turbo run test`, which executes the following command in every workspace package after building its workspace dependencies:
 
 ```bash
-pnpm test:watch
+vitest run --no-fsModuleCache --passWithNoTests --coverage
 ```
 
-Run the tests of one package only:
+There is no `vitest.config.*` file by default: packages use Vitest's built-in defaults and transform TypeScript source files directly from `src/`.
+
+Run tests for a single workspace package using pnpm's `--filter` flag:
 
 ```bash
 pnpm --filter eslint-plugin-spellbookx test
 ```
 
-Run one test file only. Pass the file name filter after the script name:
+Run a single test file inside a package by passing its path:
 
 ```bash
-pnpm --filter spellbookx test banner
+pnpm --filter spellbookx test tests/banner.test.ts
 ```
 
-Bypass the Turborepo cache and run every test again:
+Filter tests by name using Vitest's `-t` flag:
 
 ```bash
-pnpm test --force
+pnpm --filter spellbookx test -- -t "banner"
 ```
 
-Each package runs `vitest run --no-fsModuleCache`. There is no Vitest config file: the packages use the Vitest defaults.
+Run Vitest in watch mode while developing a package:
+
+```bash
+pnpm --filter spellbookx exec vitest
+```
+
+Run tests through Turborepo (as part of the full cached check pipeline), or bypass the Turborepo cache with `--force`:
+
+```bash
+pnpm check
+```
+
+```bash
+pnpm exec turbo run test --force
+```
+
+See [`turbo.json`](../../turbo.json) for the cached inputs (`src/**`, `tests/**`, `vitest.config.*`, `tsconfig*.json`, `package.json`) and outputs (`coverage/**`).
+
+## Coverage
+
+`pnpm test` generates V8 coverage reports inside each package's `coverage/` directory (for example `packages/spellbookx/coverage/index.html`). All `coverage/` folders are gitignored and excluded from Prettier and ESLint checks.
 
 ## Write Tests
 
-- Every new feature, utility function or bug fix must have tests.
-- Put the tests in the `tests/` folder at the root of the package, not next to the source files.
-- Name each test file after the module that it tests, with the `.test.ts` extension, for example `detect-pm.test.ts` for `src/lib/detect-pm.ts`. Keep each file small and focused on one module.
-- Name the top-level `describe` block after the package and the module:
+- Every new feature, utility function, or bug fix must include tests.
+- Place test files in each package's `tests/` directory, mirroring the structure of its `src/` rather than co-locating tests beside source files.
+- Name each test file after the module it tests with the `.test.ts` suffix, for example `packages/spellbookx/tests/detect-pm.test.ts` for `packages/spellbookx/src/lib/detect-pm.ts`. Keep each file focused on a single module.
+- Name the top-level `describe` block clearly after the package and module under test:
 
   ```ts
   describe('spellbookx (banner)', () => {
@@ -59,23 +71,23 @@ Each package runs `vitest run --no-fsModuleCache`. There is no Vitest config fil
   });
   ```
 
-- Import the Vitest functions explicitly. Globals are not enabled:
+- Import Vitest helpers explicitly; globals are not enabled:
 
   ```ts
   import { describe, expect, it, vi } from 'vitest';
   ```
 
-- Import the code under test from `../src/` with the `.js` extension:
+- Import the code under test from `../src/` with the `.js` extension (required by `moduleResolution: NodeNext`):
 
   ```ts
   import { getBanner } from '../src/lib/banner.js';
   ```
 
-- Tests that write files must use a temporary folder (`mkdtempSync(path.join(os.tmpdir(), '<prefix>-'))`) and remove it after the test. Do not write files into the repository.
-- Restore mocks after each test, for example with `vi.restoreAllMocks()` in `afterEach`.
+- Tests that touch the filesystem must use a temporary directory (`mkdtempSync(path.join(os.tmpdir(), '<prefix>-'))`) and clean it up afterwards. Never write test artifacts into the repository tree.
+- Restore spies and mocks after each test, for example by calling `vi.restoreAllMocks()` in `afterEach`.
 
-The tests are type-checked together with the source code by `pnpm lint:types`.
+Each package's `tests/` directory is included in its `tsconfig.json` and type-checked by `pnpm lint:types`, while its `tsconfig.build.json` excludes `tests/` from the published `dist/` output.
 
 ## Continuous Integration
 
-CI runs the tests on every pull request and on every push to `main`, after the build, lint, format and type-check steps. See [`.github/workflows/code-quality-and-tests.yml`](../../.github/workflows/code-quality-and-tests.yml).
+CI runs `pnpm test` on every pull request and push to `main` after the build, commitlint, ESLint, Prettier, CSpell, and type-check steps. See [`.github/workflows/code-quality-tests-build.yml`](../../.github/workflows/code-quality-tests-build.yml).

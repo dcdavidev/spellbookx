@@ -1,7 +1,4 @@
-import { defineConfig, globalIgnores } from 'eslint/config';
+import { defineConfig } from 'eslint/config';
 import spellbookx from 'eslint-plugin-spellbookx';
 
-export default defineConfig(
-  globalIgnores(['.agents/**', '.changeset/**', '.claude/**', '.turbo/**']),
-  [spellbookx.configs['recommended-spellcheck']]
-);
+export default defineConfig([spellbookx.configs['recommended-spellcheck']]);

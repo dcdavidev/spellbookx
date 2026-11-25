@@ -6,36 +6,72 @@
 
 The project is guided by four foundational architectural principles:
 
-1. **Native Modern Standards First**: Exclusively target modern web and tooling standards—ESLint 9+ Flat Configs, pure ECMAScript Modules (`"type": "module"`), TypeScript strict mode, and native Node.js / pnpm workflows without legacy wrappers or polyfills.
+1. **Native Modern Standards First**: Exclusively target modern web and tooling standards—ESLint 10 Flat Configs, pure ECMAScript Modules (`"type": "module"`), TypeScript strict mode targeting `ES2024`, and native Node.js / pnpm workflows without legacy wrappers or polyfills.
 2. **Single Source of Truth (SSOT)**: Shareable primitives, such as import order groupings, ignore globs, and framework definitions, are centralized in `@spellbookx/recipes` and reused uniformly across ESLint, Prettier, and CSpell.
-3. **Strict Dogfooding**: The monorepo uses its own configuration packages (`eslint-plugin-spellbookx`, `prettier-config-spellbookx`, `commitlint-config-spellbookx`, `cspell-config-spellbookx`) across all its source code, root configs, and sub-packages.
+3. **Strict Dogfooding**: The monorepo uses its own configuration packages (`eslint-plugin-spellbookx`, `prettier-config-spellbookx`, `commitlint-config-spellbookx`, `cz-config-spellbookx`, `cspell-config-spellbookx`) across all its source code, root configs, and sub-packages.
 4. **Infinite Composability & Zero Friction**: Every preset can be used out-of-the-box with a one-line import, or composed and customized via helper functions like `defineSbxConfig`.
 
 ---
 
 ## 2. Monorepo Structure & Package Topology
 
-The repository is organized as a pnpm workspace orchestrated by **Turborepo** for build caching and topological pipeline execution.
+The repository is organized as a pnpm `12.x` workspace running on Node.js `26.x` and orchestrated by **Turborepo** for build caching and topological pipeline execution.
 
 ```text
 spellbookx/
+├── .agents/skills/                   # AI coding assistant skills for Spellbookx tools
+├── .changeset/                       # Changesets configuration & lockstep release notes
+├── .config/                          # Tool configs without `.config.` in the file name
+│   ├── cspell/
+│   │   └── custom.txt                # Project-specific CSpell word list
+│   ├── cspell.yml                    # CSpell configuration
+│   ├── dropdx.config.json            # Automated release configuration
+│   └── lefthook.yml                  # Lefthook Git hook definitions
+├── .github/
+│   ├── ISSUE_TEMPLATE/               # Bug report and feature request forms
+│   ├── dependabot.yml                # Weekly dependency and GitHub Actions updates
+│   ├── PULL_REQUEST_TEMPLATE.md      # Pull request checklist template
+│   └── workflows/                    # CI checks and scheduled maintenance workflows
+├── .vscode/                          # Recommended VS Code extensions and workspace settings
+├── docs/
+│   ├── CONTRIBUTING.md               # Main contributing guide
+│   ├── SECURITY.md                   # Security policy and vulnerability reporting
+│   └── contribute/                   # Detailed contributor documentation
+├── images/                           # README banner and brand assets
 ├── packages/
-│   ├── eslint-plugin-spellbookx/     # ESLint 9+ Flat Config plugin with 16 modular presets
-│   ├── prettier-config-spellbookx/   # Prettier presets, plugins & defineSbxConfig composer
 │   ├── commitlint-config-spellbookx/ # Conventional Commits rules and monorepo scope discovery
 │   ├── cspell-config-spellbookx/     # Multi-language & technical spellcheck configuration
 │   ├── cz-config-spellbookx/         # czg interactive commit prompt configuration
-│   ├── recipes/                      # Core shared recipes (import regexes & ignore patterns)
+│   ├── eslint-plugin-spellbookx/     # ESLint 10 Flat Config plugin with 17 modular presets
+│   ├── prettier-config-spellbookx/   # Prettier presets, plugins & defineSbxConfig composer
+│   ├── recipes/                      # Core shared recipes (import regexes, ignores & git scopes)
 │   └── spellbookx/                   # CLI wizard (`sbx`) for interactive toolchain scaffolding
-├── .agents/
-│   └── skills/                       # Built-in AI Agent skills for assisted toolchain adoption
-├── .changeset/                       # Changesets release orchestration & lockstep versioning
-├── docs/                             # Contributing guide, contributor guides & security policy
-│   ├── CONTRIBUTING.md               # Contributing guide (entry point)
-│   ├── contribute/                   # Contributor guides, including this architecture document
-│   └── SECURITY.md                   # Security policy
-└── turbo.json                        # Monorepo pipeline definition
+├── scripts/
+│   ├── update-node.ts                # Syncs `.nvmrc` and `@types/node` with Node.js LTS
+│   └── update-turbo.ts               # Upgrades `turbo` and runs `@turbo/codemod`
+├── .editorconfig                     # Cross-editor indentation and line-ending defaults
+├── .gitattributes                    # LF line endings and binary files
+├── .nvmrc                            # Pinned Node.js major version (26)
+├── .prettierignore                   # Paths excluded from Prettier formatting
+├── commitlint.config.mjs             # Commitlint preset configuration
+├── cz.config.mjs                     # Interactive `czg` commit prompt configuration
+├── eslint.config.mjs                 # ESLint flat config (`recommended-spellcheck`)
+├── package.json                      # Root workspace scripts and shared devDependencies
+├── pnpm-workspace.yaml               # pnpm workspace globs, build allow-list, and hoisting rules
+├── prettier.config.mjs               # Prettier base preset configuration
+├── tsconfig.base.json                # Shared base TypeScript compiler options
+├── tsconfig.json                     # Root TypeScript configuration for `scripts/`
+└── turbo.json                        # Turborepo task graph, inputs, outputs, and caching rules
 ```
+
+### Configuration Placement Convention
+
+Configuration files follow a consistent placement rule:
+
+- **Files with `.config.` in the name** live in the **repository root**, where their CLIs discover them automatically without extra flags: [`eslint.config.mjs`](../../eslint.config.mjs), [`prettier.config.mjs`](../../prettier.config.mjs), [`commitlint.config.mjs`](../../commitlint.config.mjs), and [`cz.config.mjs`](../../cz.config.mjs).
+- **Tool-name-only configuration files** live in `.config/`: [`.config/cspell.yml`](../../.config/cspell.yml) (with its dictionary at [`.config/cspell/custom.txt`](../../.config/cspell/custom.txt)), [`.config/lefthook.yml`](../../.config/lefthook.yml), and [`.config/dropdx.config.json`](../../.config/dropdx.config.json).
+- **Core platform files** stay in the repository root as required by their tools: [`package.json`](../../package.json), [`pnpm-workspace.yaml`](../../pnpm-workspace.yaml), [`tsconfig.base.json`](../../tsconfig.base.json), [`tsconfig.json`](../../tsconfig.json), [`turbo.json`](../../turbo.json), [`.nvmrc`](../../.nvmrc), [`.editorconfig`](../../.editorconfig), and [`.prettierignore`](../../.prettierignore).
+- **Per-package files** live inside each package directory under `packages/<name>/`: `package.json`, `tsconfig.json`, `tsconfig.build.json`, `src/`, `tests/`, `README.md`, `LICENSE`, and `CHANGELOG.md`.
 
 ### Dependency & Relationship Graph
 
@@ -46,9 +82,10 @@ flowchart TD
     end
 
     subgraph Tooling ["Config Packages"]
-        ESLINT["eslint-plugin-spellbookx<br/><i>ESLint 9 Flat Configs</i>"]
+        ESLINT["eslint-plugin-spellbookx<br/><i>ESLint 10 Flat Configs</i>"]
         PRETTIER["prettier-config-spellbookx<br/><i>Prettier Presets & Plugins</i>"]
         COMMITLINT["commitlint-config-spellbookx<br/><i>Monorepo Scope Discovery</i>"]
+        CZ["cz-config-spellbookx<br/><i>Interactive czg Prompt</i>"]
         CSPELL["cspell-config-spellbookx<br/><i>Multi-Language Spellcheck</i>"]
     end
 
@@ -59,11 +96,14 @@ flowchart TD
 
     RECIPES -->|Imports regex & ignores| ESLINT
     RECIPES -->|Import order & ignores| PRETTIER
+    RECIPES -->|Git scopes & commit types| COMMITLINT
+    RECIPES -->|Git scopes & commit types| CZ
     RECIPES -.->|Shared ignore patterns| CSPELL
 
     ESLINT --> CLI
     PRETTIER --> CLI
     COMMITLINT --> CLI
+    CZ --> CLI
     CSPELL --> CLI
 
     Tooling -.->|Automated guidance| SKILLS
@@ -76,19 +116,20 @@ flowchart TD
 
 ### 3.1 `@spellbookx/recipes`
 
-- **Role**: Foundational, zero-dependency library providing curated constants and regex patterns.
+- **Role**: Foundational library providing curated constants, regex patterns, and monorepo scope discovery helpers.
 - **Components**:
   - `imports`: Categorized RegExp rules for module import ordering (e.g., node built-ins, framework runtimes, component libraries, state management, utilities, internal aliases, styles).
   - `ignores`: Exhaustive ignore globs grouped by domain (Node runtime artifacts, package managers, build outputs, frameworks like Astro/Next/Svelte, test runners, operating system artifacts).
-- **Export Strategy**: Provides both granular exports (`@spellbookx/recipes/imports`, `@spellbookx/recipes/ignores`) and a root aggregator.
+  - `git`: Shared commit types and dynamic workspace scope discovery.
+- **Export Strategy**: Provides granular exports (`@spellbookx/recipes/imports`, `@spellbookx/recipes/ignores`, `@spellbookx/recipes/git`) and a root aggregator.
 
 ### 3.2 `eslint-plugin-spellbookx`
 
-- **Role**: ESLint 9+ native Flat Config plugin exporting 16 modular presets.
+- **Role**: ESLint 10 native Flat Config plugin exporting 17 modular presets.
 - **Key Modules**:
   - `recommended`: Standard TypeScript & JavaScript best practices.
   - `recommended-spellcheck`: Recommended rules + integrated CSpell linting.
-  - Framework configs: `react`, `astro`, `svelte`, `node`.
+  - Framework configs: `react`, `next`, `astro`, `svelte`, `node`.
   - Format & syntax configs: `json`, `markdown`, `strict`, `all`, `vuoto` (clean baseline).
 - **Import Sorting**: Integrates `eslint-plugin-simple-import-sort` driven by patterns from `@spellbookx/recipes/imports`.
 - **Ignore Strategy**: Exports `configs.ignores` utilizing `@spellbookx/recipes/ignores`.
@@ -99,7 +140,7 @@ flowchart TD
 - **Key Modules**:
   - Modular presets for Tailwind CSS class sorting, Astro, Svelte, Prisma, SQL, Nginx, XML, and multiline arrays.
   - `defineSbxConfig`: A configuration composer function that deduplicates plugins, validates mutual exclusion, and merges custom override options.
-  - Import sorting via `@ianvs/prettier-plugin-sort-imports` or `prettier-plugin-organize-imports`, aligning with `@spellbookx/recipes`.
+  - Import sorting via `@ianvs/prettier-plugin-sort-imports`, aligning with `@spellbookx/recipes`.
 
 ### 3.4 `commitlint-config-spellbookx`
 
@@ -119,7 +160,7 @@ flowchart TD
 
 - **Role**: Interactive terminal wizard for bootstrapping and managing the Spellbookx toolchain in user projects.
 - **Stack**: Built with `commander`, `@inquirer/prompts`, `ora`, `chalk`, and `execa`.
-- **Capabilities**: Detects project framework (React, Astro, Svelte, Node), package manager, and existing configs; interactively scaffolds `eslint.config.mjs`, `prettier.config.mjs`, `commitlint.config.mjs`, `cspell.json`, and installs required dependencies.
+- **Capabilities**: Detects project framework (React, Astro, Svelte, Node), package manager, and existing configs; interactively scaffolds `eslint.config.mjs`, `prettier.config.mjs`, `commitlint.config.mjs`, `cz.config.mjs`, `.config/cspell.yml`, and installs required dependencies.
 
 ### 3.7 `.agents/skills`
 
@@ -130,60 +171,65 @@ flowchart TD
 
 ## 4. Build, Test, & Release Pipeline
 
-### 4.1 Build Engine: Rolldown & TypeScript
+### 4.1 Build Engine: TypeScript (`tsc`)
 
-- Every package builds with **Rolldown** (`rolldown -c`) from the shared [`rolldown.base.ts`](../../rolldown.base.ts). Each `rolldown.config.ts` only calls `definePackageBuild()`.
-- Every file in `src/` is an entry and `preserveModules` is enabled, so `dist/` mirrors `src/` one-to-one (no hashed chunks).
-- Bare imports (npm packages, workspace packages, `node:` built-ins) stay external: runtime dependencies are installed by consumers, not bundled.
-- Type declarations (`.d.ts`) are emitted by `tsc -p tsconfig.build.json`. `tsconfig.json` covers `src/` and `tests/` with `noEmit` and powers `lint:types` and the editor.
+The monorepo separates shared compiler defaults, type-checking, and build emission:
+
+- [`tsconfig.base.json`](../../tsconfig.base.json) defines shared strict compiler options (`target: "ES2024"`, `module: "NodeNext"`, `moduleResolution: "NodeNext"`, `strict: true`, `isolatedModules: true`, `verbatimModuleSyntax: true`, `noEmit: true`).
+- Root [`tsconfig.json`](../../tsconfig.json) extends `tsconfig.base.json` and covers `scripts/**/*` for root maintenance scripts.
+- Each package's `tsconfig.json` extends `../../tsconfig.base.json` and covers `src/**/*` and `tests/**/*`. It powers `pnpm lint:types` (`tsc -p tsconfig.json`) and editor language services.
+- Each package's `tsconfig.build.json` extends `./tsconfig.json`, sets `noEmit: false`, restricts `include` to `src/**/*`, and emits JavaScript, `.d.ts` type declarations, `.d.ts.map` declaration maps, and `.js.map` source maps into `dist/`. It powers `pnpm build` (`tsc -p tsconfig.build.json`) and `pnpm dev` (`tsc -p tsconfig.build.json --watch --preserveWatchOutput`).
+- Each publishable package lists `"files": ["dist"]` and exposes ESM entry points via `exports`, `main`, `module`, and `types`.
+
+> **Side-by-side TypeScript 6 / 7**: Packages build with TypeScript 7 (`typescript@^7.0.2`), while the workspace root and `eslint-plugin-spellbookx` pin `typescript` to `npm:@typescript/typescript6@^6.0.2` alongside `@typescript/native` (`npm:typescript@^7.0.2`) so `typescript-eslint` uses the TypeScript 6 compiler API cleanly.
 
 ### 4.2 Monorepo Task Orchestration: Turborepo
 
-Turborepo coordinates dependencies and parallel execution across the workspace:
+[`turbo.json`](../../turbo.json) coordinates tasks across workspace packages and root checks:
 
-```json
-{
-  "$schema": "https://turborepo.dev/schema.json",
-  "ui": "tui",
-  "tasks": {
-    "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**"]
-    },
-    "test": {
-      "dependsOn": ["build"],
-      "inputs": ["$TURBO_DEFAULT$"]
-    },
-    "lint:types": {
-      "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$"],
-      "outputs": []
-    }
-  }
-}
-```
+- **Global dependencies**: `.nvmrc`, `pnpm-lock.yaml`, and `tsconfig.base.json` invalidate cached results whenever the Node.js version, dependencies, or shared TypeScript compiler options change.
+- **Package tasks**: `build` (`dependsOn: ["^build"]`, outputs `dist/**`), `lint:types` (`dependsOn: ["^build"]`), `test` (`dependsOn: ["^build"]`, outputs `coverage/**`), `clean` (uncached), and `dev` (uncached, persistent).
+- **Root tasks**: `//#lint:code`, `//#lint:spelling`, and `//#fmt:check` depend on `^build` (ensuring dogfooded workspace configs are compiled first) and run once at the repository root with Turborepo caching.
+- **Aggregate commands**: `pnpm lint` runs `lint:code` and `lint:spelling`; `pnpm check` type-checks root `scripts/` and runs `build`, `lint:code`, `lint:spelling`, `lint:types`, `fmt:check`, and `test` via Turborepo.
 
-- `dependsOn: ["^build"]` ensures that foundational dependencies (such as `@spellbookx/recipes`) are built before consuming packages (`eslint-plugin-spellbookx`, `prettier-config-spellbookx`).
-- `lint:types` needs the declarations of the workspace dependencies, so it also depends on `^build`.
+### 4.3 pnpm Workspace Settings
 
-### 4.3 Versioning & Publishing: Changesets and dropdx
+[`pnpm-workspace.yaml`](../../pnpm-workspace.yaml) configures the workspace layout and pnpm policies:
 
-- Versioning is synchronized across packages using `@changesets/cli` with a `fixed` configuration group.
+- `packages`: registers `packages/*` as workspace packages.
+- `allowBuilds`: explicitly permits post-install build scripts only for `esbuild` and `lefthook`.
+- `engineStrict: true`: enforces runtime and package manager constraints.
+- `publicHoistPattern`: hoists `*prettier-plugin-*` and `@prettier/plugin-*` so Prettier and editor integrations resolve `prettier-config-spellbookx`'s bundled plugins cleanly without duplicating them in the root `package.json`.
+
+### 4.4 Versioning & Publishing: Changesets and `dropdx`
+
+- Versioning is synchronized across packages using `@changesets/cli` with a `fixed` configuration group in [`.changeset/config.json`](../../.changeset/config.json).
 - Conventional Commits are mapped into changeset entries via `changeset-conventional-commits`.
-- Packages are built, tagged, and published by [`dropdx`](https://github.com/dcdavidev/dropdx).
-- Publishing workflow:
+- Packages are built, tagged, and published by [`dropdx`](https://github.com/dcdavidev/dropdx):
   1. On the feature branch, `pnpm changeset:commits` (or `pnpm changeset` interactively) creates the release intents. Commit them with the change.
-  2. On a clean, up-to-date `main`, `pnpm release` runs `dropdx`. It runs `changeset version` on the committed changesets, builds, commits `chore(release): bump to vX.Y.Z`, tags, pushes and publishes to npm. `.config/dropdx.config.json` sets `conventionalCommits: true`, so the release commit passes commitlint on every OS.
+  2. On a clean, up-to-date `main`, `pnpm release` runs `dropdx`. It runs `changeset version` on the committed changesets, builds, commits `chore(release): bump to vX.Y.Z`, tags, pushes, and publishes to npm. [`.config/dropdx.config.json`](../../.config/dropdx.config.json) sets `conventionalCommits: true`, so the release commit passes Commitlint on every OS.
 
-### 4.4 Continuous Integration
+### 4.5 Continuous Integration & Maintenance Automation
 
-[`.github/workflows/code-quality-and-tests.yml`](../../.github/workflows/code-quality-and-tests.yml) runs on every pull request and on pushes to `main`. It runs each check as a separate step: build, commit messages, `lint:code`, `lint:spelling`, `fmt:check`, `lint:types`, and `test`. Script names follow [Package.json Scripts Naming Conventions](package-json-scripts-naming-conventions.md).
+- **CI** ([`.github/workflows/code-quality-tests-build.yml`](../../.github/workflows/code-quality-tests-build.yml)): runs on every pull request and push to `main` with `LEFTHOOK=0` and `TURBO_TELEMETRY_DISABLED=1`, executing install, build, PR commitlint, `lint:code`, `fmt:check`, `lint:spelling`, `lint:types`, and `test` as separate steps.
+- **Maintenance scripts**: [`scripts/update-node.ts`](../../scripts/update-node.ts) and [`scripts/update-turbo.ts`](../../scripts/update-turbo.ts) run via `tsx` both locally (`pnpm update:node`, `pnpm update:turbo`) and on weekly GitHub Actions schedules ([`update-node.yml`](../../.github/workflows/update-node.yml) and [`update-turbo.yml`](../../.github/workflows/update-turbo.yml)) that open automated pull requests when updates are available.
+- **Dependency updates**: [`.github/dependabot.yml`](../../.github/dependabot.yml) schedules weekly grouped updates for npm dependencies and GitHub Actions.
 
 ---
 
 ## 5. Quality Assurance & Git Automation
 
-- **Pre-commit Automation**: Managed by **Lefthook** (`.config/lefthook.yml`). Executes staged-file formatting, ESLint validation, and CSpell checks in parallel before commits are allowed.
-- **Commit-msg Validation**: Lefthook triggers `@commitlint/cli` using `commitlint-config-spellbookx` to enforce Conventional Commits rules on every commit message.
-- **Unit Testing**: Vitest runs unit and integration tests across all packages, verifying preset outputs, rule validity, and CLI flows.
+All linting, formatting, spelling, and commit rules come from Spellbookx's own workspace packages configured once at the repository root:
+
+| Concern           | Config file                                            | Workspace package                                     |
+| :---------------- | :----------------------------------------------------- | :---------------------------------------------------- |
+| Code linting      | [`eslint.config.mjs`](../../eslint.config.mjs)         | `eslint-plugin-spellbookx` (`recommended-spellcheck`) |
+| Formatting        | [`prettier.config.mjs`](../../prettier.config.mjs)     | `prettier-config-spellbookx/base`                     |
+| Spell-checking    | [`.config/cspell.yml`](../../.config/cspell.yml)       | `cspell-config-spellbookx`                            |
+| Commit validation | [`commitlint.config.mjs`](../../commitlint.config.mjs) | `commitlint-config-spellbookx`                        |
+| Guided commits    | [`cz.config.mjs`](../../cz.config.mjs)                 | `cz-config-spellbookx`                                |
+| Git hooks         | [`.config/lefthook.yml`](../../.config/lefthook.yml)   | `lefthook`                                            |
+
+- **Pre-commit Automation**: Managed by **Lefthook** ([`.config/lefthook.yml`](../../.config/lefthook.yml)) with `piped: true`. Runs `eslint --no-warn-ignored --fix` and then `prettier --ignore-unknown --write` on staged files, automatically re-staging fixed files.
+- **Commit-msg Validation**: Lefthook runs `@commitlint/cli` using `commitlint-config-spellbookx` to enforce Conventional Commits rules on every commit message.
+- **Unit Testing**: Vitest with `@vitest/coverage-v8` runs unit and integration tests across all packages, verifying preset outputs, rule validity, and CLI flows.
