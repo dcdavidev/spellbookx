@@ -9,14 +9,14 @@ import {
   defaultImportOrderParserPlugins,
   importOrder,
 } from '../import-order.js';
-import { overrides } from '../overrides.js';
+import { type OverrideEntry, overrides } from '../overrides.js';
 import { plugins } from '../plugins.js';
 import { rules } from '../rules.js';
 
 /**
  * Aggregated file overrides applied in the comprehensive preset.
  */
-export const allOverrides = overrides.all;
+export const allOverrides: OverrideEntry[] = overrides.all;
 
 /**
  * Comprehensive Prettier configuration preset.

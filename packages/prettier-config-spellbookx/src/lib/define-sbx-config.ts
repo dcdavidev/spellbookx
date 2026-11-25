@@ -77,4 +77,4 @@ export function defineSbxConfig(
 /**
  * Alias for `defineSbxConfig` to facilitate conventional configuration declaration.
  */
-export const defineConfig = defineSbxConfig;
+export const defineConfig: typeof defineSbxConfig = defineSbxConfig;

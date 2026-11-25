@@ -16,9 +16,26 @@ import { getWorkspacesRawPath } from './get-workspaces-raw-path.js';
 import { scopesArray, scopesEnum } from './scopes.js';
 
 /**
+ * Type of the unified `git` dictionary.
+ */
+export interface GitDictionary {
+  readonly COMMIT_TYPE_DEFINITIONS: typeof COMMIT_TYPE_DEFINITIONS;
+  readonly COMMIT_TYPES: typeof COMMIT_TYPES;
+  readonly commitTypes: typeof commitTypes;
+  readonly findGitRoot: typeof findGitRoot;
+  readonly getScopeDescription: typeof getScopeDescription;
+  readonly getScopes: typeof getScopes;
+  readonly getWorkspacesRawPath: typeof getWorkspacesRawPath;
+  readonly SCOPE_RELEASE: typeof SCOPE_RELEASE;
+  readonly SCOPE_WORKSPACE: typeof SCOPE_WORKSPACE;
+  readonly scopesArray: typeof scopesArray;
+  readonly scopesEnum: typeof scopesEnum;
+}
+
+/**
  * Dictionary of all git recipe constants, scope collections, and workspace discovery helpers.
  */
-export const git = {
+export const git: GitDictionary = {
   COMMIT_TYPE_DEFINITIONS,
   COMMIT_TYPES,
   commitTypes,
@@ -30,17 +47,12 @@ export const git = {
   SCOPE_WORKSPACE,
   scopesArray,
   scopesEnum,
-} as const;
+};
 
 /**
  * Valid keys in the `git` dictionary.
  */
-export type GitRecipeKey = keyof typeof git;
-
-/**
- * Type of the unified `git` dictionary.
- */
-export type GitDictionary = typeof git;
+export type GitRecipeKey = keyof GitDictionary;
 
 export * from './commit-types.js';
 export * from './constants.js';

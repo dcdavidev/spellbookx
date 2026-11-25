@@ -5,14 +5,14 @@
 
 import type { Config } from 'prettier';
 
-import { overrides } from '../overrides.js';
+import { type OverrideEntry, overrides } from '../overrides.js';
 import { plugins } from '../plugins.js';
 import base from './base.js';
 
 /**
  * File override applied for Svelte files.
  */
-export const svelteOverride = overrides.svelte;
+export const svelteOverride: OverrideEntry = overrides.svelte;
 
 /**
  * Prettier configuration preset for Svelte projects.

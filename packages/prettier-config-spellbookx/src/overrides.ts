@@ -105,7 +105,21 @@ export const allOverrides: OverrideEntry[] = [
 /**
  * Dictionary of individual and aggregated file override presets.
  */
-export const overrides = {
+export interface PrettierOverrides {
+  readonly czrc: OverrideEntry;
+  readonly jsonc: OverrideEntry;
+  readonly toml: OverrideEntry;
+  readonly xml: OverrideEntry;
+  readonly astro: OverrideEntry;
+  readonly svelte: OverrideEntry;
+  readonly base: OverrideEntry[];
+  readonly all: OverrideEntry[];
+}
+
+/**
+ * Dictionary of individual and aggregated file override presets.
+ */
+export const overrides: PrettierOverrides = {
   czrc: czrcOverride,
   jsonc: jsoncOverride,
   toml: tomlOverride,
@@ -114,7 +128,7 @@ export const overrides = {
   svelte: svelteOverride,
   base: baseOverrides,
   all: allOverrides,
-} as const;
+};
 
 /**
  * Valid override identifier keys.

@@ -20,9 +20,16 @@ export const baseRules: Omit<Config, 'plugins' | 'overrides'> = {
 /**
  * Dictionary of reusable formatting rule sets.
  */
-export const rules = {
+export interface PrettierRules {
+  readonly base: Omit<Config, 'plugins' | 'overrides'>;
+}
+
+/**
+ * Dictionary of reusable formatting rule sets.
+ */
+export const rules: PrettierRules = {
   base: baseRules,
-} as const;
+};
 
 /**
  * Valid rule set identifier keys.

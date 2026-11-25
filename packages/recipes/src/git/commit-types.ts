@@ -27,7 +27,7 @@ export type CommitType = (typeof COMMIT_TYPES)[number];
 /**
  * CamelCase alias for `COMMIT_TYPES`.
  */
-export const commitTypes = COMMIT_TYPES;
+export const commitTypes: typeof COMMIT_TYPES = COMMIT_TYPES;
 
 /**
  * Display metadata for a Conventional Commit type.

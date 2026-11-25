@@ -17,7 +17,7 @@ Use `@file` rather than `@fileoverview` (enforced by `jsdoc/check-tag-names`).
 
 ## Language and Modules
 
-- Write source code, tests, and scripts in **TypeScript** with `strict`, `isolatedModules`, and `verbatimModuleSyntax` enabled (see [`tsconfig.base.json`](../../tsconfig.base.json)).
+- Write source code, tests, and scripts in **TypeScript** with `strict`, `isolatedModules`, `isolatedDeclarations`, and `verbatimModuleSyntax` enabled (see [`tsconfig.base.json`](../../tsconfig.base.json)).
 - The repository and all workspace packages target `ES2024` and are pure ECMAScript modules (`"type": "module"`). Do not use CommonJS (`require`, `module.exports`).
 - TypeScript uses `module: NodeNext` and `moduleResolution: NodeNext`. Relative imports must include the `.js` extension, including inside `.ts` files:
 

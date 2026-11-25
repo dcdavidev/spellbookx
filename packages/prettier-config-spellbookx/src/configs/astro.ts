@@ -5,14 +5,14 @@
 
 import type { Config } from 'prettier';
 
-import { overrides } from '../overrides.js';
+import { type OverrideEntry, overrides } from '../overrides.js';
 import { plugins } from '../plugins.js';
 import base from './base.js';
 
 /**
  * File override applied for Astro files.
  */
-export const astroOverride = overrides.astro;
+export const astroOverride: OverrideEntry = overrides.astro;
 
 /**
  * Prettier configuration preset for Astro projects.

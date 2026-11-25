@@ -5,19 +5,19 @@
 
 import type { Config } from 'prettier';
 
-import { overrides } from '../overrides.js';
+import { type OverrideEntry, overrides } from '../overrides.js';
 import { plugins } from '../plugins.js';
 import { rules } from '../rules.js';
 
 /**
  * Base formatting rules.
  */
-export const baseRules = rules.base;
+export const baseRules: Omit<Config, 'plugins' | 'overrides'> = rules.base;
 
 /**
  * Base file overrides.
  */
-export const baseOverrides = overrides.base;
+export const baseOverrides: OverrideEntry[] = overrides.base;
 
 /**
  * List of plugins included in the base configuration.

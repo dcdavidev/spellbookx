@@ -51,6 +51,6 @@ export const DICTIONARIES: string[] = [
 /**
  * Alias for {@link DICTIONARIES}.
  */
-export const dictionaries = DICTIONARIES;
+export const dictionaries: string[] = DICTIONARIES;
 
 export default DICTIONARIES;

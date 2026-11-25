@@ -157,7 +157,7 @@ export const misc = [
 /**
  * Combined list of all standard ignore glob patterns.
  */
-export const all = [
+export const all: readonly string[] = [
   ...core,
   ...node,
   ...lockFiles,
@@ -167,17 +167,17 @@ export const all = [
   ...toolchains,
   ...windows,
   ...misc,
-] as const;
+];
 
 // Uppercase aliases for conventional matching
-export const CORE_IGNORE_PATHS = core;
-export const NODE_IGNORE_PATHS = node;
-export const LOCK_FILES_IGNORE_PATHS = lockFiles;
-export const RUST_IGNORE_PATHS = rust;
-export const GO_IGNORE_PATHS = go;
-export const PYTHON_IGNORE_PATHS = python;
-export const TOOLCHAINS_IGNORE_PATHS = toolchains;
-export const WINDOWS_IGNORE_PATHS = windows;
-export const MISC_IGNORE_PATHS = misc;
-export const ALL_IGNORE_PATHS = all;
+export const CORE_IGNORE_PATHS: typeof core = core;
+export const NODE_IGNORE_PATHS: typeof node = node;
+export const LOCK_FILES_IGNORE_PATHS: typeof lockFiles = lockFiles;
+export const RUST_IGNORE_PATHS: typeof rust = rust;
+export const GO_IGNORE_PATHS: typeof go = go;
+export const PYTHON_IGNORE_PATHS: typeof python = python;
+export const TOOLCHAINS_IGNORE_PATHS: typeof toolchains = toolchains;
+export const WINDOWS_IGNORE_PATHS: typeof windows = windows;
+export const MISC_IGNORE_PATHS: typeof misc = misc;
+export const ALL_IGNORE_PATHS: readonly string[] = all;
 export const ignorePaths: string[] = [...all];

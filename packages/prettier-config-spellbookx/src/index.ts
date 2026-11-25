@@ -79,4 +79,4 @@ export { plugins } from './plugins.js';
 export { baseRules, rules } from './rules.js';
 
 // Default export is the community recommended preset
-export default configs.recommended;
+export { recommended as default } from './configs/index.js';

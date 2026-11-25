@@ -6,9 +6,25 @@
 import * as constants from './constants.js';
 
 /**
+ * Type of the unified `ignores` dictionary.
+ */
+export interface IgnoresDictionary {
+  readonly all: typeof constants.all;
+  readonly core: typeof constants.core;
+  readonly go: typeof constants.go;
+  readonly lockFiles: typeof constants.lockFiles;
+  readonly misc: typeof constants.misc;
+  readonly node: typeof constants.node;
+  readonly python: typeof constants.python;
+  readonly rust: typeof constants.rust;
+  readonly toolchains: typeof constants.toolchains;
+  readonly windows: typeof constants.windows;
+}
+
+/**
  * Dictionary of all ignore recipe categories and complete collections.
  */
-export const ignores = {
+export const ignores: IgnoresDictionary = {
   all: constants.all,
   core: constants.core,
   go: constants.go,
@@ -19,17 +35,12 @@ export const ignores = {
   rust: constants.rust,
   toolchains: constants.toolchains,
   windows: constants.windows,
-} as const;
+};
 
 /**
  * Valid keys in the `ignores` dictionary.
  */
-export type IgnoreRecipeKey = keyof typeof ignores;
-
-/**
- * Type of the unified `ignores` dictionary.
- */
-export type IgnoresDictionary = typeof ignores;
+export type IgnoreRecipeKey = keyof IgnoresDictionary;
 
 export * from './constants.js';
 

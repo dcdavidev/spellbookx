@@ -11,12 +11,12 @@ export const separator = '';
 /**
  * Alias for `separator` indicating a blank line between import groups.
  */
-export const newline = separator;
+export const newline: string = separator;
 
 /**
  * Short alias for `separator` indicating a blank line between import groups.
  */
-export const nl = separator;
+export const nl: string = separator;
 
 /**
  * Dotenv environment configuration packages (`@dotenvx/dotenvx`, `dotenv`).
@@ -26,7 +26,7 @@ export const dotenv = ['@dotenvx/dotenvx', 'dotenv'] as const;
 /**
  * Side-effect imports identifier pattern.
  */
-export const sideEffects = [String.raw`^\u0000`] as const;
+export const sideEffects: readonly string[] = [String.raw`^\u0000`];
 
 /**
  * Environment variable module aliases (`@env`).
@@ -153,7 +153,7 @@ export const fullstackFrameworks = [
 /**
  * React Native, Expo, and mobile application navigation libraries.
  */
-export const reactNativeExpo = [
+export const reactNativeExpo: readonly string[] = [
   '@expo',
   String.raw`^@expo\/`,
   '@react-native',
@@ -161,7 +161,7 @@ export const reactNativeExpo = [
   'expo-',
   'react-native',
   'react-navigation',
-] as const;
+];
 
 /**
  * Client-side state management libraries (Redux, Zustand, MobX, Jotai, Recoil, Valtio).
@@ -225,7 +225,7 @@ export const cssInJs = [
 /**
  * Icon sets and component icon packages (Lucide, FontAwesome, React Icons, Tabler).
  */
-export const icons = [
+export const icons: readonly string[] = [
   String.raw`^@expo\/vector-icons`,
   '@fortawesome',
   '@tabler/icons-react',
@@ -234,7 +234,7 @@ export const icons = [
   'react-icons',
   'react-native-feather',
   'react-native-vector-icons',
-] as const;
+];
 
 /**
  * Unit, integration, and end-to-end testing frameworks (Vitest, Jest, Playwright, Cypress, Testing Library).
@@ -250,11 +250,11 @@ export const testing = [
 /**
  * Third-party dependencies matching tokens and general npm module patterns.
  */
-export const thirdParty = [
+export const thirdParty: readonly string[] = [
   '<THIRD_PARTY_MODULES>',
   '^[a-z]',
   String.raw`^@\w`,
-] as const;
+];
 
 /**
  * Monorepo workspace package scope prefixes.
@@ -276,28 +276,28 @@ export const internalAliases = ['@/', '~/', '#/'] as const;
 /**
  * Static media and font asset file patterns (video, audio, images, fonts, lottie).
  */
-export const assets = [
+export const assets: readonly string[] = [
   String.raw`^.+\.(avi|mkv|mov|mp4|webm)$`,
   String.raw`^.+\.(mp3|ogg|wav|weba)$`,
   String.raw`^.+\.(gif|jpe?g|png|svg|webp)$`,
   String.raw`^.+\.lottie$`,
   String.raw`^.+\.(eot|otf|ttf|woff|woff2)$`,
-] as const;
+];
 
 /**
  * JSON file patterns.
  */
-export const json = [String.raw`^.+\.json$`] as const;
+export const json: readonly string[] = [String.raw`^.+\.json$`];
 
 /**
  * Stylesheet and preprocessor file patterns (`.css`, `.scss`, `.less`).
  */
-export const styles = [
+export const styles: readonly string[] = [
   String.raw`^.+\.less$`,
   String.raw`^.+\.s?css$`,
-] as const;
+];
 
 /**
  * Relative file path patterns (`../`, `./`).
  */
-export const relative = ['../', './', String.raw`^\.?\.\/`] as const;
+export const relative: readonly string[] = ['../', './', String.raw`^\.?\.\/`];

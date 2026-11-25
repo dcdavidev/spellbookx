@@ -5,7 +5,7 @@
 /**
  * Curated list of accepted technical keywords, package names, and domain terminology.
  */
-export const words = [
+export const words: string[] = [
   'auctor',
   'bunfig',
   'bunx',

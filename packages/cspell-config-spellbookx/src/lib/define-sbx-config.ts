@@ -35,4 +35,4 @@ export function defineSbxConfig(
 /**
  * Alias for {@link defineSbxConfig}.
  */
-export const defineConfig = defineSbxConfig;
+export const defineConfig: typeof defineSbxConfig = defineSbxConfig;

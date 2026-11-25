@@ -26,7 +26,7 @@ export const CONFIG_DIR = '.config';
 /**
  * Project word list used by the generated CSpell configuration.
  */
-export const CSPELL_DICTIONARY_PATH = `${CONFIG_DIR}/cspell/custom.txt`;
+export const CSPELL_DICTIONARY_PATH: string = `${CONFIG_DIR}/cspell/custom.txt`;
 
 /**
  * Default choices, used for every choice that is not passed explicitly when
