@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for the `cspell-config-spellbookx` entry point exports.
+ */
 import { describe, expect, it } from 'vitest';
 
 import defaultConfig, {

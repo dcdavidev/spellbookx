@@ -1,6 +1,5 @@
 /**
- * @file lefthook.ts
- * Builds the Lefthook configuration in YAML, JSON, or TOML.
+ * @file Builds the Lefthook configuration in YAML, JSON, or TOML.
  *
  * Lefthook is the only Git hook manager supported by Spellbookx. Its config
  * file is always written as `.config/lefthook.EXT`, which Lefthook finds by

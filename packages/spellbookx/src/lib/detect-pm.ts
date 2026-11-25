@@ -1,6 +1,5 @@
 /**
- * @file detect-pm.ts
- * Detects the active package manager in a directory.
+ * @file Detects the active package manager in a directory.
  */
 
 import { existsSync, readFileSync } from 'node:fs';

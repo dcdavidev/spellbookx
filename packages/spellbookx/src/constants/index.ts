@@ -1,6 +1,5 @@
 /**
- * @file index.ts
- * Main entry point for Spellbookx CLI constants.
+ * @file Main entry point for Spellbookx CLI constants.
  */
 
 export * from './templates.js';

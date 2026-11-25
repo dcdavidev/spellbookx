@@ -1,6 +1,6 @@
 /**
- * @file tailwind.ts
- * Prettier configuration preset extending base with Tailwind CSS class sorting.
+ * @file Prettier configuration preset extending base with Tailwind CSS class
+ * sorting.
  */
 
 import type { Config } from 'prettier';

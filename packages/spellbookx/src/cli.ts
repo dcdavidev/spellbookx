@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 /**
- * @file cli.ts
- * Executable entry point for the Spellbookx CLI (`sbx` / `spellbookx`).
+ * @file Executable entry point for the Spellbookx CLI (`sbx` / `spellbookx`).
  */
 
 import chalk from 'chalk';

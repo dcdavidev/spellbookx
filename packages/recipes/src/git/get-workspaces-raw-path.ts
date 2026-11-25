@@ -1,6 +1,6 @@
 /**
- * @file get-workspaces-raw-path.ts
- * Parser for extracting workspace path globs from JSON and YAML configuration files.
+ * @file Parser for extracting workspace path globs from JSON and YAML
+ * configuration files.
  */
 
 import { existsSync, readFileSync } from 'node:fs';

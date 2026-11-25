@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for internal utilities in `eslint-plugin-spellbookx`.
+ */
 import { describe, expect, it } from 'vitest';
 
 import { defineImports, packageJson } from '../src/lib/index.js';

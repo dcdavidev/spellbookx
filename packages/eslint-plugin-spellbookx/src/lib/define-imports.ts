@@ -1,6 +1,6 @@
 /**
- * @file define-imports.ts
- * Composes regex groups for `eslint-plugin-simple-import-sort` using Spellbookx import recipes.
+ * @file Composes regex groups for `eslint-plugin-simple-import-sort` using
+ * Spellbookx import recipes.
  */
 
 /**

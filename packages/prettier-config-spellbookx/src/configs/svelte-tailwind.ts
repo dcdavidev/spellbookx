@@ -1,6 +1,6 @@
 /**
- * @file svelte-tailwind.ts
- * Prettier configuration preset combining Svelte component and Tailwind CSS formatting.
+ * @file Prettier configuration preset combining Svelte component and Tailwind
+ * CSS formatting.
  */
 
 import type { Config } from 'prettier';

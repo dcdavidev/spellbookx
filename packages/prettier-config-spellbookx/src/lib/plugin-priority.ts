@@ -1,6 +1,5 @@
 /**
- * @file plugin-priority.ts
- * Priority mapping used for canonical ordering of Prettier plugins.
+ * @file Priority mapping used for canonical ordering of Prettier plugins.
  */
 
 /**

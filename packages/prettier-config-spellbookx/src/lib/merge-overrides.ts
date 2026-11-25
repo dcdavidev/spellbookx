@@ -1,6 +1,6 @@
 /**
- * @file merge-overrides.ts
- * Merges Prettier override entries deduplicating by matched file patterns.
+ * @file Merges Prettier override entries deduplicating by matched file
+ * patterns.
  */
 
 import type { OverrideEntry } from '../overrides.js';

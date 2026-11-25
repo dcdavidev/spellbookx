@@ -1,6 +1,5 @@
 /**
- * @file index.ts
- * Main entry point for commitlint-config-spellbookx.
+ * @file Main entry point for commitlint-config-spellbookx.
  * Exports conventional commit configuration, rules, and prompt settings.
  */
 

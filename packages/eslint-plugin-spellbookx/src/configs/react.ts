@@ -1,6 +1,6 @@
 /**
- * @file react.ts
- * ESLint configuration for React and React Native components using `@eslint-react`.
+ * @file ESLint configuration for React and React Native components using
+ * `@eslint-react`.
  */
 
 import type { Linter } from 'eslint';

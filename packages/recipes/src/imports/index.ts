@@ -1,6 +1,5 @@
 /**
- * @file index.ts
- * Main exports for `@spellbookx/recipes/imports`.
+ * @file Main exports for `@spellbookx/recipes/imports`.
  * Exposes all modular import groups, types, and the unified `imports` dictionary.
  */
 

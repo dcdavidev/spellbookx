@@ -1,6 +1,6 @@
 /**
- * @file index.ts
- * Re-exports all individual Prettier configurations provided by Spellbookx.
+ * @file Re-exports all individual Prettier configurations provided by
+ * Spellbookx.
  */
 
 export { default as all } from './all.js';

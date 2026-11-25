@@ -1,6 +1,5 @@
 /**
- * @file plugins.ts
- * Dictionary of Prettier plugins supported by Spellbookx.
+ * @file Dictionary of Prettier plugins supported by Spellbookx.
  */
 
 /**

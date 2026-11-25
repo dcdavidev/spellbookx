@@ -1,6 +1,6 @@
 /**
- * @file base.ts
- * Minimal base ESLint configuration for JavaScript, TypeScript, and Prettier formatting.
+ * @file Minimal base ESLint configuration for JavaScript, TypeScript, and
+ * Prettier formatting.
  */
 
 import type { Linter } from 'eslint';

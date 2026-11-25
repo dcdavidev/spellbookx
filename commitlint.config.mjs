@@ -1,5 +1,5 @@
 /**
- * Commitlint configuration for Spellbookx.
+ * @file Commitlint configuration for Spellbookx.
  * Documentation: https://commitlint.js.org/reference/configuration
  *
  * Extends `@commitlint/config-conventional` and applies the Spellbookx preset:

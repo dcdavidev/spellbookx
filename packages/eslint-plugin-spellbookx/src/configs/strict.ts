@@ -1,6 +1,6 @@
 /**
- * @file strict.ts
- * Strict ESLint configuration activating `typescript-eslint` strict rule definitions.
+ * @file Strict ESLint configuration activating `typescript-eslint` strict rule
+ * definitions.
  */
 
 import type { Linter } from 'eslint';

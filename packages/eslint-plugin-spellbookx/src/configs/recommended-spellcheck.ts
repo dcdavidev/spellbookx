@@ -1,6 +1,6 @@
 /**
- * @file recommended-spellcheck.ts
- * Recommended ESLint configuration extended with automated CSpell spell-checking.
+ * @file Recommended ESLint configuration extended with automated CSpell
+ * spell-checking.
  */
 
 import type { Linter } from 'eslint';

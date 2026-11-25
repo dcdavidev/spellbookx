@@ -1,6 +1,6 @@
 /**
- * @file constants.ts
- * Standard import groups and patterns shared across Spellbookx configurations.
+ * @file Standard import groups and patterns shared across Spellbookx
+ * configurations.
  */
 
 /**

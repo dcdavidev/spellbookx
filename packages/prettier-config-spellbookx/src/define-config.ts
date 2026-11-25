@@ -1,6 +1,5 @@
 /**
- * @file define-config.ts
- * Deep-merging configuration composer for Prettier configs.
+ * @file Deep-merging configuration composer for Prettier configs.
  */
 
 export {

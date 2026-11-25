@@ -1,6 +1,5 @@
 /**
- * @file init.ts
- * Main wizard command initializing Spellbookx configurations.
+ * @file Main wizard command initializing Spellbookx configurations.
  */
 
 import chalk from 'chalk';

@@ -1,6 +1,6 @@
 /**
- * @file astro-prisma-tailwind.ts
- * Prettier configuration preset combining Astro, Prisma, and Tailwind CSS formatting.
+ * @file Prettier configuration preset combining Astro, Prisma, and Tailwind CSS
+ * formatting.
  */
 
 import type { Config } from 'prettier';

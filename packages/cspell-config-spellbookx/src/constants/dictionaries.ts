@@ -1,6 +1,5 @@
 /**
- * @file dictionaries.ts
- * Featured dictionary definitions and categories for CSpell.
+ * @file Featured dictionary definitions and categories for CSpell.
  */
 
 /**

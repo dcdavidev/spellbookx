@@ -1,6 +1,6 @@
 /**
- * @file astro.ts
- * ESLint configuration tailored for Astro projects using `eslint-plugin-astro`.
+ * @file ESLint configuration tailored for Astro projects using
+ * `eslint-plugin-astro`.
  */
 
 import type { Linter } from 'eslint';

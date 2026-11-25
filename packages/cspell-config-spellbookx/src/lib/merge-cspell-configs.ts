@@ -1,6 +1,5 @@
 /**
- * @file merge-cspell-configs.ts
- * Deep merger for CSpell configuration objects.
+ * @file Deep merger for CSpell configuration objects.
  */
 
 import type { CSpellSettings } from '@cspell/cspell-types';

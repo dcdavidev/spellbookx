@@ -1,6 +1,5 @@
 /**
- * @file install-deps.ts
- * Executes dependency installation using the selected package manager.
+ * @file Executes dependency installation using the selected package manager.
  */
 
 import { execa } from 'execa';

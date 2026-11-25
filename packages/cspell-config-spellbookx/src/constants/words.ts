@@ -1,6 +1,5 @@
 /**
- * @file words.ts
- * Curated list of custom words and technical terms for Spellbookx.
+ * @file Curated list of custom words and technical terms for Spellbookx.
  */
 
 /**

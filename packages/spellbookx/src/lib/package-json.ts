@@ -1,6 +1,5 @@
 /**
- * @file package-json.ts
- * Reads package metadata for the spellbookx CLI.
+ * @file Reads package metadata for the spellbookx CLI.
  */
 
 import { readFileSync } from 'node:fs';

@@ -1,6 +1,5 @@
 /**
- * @file define-imports.ts
- * Import ordering composer for `@ianvs/prettier-plugin-sort-imports`.
+ * @file Import ordering composer for `@ianvs/prettier-plugin-sort-imports`.
  */
 
 import { formatGroupToRegex } from './format-group-to-regex.js';

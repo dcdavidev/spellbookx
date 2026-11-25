@@ -1,6 +1,5 @@
 /**
- * @file write-config.ts
- * Configuration file writer with directory creation.
+ * @file Configuration file writer with directory creation.
  */
 
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';

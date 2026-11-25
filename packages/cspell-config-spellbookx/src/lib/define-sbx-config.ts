@@ -1,6 +1,5 @@
 /**
- * @file define-sbx-config.ts
- * Configuration builder extending the Spellbookx default CSpell settings.
+ * @file Configuration builder extending the Spellbookx default CSpell settings.
  */
 
 import type { CSpellSettings } from '@cspell/cspell-types';

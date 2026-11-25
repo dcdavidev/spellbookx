@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for the `cz-config-spellbookx` entry point exports.
+ */
 import { describe, expect, it } from 'vitest';
 
 import { COMMIT_TYPES, scopesArray } from '@spellbookx/recipes/git';

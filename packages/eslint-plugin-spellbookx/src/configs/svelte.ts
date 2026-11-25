@@ -1,6 +1,6 @@
 /**
- * @file svelte.ts
- * ESLint configuration tailored for Svelte projects using `eslint-plugin-svelte`.
+ * @file ESLint configuration tailored for Svelte projects using
+ * `eslint-plugin-svelte`.
  */
 
 import type { Linter } from 'eslint';

@@ -1,6 +1,5 @@
 /**
- * @file normalize-words.ts
- * Normalizes, deduplicates, and sorts word lists for CSpell.
+ * @file Normalizes, deduplicates, and sorts word lists for CSpell.
  */
 
 /**

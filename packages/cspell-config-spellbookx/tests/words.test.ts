@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for custom word lists in `cspell-config-spellbookx`.
+ */
 import { describe, expect, it } from 'vitest';
 
 import defaultWords, { words } from '../src/constants/words.js';

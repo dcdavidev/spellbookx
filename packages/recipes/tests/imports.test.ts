@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for `@spellbookx/recipes/imports` import group presets.
+ */
 import { describe, expect, it } from 'vitest';
 
 import defaultImports, {

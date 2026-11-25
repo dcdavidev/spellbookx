@@ -1,6 +1,6 @@
 /**
- * @file sort-plugins.ts
- * Sorts Prettier plugins in optimal resolution order and deduplicates entries.
+ * @file Sorts Prettier plugins in optimal resolution order and deduplicates
+ * entries.
  */
 
 import type { Config } from 'prettier';

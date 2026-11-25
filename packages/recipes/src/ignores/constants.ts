@@ -1,6 +1,6 @@
 /**
- * @file constants.ts
- * Standard glob patterns for paths ignored by linting, formatting, and spell-checking tools.
+ * @file Standard glob patterns for paths ignored by linting, formatting, and
+ * spell-checking tools.
  */
 
 /**

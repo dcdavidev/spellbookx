@@ -1,6 +1,5 @@
 /**
- * @file package-json.ts
- * Reads and exports package metadata for `eslint-plugin-spellbookx`.
+ * @file Reads and exports package metadata for `eslint-plugin-spellbookx`.
  */
 
 import { readFileSync } from 'node:fs';

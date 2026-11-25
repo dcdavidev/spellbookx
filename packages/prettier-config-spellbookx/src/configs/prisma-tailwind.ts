@@ -1,6 +1,6 @@
 /**
- * @file prisma-tailwind.ts
- * Prettier configuration preset combining Prisma schema formatting and Tailwind CSS class sorting.
+ * @file Prettier configuration preset combining Prisma schema formatting and
+ * Tailwind CSS class sorting.
  */
 
 import type { Config } from 'prettier';

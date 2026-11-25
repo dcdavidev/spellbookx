@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for configuration file names and locations in `spellbookx`.
+ */
 import { describe, expect, it } from 'vitest';
 
 import { cspellConfigTemplate } from '../src/constants/templates.js';

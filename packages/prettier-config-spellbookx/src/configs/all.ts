@@ -1,6 +1,6 @@
 /**
- * @file all.ts
- * Comprehensive Prettier configuration preset containing all supported plugins and file overrides.
+ * @file Comprehensive Prettier configuration preset containing all supported
+ * plugins and file overrides.
  */
 
 import type { Config } from 'prettier';

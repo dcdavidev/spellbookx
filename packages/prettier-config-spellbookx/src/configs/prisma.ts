@@ -1,6 +1,6 @@
 /**
- * @file prisma.ts
- * Prettier configuration preset extending base with Prisma schema formatting.
+ * @file Prettier configuration preset extending base with Prisma schema
+ * formatting.
  */
 
 import type { Config } from 'prettier';

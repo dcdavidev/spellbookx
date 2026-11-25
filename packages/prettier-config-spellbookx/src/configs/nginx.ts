@@ -1,6 +1,6 @@
 /**
- * @file nginx.ts
- * Prettier configuration preset extending base with Nginx configuration formatting.
+ * @file Prettier configuration preset extending base with Nginx configuration
+ * formatting.
  */
 
 import type { Config } from 'prettier';

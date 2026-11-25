@@ -1,6 +1,5 @@
 /**
- * @file ignores.ts
- * Global ignore patterns configuration for ESLint.
+ * @file Global ignore patterns configuration for ESLint.
  * Shared presets imported from `@spellbookx/recipes/ignores`.
  */
 

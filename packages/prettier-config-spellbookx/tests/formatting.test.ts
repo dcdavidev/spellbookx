@@ -1,3 +1,7 @@
+/**
+ * @file Integration tests verifying live formatting with
+ * `prettier-config-spellbookx` presets.
+ */
 import { describe, expect, it } from 'vitest';
 
 import prettier, { type Config } from 'prettier';

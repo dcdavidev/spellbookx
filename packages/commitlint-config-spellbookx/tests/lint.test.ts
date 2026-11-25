@@ -1,3 +1,7 @@
+/**
+ * @file Integration tests validating commit messages against
+ * `commitlint-config-spellbookx` rules.
+ */
 import { describe, expect, it } from 'vitest';
 
 import lint from '@commitlint/lint';

@@ -1,6 +1,6 @@
 /**
- * @file node.ts
- * Dedicated ESLint configuration tailored for Node.js backend services and CLI tools.
+ * @file Dedicated ESLint configuration tailored for Node.js backend services
+ * and CLI tools.
  */
 
 import type { Linter } from 'eslint';

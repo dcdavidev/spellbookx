@@ -1,6 +1,5 @@
 /**
- * @file commit-types.ts
- * Standard Conventional Commit types supported by Spellbookx.
+ * @file Standard Conventional Commit types supported by Spellbookx.
  */
 
 /**

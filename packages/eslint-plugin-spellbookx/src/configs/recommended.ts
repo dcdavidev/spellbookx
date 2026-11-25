@@ -1,6 +1,6 @@
 /**
- * @file recommended.ts
- * Standard recommended ESLint configuration for JavaScript, TypeScript, React, JSON, Markdown, and Prettier.
+ * @file Standard recommended ESLint configuration for JavaScript, TypeScript,
+ * React, JSON, Markdown, and Prettier.
  */
 
 import type { Linter } from 'eslint';

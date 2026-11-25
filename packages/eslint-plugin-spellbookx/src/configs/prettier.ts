@@ -1,6 +1,5 @@
 /**
- * @file prettier.ts
- * ESLint configuration integrating Prettier formatting rules.
+ * @file ESLint configuration integrating Prettier formatting rules.
  */
 
 import type { Linter } from 'eslint';

@@ -1,6 +1,6 @@
 /**
- * @file javascript.ts
- * Comprehensive ESLint flat configuration for JavaScript, TypeScript, and Node.js.
+ * @file Comprehensive ESLint flat configuration for JavaScript, TypeScript, and
+ * Node.js.
  */
 
 import type { Linter } from 'eslint';

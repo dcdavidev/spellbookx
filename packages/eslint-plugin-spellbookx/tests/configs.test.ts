@@ -1,3 +1,7 @@
+/**
+ * @file Unit tests for ESLint flat configuration presets in
+ * `eslint-plugin-spellbookx`.
+ */
 import { describe, expect, it } from 'vitest';
 
 import { configAll } from '../src/configs/all.js';

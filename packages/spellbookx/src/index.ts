@@ -1,6 +1,5 @@
 /**
- * @file index.ts
- * Programmatic API and command factory for Spellbookx CLI.
+ * @file Programmatic API and command factory for Spellbookx CLI.
  */
 
 import { Command, Option } from 'commander';

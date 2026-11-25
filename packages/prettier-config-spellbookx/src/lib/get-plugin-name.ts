@@ -1,6 +1,6 @@
 /**
- * @file get-plugin-name.ts
- * Utility to extract plugin name string from a plugin reference or object.
+ * @file Utility to extract plugin name string from a plugin reference or
+ * object.
  */
 
 /**

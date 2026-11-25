@@ -1,6 +1,5 @@
 /**
- * @file index.ts
- * Atomic utilities for CSpell configuration composition.
+ * @file Atomic utilities for CSpell configuration composition.
  */
 
 export * from './define-sbx-config.js';

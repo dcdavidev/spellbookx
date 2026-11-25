@@ -1,3 +1,7 @@
+/**
+ * @file Unit tests for the `eslint-plugin-spellbookx` plugin index and
+ * metadata.
+ */
 import { describe, expect, it } from 'vitest';
 
 import { configAll } from '../src/configs/all.js';

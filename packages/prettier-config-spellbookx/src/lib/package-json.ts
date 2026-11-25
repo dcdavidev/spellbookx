@@ -1,6 +1,5 @@
 /**
- * @file package-json.ts
- * Reads package metadata for prettier-config-spellbookx.
+ * @file Reads package metadata for prettier-config-spellbookx.
  */
 
 import { readFileSync } from 'node:fs';

@@ -1,6 +1,6 @@
 /**
- * @file next.ts
- * ESLint configuration tailored for Next.js projects using `@next/eslint-plugin-next`.
+ * @file ESLint configuration tailored for Next.js projects using
+ * `@next/eslint-plugin-next`.
  */
 
 import type { Linter } from 'eslint';

@@ -1,6 +1,5 @@
 /**
- * @file config-files.ts
- * Official configuration file names and locations for every tool.
+ * @file Official configuration file names and locations for every tool.
  *
  * Naming rule:
  *

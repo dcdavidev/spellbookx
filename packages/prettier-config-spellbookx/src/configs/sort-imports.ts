@@ -1,6 +1,6 @@
 /**
- * @file sort-imports.ts
- * Prettier configuration preset extending base with deterministic import sorting.
+ * @file Prettier configuration preset extending base with deterministic import
+ * sorting.
  */
 
 import type { Config } from 'prettier';

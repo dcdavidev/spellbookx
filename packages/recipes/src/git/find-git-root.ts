@@ -1,6 +1,5 @@
 /**
- * @file find-git-root.ts
- * Utility to locate the root directory of a git repository.
+ * @file Utility to locate the root directory of a git repository.
  */
 
 import { existsSync } from 'node:fs';

@@ -1,6 +1,6 @@
 /**
- * @file prompt.ts
- * commitlint prompt questions and settings (the `prompt` field of the commitlint config).
+ * @file commitlint prompt questions and settings (the `prompt` field of the
+ * commitlint config).
  */
 
 import type { UserConfig } from '@commitlint/types';

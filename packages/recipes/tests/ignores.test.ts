@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for `@spellbookx/recipes/ignores` glob pattern presets.
+ */
 import { describe, expect, it } from 'vitest';
 
 import defaultIgnores, {

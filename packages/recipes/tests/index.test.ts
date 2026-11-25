@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for the `@spellbookx/recipes` root entry point exports.
+ */
 import { describe, expect, it } from 'vitest';
 
 import * as subpathGit from '../src/git/index.js';

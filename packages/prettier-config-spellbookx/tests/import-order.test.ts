@@ -1,3 +1,7 @@
+/**
+ * @file Unit tests for `importOrder` and `defineImports` in
+ * `prettier-config-spellbookx`.
+ */
 import { describe, expect, it } from 'vitest';
 
 import {

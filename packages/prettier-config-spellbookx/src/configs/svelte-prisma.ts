@@ -1,6 +1,6 @@
 /**
- * @file svelte-prisma.ts
- * Prettier configuration preset combining Svelte component and Prisma schema formatting.
+ * @file Prettier configuration preset combining Svelte component and Prisma
+ * schema formatting.
  */
 
 import type { Config } from 'prettier';

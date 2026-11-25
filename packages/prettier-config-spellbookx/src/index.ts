@@ -1,6 +1,5 @@
 /**
- * @file index.ts
- * Main entry point for prettier-config-spellbookx.
+ * @file Main entry point for prettier-config-spellbookx.
  * Exports pre-configured presets, modular building blocks, and composer functions.
  */
 

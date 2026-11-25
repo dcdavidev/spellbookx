@@ -1,6 +1,5 @@
 /**
- * @file config.ts
- * Default Spellbookx CSpell configuration.
+ * @file Default Spellbookx CSpell configuration.
  */
 
 import type { CSpellSettings } from '@cspell/cspell-types';

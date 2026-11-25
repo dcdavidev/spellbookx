@@ -1,3 +1,7 @@
+/**
+ * @file Unit tests for CSpell dictionary definitions in
+ * `cspell-config-spellbookx`.
+ */
 import { describe, expect, it } from 'vitest';
 
 import {

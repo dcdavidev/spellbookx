@@ -1,6 +1,6 @@
 /**
- * @file multiline-arrays.ts
- * Prettier configuration preset extending base with multiline array formatting.
+ * @file Prettier configuration preset extending base with multiline array
+ * formatting.
  */
 
 import type { Config } from 'prettier';

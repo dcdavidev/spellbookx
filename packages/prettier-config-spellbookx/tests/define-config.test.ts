@@ -1,3 +1,7 @@
+/**
+ * @file Unit tests for `defineSbxConfig` and `defineConfig` in
+ * `prettier-config-spellbookx`.
+ */
 import { describe, expect, it } from 'vitest';
 
 import prettier from 'prettier';

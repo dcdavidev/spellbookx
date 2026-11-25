@@ -1,6 +1,6 @@
 /**
- * @file get-scopes.ts
- * Discovers and gathers workspace package scopes in a monorepo or standard repository.
+ * @file Discovers and gathers workspace package scopes in a monorepo or
+ * standard repository.
  */
 
 import { existsSync, readFileSync } from 'node:fs';

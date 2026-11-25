@@ -1,6 +1,6 @@
 /**
- * @file base.ts
- * Base Prettier configuration covering core formatting, shell scripts, TOML, INI, package.json, and XML.
+ * @file Base Prettier configuration covering core formatting, shell scripts,
+ * TOML, INI, package.json, and XML.
  */
 
 import type { Config } from 'prettier';

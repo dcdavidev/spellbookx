@@ -1,6 +1,5 @@
 /**
- * @file rules.ts
- * Standard Prettier formatting rules and presets.
+ * @file Standard Prettier formatting rules and presets.
  */
 
 import type { Config } from 'prettier';

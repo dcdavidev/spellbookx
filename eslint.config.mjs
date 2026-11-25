@@ -1,3 +1,7 @@
+/**
+ * @file ESLint flat configuration for the Spellbookx monorepo.
+ */
+
 import { defineConfig } from 'eslint/config';
 import spellbookx from 'eslint-plugin-spellbookx';
 

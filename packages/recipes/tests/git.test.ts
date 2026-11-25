@@ -1,3 +1,7 @@
+/**
+ * @file Unit tests for `@spellbookx/recipes/git` commit types and scope
+ * discovery.
+ */
 import {
   existsSync,
   mkdirSync,

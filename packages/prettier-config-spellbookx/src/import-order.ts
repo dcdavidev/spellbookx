@@ -1,6 +1,6 @@
 /**
- * @file import-order.ts
- * Import ordering composer and parser presets for `@ianvs/prettier-plugin-sort-imports`.
+ * @file Import ordering composer and parser presets for
+ * `@ianvs/prettier-plugin-sort-imports`.
  * Re-exports shared constants from `@spellbookx/recipes/imports` and provides `defineImports`.
  */
 

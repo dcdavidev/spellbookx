@@ -1,6 +1,5 @@
 /**
- * @file cspell.ts
- * ESLint configuration for CSpell spell-checking integration.
+ * @file ESLint configuration for CSpell spell-checking integration.
  */
 
 import type { Linter } from 'eslint';

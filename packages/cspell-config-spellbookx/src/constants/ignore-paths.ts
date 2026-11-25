@@ -1,6 +1,5 @@
 /**
- * @file ignore-paths.ts
- * Standard glob patterns for paths ignored during spell-checking.
+ * @file Standard glob patterns for paths ignored during spell-checking.
  * Shared presets re-exported from `@spellbookx/recipes/ignores`.
  */
 

@@ -1,6 +1,6 @@
 /**
- * @file astro.ts
- * Prettier configuration preset extending base with Astro component formatting.
+ * @file Prettier configuration preset extending base with Astro component
+ * formatting.
  */
 
 import type { Config } from 'prettier';

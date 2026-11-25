@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for the `spellbookx` CLI program and package exports.
+ */
 import { describe, expect, it } from 'vitest';
 
 import {

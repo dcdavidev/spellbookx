@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for configuration file writing in `spellbookx`.
+ */
 import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';

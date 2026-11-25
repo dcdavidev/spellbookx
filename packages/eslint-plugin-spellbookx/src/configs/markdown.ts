@@ -1,6 +1,5 @@
 /**
- * @file markdown.ts
- * ESLint configuration for Markdown and GitHub Flavored Markdown files.
+ * @file ESLint configuration for Markdown and GitHub Flavored Markdown files.
  */
 
 import type { Linter } from 'eslint';

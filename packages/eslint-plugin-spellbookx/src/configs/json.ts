@@ -1,6 +1,6 @@
 /**
- * @file json.ts
- * ESLint configuration for JSON, JSON5, JSONC, and package.json validation.
+ * @file ESLint configuration for JSON, JSON5, JSONC, and package.json
+ * validation.
  */
 
 import type { Linter } from 'eslint';

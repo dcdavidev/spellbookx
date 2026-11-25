@@ -1,6 +1,6 @@
 /**
- * @file scopes.ts
- * Scopes constants and scope enumeration generator for commitlint and czg.
+ * @file Scopes constants and scope enumeration generator for commitlint and
+ * czg.
  */
 
 import { SCOPE_RELEASE, SCOPE_WORKSPACE } from './constants.js';

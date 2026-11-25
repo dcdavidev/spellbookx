@@ -1,6 +1,5 @@
 /**
- * @file index.ts
- * Main entry point for `eslint-plugin-spellbookx`.
+ * @file Main entry point for `eslint-plugin-spellbookx`.
  * Exports ESLint flat configurations, plugin metadata, and configuration type definitions.
  */
 

@@ -1,3 +1,6 @@
+/**
+ * @file Integration tests for the `spellbookx` `init` command.
+ */
 import {
   existsSync,
   mkdtempSync,

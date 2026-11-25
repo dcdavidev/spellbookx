@@ -1,6 +1,6 @@
 /**
- * @file update-package-json.ts
- * Updates package.json scripts and configuration preserving alphabetical ordering.
+ * @file Updates package.json scripts and configuration preserving alphabetical
+ * ordering.
  */
 
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';

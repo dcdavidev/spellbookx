@@ -1,6 +1,5 @@
 /**
- * @file theme.ts
- * Purple brand styling, wizard emoji icons, and terminal formatters.
+ * @file Purple brand styling, wizard emoji icons, and terminal formatters.
  */
 
 import chalk from 'chalk';

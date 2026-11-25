@@ -1,6 +1,5 @@
 /**
- * @file index.ts
- * Main entry point exporting all Spellbookx CLI utility modules.
+ * @file Main entry point exporting all Spellbookx CLI utility modules.
  */
 
 export * from './banner.js';

@@ -1,6 +1,5 @@
 /**
- * @file index.ts
- * Main entry point for `@spellbookx/recipes`.
+ * @file Main entry point for `@spellbookx/recipes`.
  * Re-exports all git recipes, import groups, ignore path groups, types, and unified recipe dictionaries.
  */
 

@@ -1,6 +1,5 @@
 /**
- * @file rules.ts
- * Commitlint rule definitions for enforcing conventional commits.
+ * @file Commitlint rule definitions for enforcing conventional commits.
  */
 
 import type { QualifiedRules } from '@commitlint/types';

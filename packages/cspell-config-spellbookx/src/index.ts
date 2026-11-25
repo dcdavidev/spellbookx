@@ -1,6 +1,5 @@
 /**
- * @file index.ts
- * Primary entry point for cspell-config-spellbookx.
+ * @file Primary entry point for cspell-config-spellbookx.
  */
 
 export { config, config as default } from './config.js';

@@ -1,6 +1,6 @@
 /**
- * @file svelte.ts
- * Prettier configuration preset extending base with Svelte component formatting.
+ * @file Prettier configuration preset extending base with Svelte component
+ * formatting.
  */
 
 import type { Config } from 'prettier';

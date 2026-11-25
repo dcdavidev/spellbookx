@@ -1,6 +1,5 @@
 /**
- * @file index.ts
- * Barrel export for all CSpell constants.
+ * @file Barrel export for all CSpell constants.
  */
 
 export * from './dictionaries.js';

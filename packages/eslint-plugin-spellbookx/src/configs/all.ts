@@ -1,6 +1,6 @@
 /**
- * @file all.ts
- * Comprehensive ESLint configuration bundling all supported file types, frameworks, and plugins.
+ * @file Comprehensive ESLint configuration bundling all supported file types,
+ * frameworks, and plugins.
  */
 
 import type { Linter } from 'eslint';

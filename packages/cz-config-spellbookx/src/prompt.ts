@@ -1,6 +1,5 @@
 /**
- * @file prompt.ts
- * czg interactive prompt configuration using definePrompt.
+ * @file czg interactive prompt configuration using definePrompt.
  */
 
 import { type CommitizenGitOptions, definePrompt } from 'czg';

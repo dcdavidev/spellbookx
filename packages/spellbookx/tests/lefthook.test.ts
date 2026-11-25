@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for Lefthook configuration generation in `spellbookx`.
+ */
 import { describe, expect, it } from 'vitest';
 
 import {

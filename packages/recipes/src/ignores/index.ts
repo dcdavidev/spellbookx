@@ -1,6 +1,5 @@
 /**
- * @file index.ts
- * Main exports for `@spellbookx/recipes/ignores`.
+ * @file Main exports for `@spellbookx/recipes/ignores`.
  * Exposes all modular ignore path groups, types, and the unified `ignores` dictionary.
  */
 

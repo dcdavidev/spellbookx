@@ -1,6 +1,6 @@
 /**
- * @file vuoto.ts
- * ESLint configuration for empty files, blocks, and clean code enforcement via `eslint-plugin-vuoto`.
+ * @file ESLint configuration for empty files, blocks, and clean code
+ * enforcement via `eslint-plugin-vuoto`.
  */
 
 import type { Linter } from 'eslint';

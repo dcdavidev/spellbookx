@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for configuration utilities in `cspell-config-spellbookx`.
+ */
 import { describe, expect, it } from 'vitest';
 
 import {

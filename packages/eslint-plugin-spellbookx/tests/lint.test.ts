@@ -1,3 +1,7 @@
+/**
+ * @file Integration tests running ESLint with `eslint-plugin-spellbookx`
+ * presets.
+ */
 import { describe, expect, it } from 'vitest';
 
 import { ESLint } from 'eslint';

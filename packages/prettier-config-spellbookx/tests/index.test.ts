@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for the `prettier-config-spellbookx` entry point exports.
+ */
 import { describe, expect, it } from 'vitest';
 
 import * as allConfigs from '../src/configs/index.js';

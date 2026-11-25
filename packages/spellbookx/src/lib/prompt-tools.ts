@@ -1,6 +1,6 @@
 /**
- * @file prompt-tools.ts
- * Interactive prompts for selecting Spellbookx tools, presets, config file
+ * @file Interactive prompts for selecting Spellbookx tools, presets, config
+ * file
  * formats, and config file locations.
  */
 

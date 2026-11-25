@@ -1,6 +1,5 @@
 /**
- * @file banner.ts
- * ASCII-art brand banner rendered with figlet and colored with chalk.
+ * @file ASCII-art brand banner rendered with figlet and colored with chalk.
  */
 
 import chalk from 'chalk';

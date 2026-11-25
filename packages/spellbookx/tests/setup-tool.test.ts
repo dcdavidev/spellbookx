@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for individual tool setup execution in `spellbookx`.
+ */
 import {
   existsSync,
   mkdtempSync,

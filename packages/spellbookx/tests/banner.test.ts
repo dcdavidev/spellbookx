@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for the Spellbookx CLI banner rendering utilities.
+ */
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {

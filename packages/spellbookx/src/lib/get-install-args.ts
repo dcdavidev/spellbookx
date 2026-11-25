@@ -1,6 +1,6 @@
 /**
- * @file get-install-args.ts
- * Resolves package manager CLI arguments for installing development dependencies.
+ * @file Resolves package manager CLI arguments for installing development
+ * dependencies.
  */
 
 import type { PackageManager } from '../types/index.js';

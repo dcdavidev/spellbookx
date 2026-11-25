@@ -1,6 +1,5 @@
 /**
- * @file sql.ts
- * Prettier configuration preset extending base with SQL formatting.
+ * @file Prettier configuration preset extending base with SQL formatting.
  */
 
 import type { Config } from 'prettier';

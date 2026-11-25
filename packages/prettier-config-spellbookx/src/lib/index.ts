@@ -1,6 +1,6 @@
 /**
- * @file index.ts
- * Barrel export for reusable and atomic utilities in prettier-config-spellbookx.
+ * @file Barrel export for reusable and atomic utilities in
+ * prettier-config-spellbookx.
  */
 
 export { defineImports, type ImportInput } from './define-imports.js';

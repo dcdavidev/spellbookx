@@ -1,6 +1,5 @@
 /**
- * @file get-scope-description.ts
- * Formats user-facing description strings for commit scopes.
+ * @file Formats user-facing description strings for commit scopes.
  */
 
 import { SCOPE_RELEASE, SCOPE_WORKSPACE } from './constants.js';

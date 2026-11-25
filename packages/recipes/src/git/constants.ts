@@ -1,6 +1,5 @@
 /**
- * @file constants.ts
- * Special commit scope identifiers shared by the git recipes.
+ * @file Special commit scope identifiers shared by the git recipes.
  */
 
 /**

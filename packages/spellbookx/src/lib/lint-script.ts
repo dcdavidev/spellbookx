@@ -1,6 +1,5 @@
 /**
- * @file lint-script.ts
- * Keeps the aggregate `lint` script in sync with the `lint:*` scripts.
+ * @file Keeps the aggregate `lint` script in sync with the `lint:*` scripts.
  */
 
 import { existsSync, readFileSync } from 'node:fs';

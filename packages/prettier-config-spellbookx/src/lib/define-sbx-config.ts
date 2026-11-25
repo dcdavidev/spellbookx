@@ -1,6 +1,5 @@
 /**
- * @file define-sbx-config.ts
- * Deep-merging configuration composer for Prettier configs.
+ * @file Deep-merging configuration composer for Prettier configs.
  */
 
 import type { Config } from 'prettier';

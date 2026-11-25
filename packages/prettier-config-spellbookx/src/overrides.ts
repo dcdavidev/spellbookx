@@ -1,6 +1,5 @@
 /**
- * @file overrides.ts
- * Prettier parser and path overrides for specific file formats.
+ * @file Prettier parser and path overrides for specific file formats.
  */
 
 import type { Config } from 'prettier';

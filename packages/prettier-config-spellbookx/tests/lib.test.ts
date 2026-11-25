@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for internal utilities in `prettier-config-spellbookx`.
+ */
 import { describe, expect, it } from 'vitest';
 
 import { plugins } from '../src/index.js';

@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for the `commitlint-config-spellbookx` entry point exports.
+ */
 import { describe, expect, it } from 'vitest';
 
 import { COMMIT_TYPES, scopesEnum } from '@spellbookx/recipes/git';

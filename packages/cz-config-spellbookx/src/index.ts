@@ -1,6 +1,5 @@
 /**
- * @file index.ts
- * Main entry point for cz-config-spellbookx.
+ * @file Main entry point for cz-config-spellbookx.
  * Exports the czg interactive prompt configuration and theme settings.
  */
 

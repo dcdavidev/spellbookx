@@ -1,6 +1,5 @@
 /**
- * @file index.ts
- * Main exports for `@spellbookx/recipes/git`.
+ * @file Main exports for `@spellbookx/recipes/git`.
  * Exposes Conventional Commit types, monorepo scope discovery utilities, and the unified `git` dictionary.
  */
 

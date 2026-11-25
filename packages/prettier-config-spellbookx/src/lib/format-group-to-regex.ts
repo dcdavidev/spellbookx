@@ -1,6 +1,6 @@
 /**
- * @file format-group-to-regex.ts
- * Transforms import package arrays and category tokens into regex strings for `@ianvs/prettier-plugin-sort-imports`.
+ * @file Transforms import package arrays and category tokens into regex strings
+ * for `@ianvs/prettier-plugin-sort-imports`.
  */
 
 /**

@@ -1,6 +1,6 @@
 /**
- * @file tools.ts
- * Tool definitions, dependencies, config files, and scripts managed by Spellbookx.
+ * @file Tool definitions, dependencies, config files, and scripts managed by
+ * Spellbookx.
  */
 
 import {

@@ -1,6 +1,5 @@
 /**
- * @file index.ts
- * Core TypeScript types and interfaces for the Spellbookx CLI.
+ * @file Core TypeScript types and interfaces for the Spellbookx CLI.
  */
 
 /**

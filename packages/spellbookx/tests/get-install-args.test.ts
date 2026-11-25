@@ -1,3 +1,6 @@
+/**
+ * @file Unit tests for dependency install argument resolution in `spellbookx`.
+ */
 import { describe, expect, it } from 'vitest';
 
 import { getInstallArgs } from '../src/lib/get-install-args.js';

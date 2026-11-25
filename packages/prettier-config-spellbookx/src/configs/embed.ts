@@ -1,6 +1,6 @@
 /**
- * @file embed.ts
- * Prettier configuration preset extending base with embedded code formatting.
+ * @file Prettier configuration preset extending base with embedded code
+ * formatting.
  */
 
 import type { Config } from 'prettier';

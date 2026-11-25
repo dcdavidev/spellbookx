@@ -1,3 +1,7 @@
+/**
+ * @file Unit tests for Prettier configuration presets in
+ * `prettier-config-spellbookx`.
+ */
 import { describe, expect, it } from 'vitest';
 
 import type { Config } from 'prettier';

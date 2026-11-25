@@ -1,6 +1,5 @@
 /**
- * @file package-json.ts
- * Reads package metadata for cspell-config-spellbookx.
+ * @file Reads package metadata for cspell-config-spellbookx.
  */
 
 import { readFileSync } from 'node:fs';

@@ -1,6 +1,6 @@
 /**
- * @file astro-prisma.ts
- * Prettier configuration preset combining Astro component and Prisma schema formatting.
+ * @file Prettier configuration preset combining Astro component and Prisma
+ * schema formatting.
  */
 
 import type { Config } from 'prettier';

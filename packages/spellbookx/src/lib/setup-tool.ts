@@ -1,6 +1,6 @@
 /**
- * @file setup-tool.ts
- * Configures an individual tool by writing files and updating package.json.
+ * @file Configures an individual tool by writing files and updating
+ * package.json.
  */
 
 import { TOOLS_MAP } from '../constants/tools.js';
