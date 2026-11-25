@@ -1,5 +1,11 @@
 # spellbookx
 
+## 2.1.2
+
+### Patch Changes
+
+- chore(release): automated patch release bump
+
 ## 2.1.1
 
 ### Patch Changes
