@@ -14,6 +14,7 @@ import { configIgnores } from './configs/ignores.js';
 import { configJavascript } from './configs/javascript.js';
 import { configJson } from './configs/json.js';
 import { configMarkdown } from './configs/markdown.js';
+import { configNext } from './configs/next.js';
 import { configNode } from './configs/node.js';
 import { configPrettier } from './configs/prettier.js';
 import { configReact } from './configs/react.js';
@@ -36,6 +37,7 @@ export type SbxESLintConfig =
   | 'javascript'
   | 'json'
   | 'markdown'
+  | 'next'
   | 'node'
   | 'prettier'
   | 'react'
@@ -57,6 +59,7 @@ const configs: Record<SbxESLintConfig, Linter.Config[]> = {
   javascript: configJavascript,
   json: configJson,
   markdown: configMarkdown,
+  next: configNext,
   node: configNode,
   prettier: configPrettier,
   react: configReact,
@@ -98,6 +101,7 @@ export { configIgnores } from './configs/ignores.js';
 export { configJavascript } from './configs/javascript.js';
 export { configJson } from './configs/json.js';
 export { configMarkdown } from './configs/markdown.js';
+export { configNext } from './configs/next.js';
 export { configNode } from './configs/node.js';
 export { configPrettier } from './configs/prettier.js';
 export { configReact } from './configs/react.js';

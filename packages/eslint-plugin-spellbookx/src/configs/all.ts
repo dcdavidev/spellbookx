@@ -12,6 +12,7 @@ import { configIgnores } from './ignores.js';
 import { configJavascript } from './javascript.js';
 import { configJson } from './json.js';
 import { configMarkdown } from './markdown.js';
+import { configNext } from './next.js';
 import { configPrettier } from './prettier.js';
 import { configReact } from './react.js';
 import { configSvelte } from './svelte.js';
@@ -24,6 +25,7 @@ export const configAll: Linter.Config[] = defineConfig([
   configIgnores,
   configJavascript,
   configReact,
+  configNext,
   configAstro,
   configSvelte,
   configJson,

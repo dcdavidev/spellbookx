@@ -1,6 +1,6 @@
 ---
 name: spellbookx-eslint-plugin
-description: Configures, customizes, and troubleshoots ESLint flat configs using eslint-plugin-spellbookx. Covers all 16 presets, framework configurations (React, Astro, Svelte, Node), and import sorting with @spellbookx/recipes.
+description: Configures, customizes, and troubleshoots ESLint flat configs using eslint-plugin-spellbookx. Covers all 17 presets, framework configurations (React, Next.js, Astro, Svelte, Node), and import sorting with @spellbookx/recipes.
 ---
 
 # Spellbookx ESLint Skill
@@ -11,16 +11,17 @@ This skill guides an AI agent through selecting, composing, and customizing ESLi
 
 ## 1. Available Configurations
 
-`eslint-plugin-spellbookx` exposes 16 flat configuration presets via `spellbookx.configs.<name>` or direct subpath exports `eslint-plugin-spellbookx/<name>`:
+`eslint-plugin-spellbookx` exposes 17 flat configuration presets via `spellbookx.configs.<name>` or direct subpath exports `eslint-plugin-spellbookx/<name>`:
 
 | Preset                       | Description                           | Key Inclusions                                                            |
 | :--------------------------- | :------------------------------------ | :------------------------------------------------------------------------ |
 | **`recommended`**            | Default preset for modern web & TS    | `ignores`, `javascript`, `react`, `json`, `markdown`, `vuoto`, `prettier` |
 | **`recommended-spellcheck`** | Recommended bundle with spellchecking | `recommended` + `cspell`                                                  |
-| **`all`**                    | All-inclusive bundle for monorepos    | All 16 configurations and framework rules                                 |
+| **`all`**                    | All-inclusive bundle for monorepos    | All 17 configurations and framework rules                                 |
 | **`base`**                   | Minimal baseline for JS/TS            | `ignores`, `javascript`, `prettier`                                       |
 | **`node`**                   | Tailored for backend/CLI Node.js      | `ignores`, `javascript`, `json`, `vuoto`, `prettier`                      |
 | **`react`**                  | React & React Native TSX/JSX          | `@eslint-react/eslint-plugin` rules                                       |
+| **`next`**                   | Next.js App & Pages Router            | `@next/eslint-plugin-next` (`core-web-vitals`) + `next-env.d.ts` ignore   |
 | **`astro`**                  | Astro `.astro` components             | `eslint-plugin-astro`                                                     |
 | **`svelte`**                 | Svelte `.svelte` components           | `eslint-plugin-svelte`                                                    |
 | **`strict`**                 | Strict TypeScript rule suite          | `typescript-eslint` strict configs                                        |
@@ -36,7 +37,7 @@ This skill guides an AI agent through selecting, composing, and customizing ESLi
 
 ## 2. Framework Configuration Recipes
 
-### React & Next.js Projects
+### React Projects
 
 ```javascript
 // eslint.config.mjs
@@ -51,6 +52,19 @@ export default defineConfig([
       // Add custom project-specific rule overrides here
     },
   },
+]);
+```
+
+### Next.js Projects
+
+```javascript
+// eslint.config.mjs
+import { defineConfig } from 'eslint/config';
+import spellbookx from 'eslint-plugin-spellbookx';
+
+export default defineConfig([
+  spellbookx.configs['recommended-spellcheck'],
+  spellbookx.configs.next,
 ]);
 ```
 

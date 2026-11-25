@@ -1,6 +1,6 @@
 # eslint-plugin-spellbookx
 
-A modern, highly modular, and opinionated [ESLint](https://eslint.org/) flat configuration plugin for the Spellbookx ecosystem. It bundles 16 ready-to-use configurations, fine-tuned rules for JavaScript, TypeScript, React, Astro, Svelte, and Node.js, and automated import sorting using Spellbookx recipes.
+A modern, highly modular, and opinionated [ESLint](https://eslint.org/) flat configuration plugin for the Spellbookx ecosystem. It bundles 17 ready-to-use configurations, fine-tuned rules for JavaScript, TypeScript, React, Next.js, Astro, Svelte, and Node.js, and automated import sorting using Spellbookx recipes.
 
 ---
 
@@ -10,11 +10,12 @@ A modern, highly modular, and opinionated [ESLint](https://eslint.org/) flat con
 | :---------------------------- | :--------------------------------------------------------- | :------------------------------------------------------------------------ |
 | **`recommended`** _(default)_ | Standard bundle for modern web and Node.js projects        | `ignores`, `javascript`, `react`, `json`, `markdown`, `vuoto`, `prettier` |
 | **`recommended-spellcheck`**  | Recommended bundle + automated spell-checking              | `recommended` + `cspell`                                                  |
-| **`all`**                     | All-inclusive bundle for multi-framework monorepos         | All 16 configurations and framework rules bundled together                |
+| **`all`**                     | All-inclusive bundle for multi-framework monorepos         | All 17 configurations and framework rules bundled together                |
 | **`base`**                    | Minimal baseline for JS/TS codebases                       | `ignores`, `javascript`, `prettier`                                       |
 | **`node`**                    | Tailored for Node.js backend services, APIs, and CLI tools | `ignores`, `javascript`, `json`, `vuoto`, `prettier`                      |
 | **`strict`**                  | Strict TypeScript rule definitions                         | `typescript-eslint` strict configs                                        |
 | **`react`**                   | React & React Native TSX/JSX components                    | `@eslint-react/eslint-plugin`                                             |
+| **`next`**                    | Next.js App & Pages Router linting and Core Web Vitals     | `@next/eslint-plugin-next` (`core-web-vitals`) + `next-env.d.ts` ignore   |
 | **`astro`**                   | Astro `.astro` component linting and parsing               | `eslint-plugin-astro`                                                     |
 | **`svelte`**                  | Svelte `.svelte` component linting and parsing             | `eslint-plugin-svelte`                                                    |
 | **`javascript`**              | Comprehensive JS/TS rules, Unicorn, JSDoc, and import sort | `@eslint/js`, `typescript-eslint`, `unicorn`, `simple-import-sort`, etc.  |
@@ -89,6 +90,7 @@ Available subpaths:
 - `eslint-plugin-spellbookx/node`
 - `eslint-plugin-spellbookx/strict`
 - `eslint-plugin-spellbookx/react`
+- `eslint-plugin-spellbookx/next`
 - `eslint-plugin-spellbookx/astro`
 - `eslint-plugin-spellbookx/svelte`
 - `eslint-plugin-spellbookx/javascript`

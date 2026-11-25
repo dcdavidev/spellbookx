@@ -6,6 +6,7 @@ import { configBase } from '../src/configs/base.js';
 import { configJavascript } from '../src/configs/javascript.js';
 import { configJson } from '../src/configs/json.js';
 import { configMarkdown } from '../src/configs/markdown.js';
+import { configNext } from '../src/configs/next.js';
 import { configNode } from '../src/configs/node.js';
 import { configRecommended } from '../src/configs/recommended.js';
 import { configRecommendedSpellcheck } from '../src/configs/recommended-spellcheck.js';
@@ -68,6 +69,31 @@ describe('eslint-plugin-spellbookx (lint execution)', () => {
     });
 
     expect(result.errorCount).toBe(0);
+  });
+
+  it('reports @next/next/no-sync-scripts errors with configNext', async () => {
+    const eslint = new ESLint({
+      overrideConfigFile: true,
+      overrideConfig: [...configJavascript, ...configNext],
+    });
+
+    const [result] = await eslint.lintText(
+      'export function Page() {\n  return <script src="https://example.com/a.js" />;\n}\n',
+      { filePath: 'page.tsx' }
+    );
+
+    expect(
+      result.messages.some((m) => m.ruleId === '@next/next/no-sync-scripts')
+    ).toBe(true);
+  });
+
+  it('ignores next-env.d.ts in configNext', async () => {
+    const eslint = new ESLint({
+      overrideConfigFile: true,
+      overrideConfig: [...configJavascript, ...configNext],
+    });
+
+    expect(await eslint.isPathIgnored('next-env.d.ts')).toBe(true);
   });
 
   it.each([

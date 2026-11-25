@@ -192,6 +192,11 @@ export const ESLINT_CONFIG_OPTIONS: {
     description: 'React and JSX rules for function components and hooks',
   },
   {
+    value: 'next',
+    title: 'Next.js',
+    description: 'Next.js Core Web Vitals rules and next-env.d.ts ignore',
+  },
+  {
     value: 'astro',
     title: 'Astro',
     description: 'Astro component linting',

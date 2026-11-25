@@ -8,6 +8,7 @@ import { configIgnores } from '../src/configs/ignores.js';
 import { configJavascript } from '../src/configs/javascript.js';
 import { configJson } from '../src/configs/json.js';
 import { configMarkdown } from '../src/configs/markdown.js';
+import { configNext } from '../src/configs/next.js';
 import { configNode } from '../src/configs/node.js';
 import { configPrettier } from '../src/configs/prettier.js';
 import { configReact } from '../src/configs/react.js';
@@ -27,6 +28,7 @@ describe('eslint-plugin-spellbookx (configs)', () => {
     ['javascript', configJavascript],
     ['json', configJson],
     ['markdown', configMarkdown],
+    ['next', configNext],
     ['node', configNode],
     ['prettier', configPrettier],
     ['react', configReact],
@@ -56,6 +58,20 @@ describe('eslint-plugin-spellbookx (configs)', () => {
   it('targets TSX and JSX files in configReact', () => {
     const reactEntry = configReact.find((entry) => entry.files);
     expect(reactEntry?.files).toContain('**/*.{tsx,jsx}');
+  });
+
+  it('configures @next/next Core Web Vitals rules and ignores next-env.d.ts in configNext', () => {
+    const ignoreEntry = configNext.find((entry) => entry.ignores);
+    expect(ignoreEntry?.ignores).toContain('**/next-env.d.ts');
+
+    const rulesEntry = configNext.find(
+      (entry) => entry.rules && '@next/next/no-sync-scripts' in entry.rules
+    );
+    expect(rulesEntry?.files).toContain('**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}');
+    expect(rulesEntry?.rules?.['@next/next/no-sync-scripts']).toBe('error');
+    expect(rulesEntry?.rules?.['@next/next/no-html-link-for-pages']).toBe(
+      'error'
+    );
   });
 
   it('targets .astro files in configAstro', () => {

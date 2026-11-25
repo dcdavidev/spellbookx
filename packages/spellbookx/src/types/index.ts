@@ -58,6 +58,7 @@ export type ESLintConfigId =
   | 'javascript'
   | 'json'
   | 'markdown'
+  | 'next'
   | 'node'
   | 'react'
   | 'recommended'

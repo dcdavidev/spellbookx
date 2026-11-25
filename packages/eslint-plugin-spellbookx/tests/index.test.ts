@@ -8,6 +8,7 @@ import { configIgnores } from '../src/configs/ignores.js';
 import { configJavascript } from '../src/configs/javascript.js';
 import { configJson } from '../src/configs/json.js';
 import { configMarkdown } from '../src/configs/markdown.js';
+import { configNext } from '../src/configs/next.js';
 import { configNode } from '../src/configs/node.js';
 import { configPrettier } from '../src/configs/prettier.js';
 import { configReact } from '../src/configs/react.js';
@@ -41,6 +42,7 @@ describe('eslint-plugin-spellbookx (plugin index)', () => {
     ['javascript', configJavascript],
     ['json', configJson],
     ['markdown', configMarkdown],
+    ['next', configNext],
     ['node', configNode],
     ['prettier', configPrettier],
     ['react', configReact],
